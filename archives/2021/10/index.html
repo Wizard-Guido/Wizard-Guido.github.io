@@ -58,7 +58,7 @@
               window.location.href = href.replace('/en/', '/');
           }
           else {
-              window.location.href = href.replace(/(^http[s]?:\/\/[a-z0-9.]*[:?0-9]*\/)(.*)/i, '$1en/$2');
+              window.location.href = href + '/en/'
           }
           if(typeof(_prevOnload) === 'function') {
               _prevOnload();
@@ -137,7 +137,7 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-switch_lang">
 
-    <a href="/en/" rel="section"><i class="language fa-fw"></i>English</a>
+    <a href="https://wizard-guido.github.io/en/" rel="section"><i class="language fa-fw"></i>English</a>
 
   </li>
         <li class="menu-item menu-item-home">
