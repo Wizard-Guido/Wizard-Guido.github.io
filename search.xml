@@ -1,98 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>DNS原理基础</title>
-    <url>/2021/11/25/DNS%E5%8E%9F%E7%90%86%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
+    <title>HTML基础---学习手记</title>
+    <url>/2021/09/22/HTML%E5%AD%A6%E4%B9%A0%E6%89%8B%E8%AE%B0/</url>
+    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
 <a id="more"></a>
 
-<h1 id="Domain-Names-System"><a href="#Domain-Names-System" class="headerlink" title="Domain Names System"></a>Domain Names System</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>DNS用于将域名转换为IP地址。其中：</p>
-<ol>
-<li>IP地址：一组用点分隔的能唯一标识互联网中的计算机的数字组合</li>
-<li>域名：一串用点分隔的名字，用来表示计算机的名称</li>
-</ol>
-<h2 id="域名构成"><a href="#域名构成" class="headerlink" title="域名构成"></a>域名构成</h2><p><strong>域名是层次结构，从上到下（从书写上看是从右到左），分为根域名、顶级域名、二级域名、三级域名等等。</strong></p>
-<blockquote>
-<ol>
-<li><p>根域名：root</p>
-<ol start="2">
-<li><blockquote>
-<p>顶级域名：net, com, edu, org…</p>
-<ol start="3">
-<li><blockquote>
-<p>二级域名：ibm, baidu, alibaba, ….</p>
-<ol start="4">
-<li><blockquote>
-<p>三级域名：www, mail, …</p>
+<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD/Layout.jpg" alt="Layout"></p>
 </blockquote>
-</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-</li>
-</ol>
-</blockquote>
-<p>注意：在域名的每一个层级都有一个域名服务器，如果顶级域名中，有edu域名服务器，com域名服务器。</p>
-<h2 id="查询方式"><a href="#查询方式" class="headerlink" title="查询方式"></a>查询方式</h2><ul>
-<li>递归查询：A只请求B，直到B返回A想要的结果。</li>
-<li>迭代查询：A请求B，B返回结果告知A所需要请求的其他服务器，然后A再请求C、D、E等并拿到响应的返回结果。</li>
-</ul>
-<h2 id="域名缓存"><a href="#域名缓存" class="headerlink" title="域名缓存"></a>域名缓存</h2><ul>
-<li><p>对于域名服务器而言：</p>
-<blockquote>
-<p>在首次进行解析域名时，会使用缓存保存域名和对应的IP地址映射。</p>
-</blockquote>
-</li>
-<li><p>对于本地计算机而言：</p>
-<ul>
-<li><p>对于浏览器：</p>
-<blockquote>
-<p>浏览器会在获取网站域名的实际IP后，用缓存保存下来，以减少网络请求次数</p>
-</blockquote>
-</li>
-<li><p>对于操作系统：</p>
-<blockquote>
-<p>操作系统的缓存就是用户自己配置的hosts文件</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h2><p>大致有七个步骤</p>
-<ol>
-<li><p>首先搜索浏览器的DNS缓存，其缓存中维护了一张域名与IP地址的对应表，若有则返回，并结束操作</p>
-</li>
-<li><p>若没有找到，继续搜索操作系统的DNS缓存，若有则返回，并结束操作</p>
-</li>
-<li><p>若没找到，则操作系统把域名发给本地域名服务器，本地域名服务器在自己的DNS缓存中采用递归方式查找，若有则返回，并结束操作</p>
-</li>
-<li><p>若没找到，则本地服务器向上级域名服务器进行迭代查询</p>
-<blockquote>
-<ol>
-<li>本地域名服务器向根域名服务器发送请求，其会返回顶级域名服务器地址</li>
-<li>本地域名服务器再向顶级域名服务器发送请求，其会返回二级域名服务器地址</li>
-<li>本地域名服务器再向二级域名服务器发送请求，最终返回该域名对应的IP地址</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-<hr>
-<p>至此，请求阶段完成，接下来分三步返回结果至浏览器并缓存。</p>
-<ol start="5">
-<li>本地域名服务器将得到的IP地址返回给操作系统，同时缓存该域名与IP的映射</li>
-<li>操作系统将得到的IP地址返回给浏览器，同时缓存该域名与IP的映射</li>
-<li>浏览器得到该域名对应的IP地址，同时缓存该域名与IP的映射</li>
-</ol>
+<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>controls</em> 显示浏览器提供的控件界面</p>
+<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
+<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>poster</em>—视频的封面</p>
+<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
+<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
+<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
+<p><em><strong>sandbox:</strong></em> 提高安全性</p>
+<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
+<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
+<p><strong>运行机制：</strong></p>
+<pre><code>                1. 检查设备宽度
+                2. 检查sizes列表中哪个媒体条件第一个为真
+                3. 查看对应的槽宽度
+                4. 加载srcset列表中最接近该槽大小的图像
+</code></pre>
 ]]></content>
       <categories>
-        <category>FrontEnd/前端</category>
+        <category>Frontend/前端</category>
       </categories>
       <tags>
-        <tag>Network</tag>
+        <tag>HTML</tag>
       </tags>
   </entry>
   <entry>
@@ -193,45 +140,98 @@
       </tags>
   </entry>
   <entry>
-    <title>HTML基础---学习手记</title>
-    <url>/2021/09/22/HTML%E5%AD%A6%E4%B9%A0%E6%89%8B%E8%AE%B0/</url>
-    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
+    <title>DNS原理基础</title>
+    <url>/2021/11/25/DNS%E5%8E%9F%E7%90%86%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
 <a id="more"></a>
 
-<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD/Layout.jpg" alt="Layout"></p>
+<h1 id="Domain-Names-System"><a href="#Domain-Names-System" class="headerlink" title="Domain Names System"></a>Domain Names System</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>DNS用于将域名转换为IP地址。其中：</p>
+<ol>
+<li>IP地址：一组用点分隔的能唯一标识互联网中的计算机的数字组合</li>
+<li>域名：一串用点分隔的名字，用来表示计算机的名称</li>
+</ol>
+<h2 id="域名构成"><a href="#域名构成" class="headerlink" title="域名构成"></a>域名构成</h2><p><strong>域名是层次结构，从上到下（从书写上看是从右到左），分为根域名、顶级域名、二级域名、三级域名等等。</strong></p>
+<blockquote>
+<ol>
+<li><p>根域名：root</p>
+<ol start="2">
+<li><blockquote>
+<p>顶级域名：net, com, edu, org…</p>
+<ol start="3">
+<li><blockquote>
+<p>二级域名：ibm, baidu, alibaba, ….</p>
+<ol start="4">
+<li><blockquote>
+<p>三级域名：www, mail, …</p>
 </blockquote>
-<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>controls</em> 显示浏览器提供的控件界面</p>
-<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
-<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>poster</em>—视频的封面</p>
-<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
-<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
-<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
-<p><em><strong>sandbox:</strong></em> 提高安全性</p>
-<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
-<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
-<p><strong>运行机制：</strong></p>
-<pre><code>                1. 检查设备宽度
-                2. 检查sizes列表中哪个媒体条件第一个为真
-                3. 查看对应的槽宽度
-                4. 加载srcset列表中最接近该槽大小的图像
-</code></pre>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p>注意：在域名的每一个层级都有一个域名服务器，如果顶级域名中，有edu域名服务器，com域名服务器。</p>
+<h2 id="查询方式"><a href="#查询方式" class="headerlink" title="查询方式"></a>查询方式</h2><ul>
+<li>递归查询：A只请求B，直到B返回A想要的结果。</li>
+<li>迭代查询：A请求B，B返回结果告知A所需要请求的其他服务器，然后A再请求C、D、E等并拿到响应的返回结果。</li>
+</ul>
+<h2 id="域名缓存"><a href="#域名缓存" class="headerlink" title="域名缓存"></a>域名缓存</h2><ul>
+<li><p>对于域名服务器而言：</p>
+<blockquote>
+<p>在首次进行解析域名时，会使用缓存保存域名和对应的IP地址映射。</p>
+</blockquote>
+</li>
+<li><p>对于本地计算机而言：</p>
+<ul>
+<li><p>对于浏览器：</p>
+<blockquote>
+<p>浏览器会在获取网站域名的实际IP后，用缓存保存下来，以减少网络请求次数</p>
+</blockquote>
+</li>
+<li><p>对于操作系统：</p>
+<blockquote>
+<p>操作系统的缓存就是用户自己配置的hosts文件</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h2><p>大致有七个步骤</p>
+<ol>
+<li><p>首先搜索浏览器的DNS缓存，其缓存中维护了一张域名与IP地址的对应表，若有则返回，并结束操作</p>
+</li>
+<li><p>若没有找到，继续搜索操作系统的DNS缓存，若有则返回，并结束操作</p>
+</li>
+<li><p>若没找到，则操作系统把域名发给本地域名服务器，本地域名服务器在自己的DNS缓存中采用递归方式查找，若有则返回，并结束操作</p>
+</li>
+<li><p>若没找到，则本地服务器向上级域名服务器进行迭代查询</p>
+<blockquote>
+<ol>
+<li>本地域名服务器向根域名服务器发送请求，其会返回顶级域名服务器地址</li>
+<li>本地域名服务器再向顶级域名服务器发送请求，其会返回二级域名服务器地址</li>
+<li>本地域名服务器再向二级域名服务器发送请求，最终返回该域名对应的IP地址</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<hr>
+<p>至此，请求阶段完成，接下来分三步返回结果至浏览器并缓存。</p>
+<ol start="5">
+<li>本地域名服务器将得到的IP地址返回给操作系统，同时缓存该域名与IP的映射</li>
+<li>操作系统将得到的IP地址返回给浏览器，同时缓存该域名与IP的映射</li>
+<li>浏览器得到该域名对应的IP地址，同时缓存该域名与IP的映射</li>
+</ol>
 ]]></content>
       <categories>
-        <category>Frontend/前端</category>
+        <category>FrontEnd/前端</category>
       </categories>
       <tags>
-        <tag>HTML</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
