@@ -1203,7 +1203,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #c9c8f7;
+  background: #ab40ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2455,7 +2455,7 @@ mjx-container + br {
   vertical-align: middle;
 }
 .menu-item:hover {
-  background-color: #ffeaa7;
+  background-color: #ffeaa7 !important;
 }
 .main-menu .menu-item-active a::after {
   background: #fc6423;
