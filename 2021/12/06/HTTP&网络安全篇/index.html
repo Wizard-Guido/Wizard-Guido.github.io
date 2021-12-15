@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
   <script src="/lib/pace/pace.min.js"></script>
@@ -30,7 +30,7 @@
 <meta property="og:description" content="本篇文章主要针对常见的一些计算机网络概念进行梳理和总结，便于今后对于web开发的深入理解。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-06T00:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-12T21:05:27.381Z">
+<meta property="article:modified_time" content="2021-12-15T17:56:32.565Z">
 <meta property="article:author" content="Will">
 <meta property="article:tag" content="HTTP">
 <meta name="twitter:card" content="summary">
@@ -209,6 +209,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -253,7 +254,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-12-12 21:05:27" itemprop="dateModified" datetime="2021-12-12T21:05:27+00:00">2021-12-12</time>
+                <time title="修改时间：2021-12-15 17:56:32" itemprop="dateModified" datetime="2021-12-15T17:56:32+00:00">2021-12-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,14 +272,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.4k</span>
+              <span>7.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -431,6 +432,38 @@
 <h4 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h4><p>一般来说，CSRF是由XSS实现的，在跨站脚本的基础上，实现伪造请求，导致受害者会执行一些自己本不愿意执行的操作。</p>
 <p><strong>注：CSRF也可以不通过XSS来实现。</strong></p>
 <h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>还是以上面的对某论坛网站的XSS攻击为例，在外部服务器成功获得用户的cookie后，它可以利用cookie，伪造成用户对论坛网站发起一系列的请求，例如修改用户名称，修改用户密码等。此时，就可以称该攻击为CSRF。</p>
+<h3 id="防范XSS和CSRF⭐️"><a href="#防范XSS和CSRF⭐️" class="headerlink" title="防范XSS和CSRF⭐️"></a>防范XSS和CSRF⭐️</h3><p><em><strong>核心思想：不相信任何外部来源数据！！！</strong></em></p>
+<p>一般来说，大部分的CSRF都是基于XSS的，因此可以说防住了XSS，也就基本防住了CSRF。</p>
+<p>对于防范XSS，主要有以下两个方法：</p>
+<ol>
+<li><strong>输入过滤：对外部输入进行彻底的敏感字符过滤</strong>——前端+后端</li>
+<li><strong>输出过滤：在显示在页面上时，做一些处理让敏感的代码脚本无法顺利执行</strong>——前端</li>
+</ol>
+<p>理论上，只要有输入数据的的地方，就存在XSS的漏洞，JavaScript的脚本可以以各种形式（如明文、编码等）注入到数据库中。</p>
+<p>就像上面提到的 JS 会以各种非法形式注入，其主要非法形式有两类：</p>
+<ol>
+<li><p><strong>明文：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  ... <span class="comment">// js 恶意代码</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>​        要处理好明文注入的过滤。</p>
+</li>
+<li><p><strong>编码：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">u0026u006cu0074u003bu0073u0063u0072u0069u0070u0074u0026u0067u0074u003bu0061u006cu0065u0072u0074u0028u0026u0023u0033u0039u003bu6211u662fu0078u0073u0073uff0cu4f60u6709u9ebbu70e6u4e86u0026u0023u0033u0039u003bu0029u0026u006cu0074u003bu002fu0073u0063u0072u0069u0070u0074u0026u0067u0074u003b</span><br></pre></td></tr></table></figure>
+<p>上面这个编码为unicode编码，它可以绕过<code>htmlSpecialChars</code>的过滤并入库，然后在展示该信息的时候，html 会自动将unicode编码转换成明文即真正的可执行脚本。</p>
+<p>由于不仅unicode编码可以注入，其它类型的编码也可以（道理类似），我们需要尽量将页面的字符编码统一设置为一种（如unicode: utf-8），这样便于我们专注于处理unicode编码的注入。</p>
+</li>
+</ol>
+<h4 id="其它一些通用的防范方法"><a href="#其它一些通用的防范方法" class="headerlink" title="其它一些通用的防范方法"></a>其它一些通用的防范方法</h4><ol>
+<li><p>在输出html时，加上<code>Content Security Policy</code>的<code>Http Header</code></p>
+<p>作用：防止页面被XSS攻击时，嵌入第三方的脚本文件</p>
+</li>
+<li><p>在设置Cookie时，加上<code>HttpOnly</code>参数</p>
+<p>作用：可以防止页面被XSS攻击时，Cookie信息被盗取</p>
+<p>缺点：网站本身的<code>JavaScript</code>代码也无法操作Cookie</p>
+</li>
+<li><p>在开发API时，检验请求的Referer参数</p>
+<p>作用：可以在一定程度上防止CSRF攻击</p>
+</li>
+</ol>
 
     </div>
 
@@ -511,7 +544,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Network"><span class="nav-number">1.</span> <span class="nav-text">Network</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE%E7%AF%87"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP协议篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">1.1.2.</span> <span class="nav-text">HTTP&#x2F;1.0</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">请求格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%BA%94%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">回应格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Type-%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">Content-Type 字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Encoding-%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">Content-Encoding 字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.2.6.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">1.1.3.</span> <span class="nav-text">HTTP&#x2F;1.1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">持久连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">管道机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Length-%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">Content-Length 字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">分块传输编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">其它功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="nav-number">1.1.3.6.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2"><span class="nav-number">1.1.4.</span> <span class="nav-text">HTTP&#x2F;2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">二进制协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%B7%A5-Multiplexing"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">多工 Multiplexing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E4%BF%A1%E6%81%AF%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">头信息压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">服务器推送</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS%E2%80%94%E2%80%94%E7%95%AA%E5%A4%96%E7%AF%87"><span class="nav-number">1.2.</span> <span class="nav-text">HTTPS——番外篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8HTTPS%E7%9A%84%E5%8E%9F%E5%9B%A0-amp-%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用HTTPS的原因&amp;作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-TLS%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">SSL&#x2F;TLS协议的基本运行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%A1%E6%89%8B%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.3.</span> <span class="nav-text">握手阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E5%87%BA%E8%AF%B7%E6%B1%82"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">阶段一：客户端发出请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9B%9E%E5%BA%94"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">阶段二：服务器回应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%89%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E5%BA%94"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">阶段三：客户端回应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E5%9B%9B%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9C%80%E5%90%8E%E5%9B%9E%E5%BA%94"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">阶段四：服务器最后回应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AF%87"><span class="nav-number">1.3.</span> <span class="nav-text">网络安全篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS%E2%80%94%E2%80%94%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC"><span class="nav-number">1.3.1.</span> <span class="nav-text">XSS——跨站脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF%E2%80%94%E2%80%94%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0"><span class="nav-number">1.3.2.</span> <span class="nav-text">CSRF——跨站请求伪造</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">攻击原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">示例</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Network"><span class="nav-number">1.</span> <span class="nav-text">Network</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP%E5%8D%8F%E8%AE%AE%E7%AF%87"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP协议篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">1.1.2.</span> <span class="nav-text">HTTP&#x2F;1.0</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">请求格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%BA%94%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">回应格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Type-%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">Content-Type 字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Encoding-%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">Content-Encoding 字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.2.6.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">1.1.3.</span> <span class="nav-text">HTTP&#x2F;1.1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">持久连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">管道机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Length-%E5%AD%97%E6%AE%B5"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">Content-Length 字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">分块传输编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">其它功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="nav-number">1.1.3.6.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2"><span class="nav-number">1.1.4.</span> <span class="nav-text">HTTP&#x2F;2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">二进制协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%B7%A5-Multiplexing"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">多工 Multiplexing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">数据流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E4%BF%A1%E6%81%AF%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">头信息压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">服务器推送</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS%E2%80%94%E2%80%94%E7%95%AA%E5%A4%96%E7%AF%87"><span class="nav-number">1.2.</span> <span class="nav-text">HTTPS——番外篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8HTTPS%E7%9A%84%E5%8E%9F%E5%9B%A0-amp-%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用HTTPS的原因&amp;作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-TLS%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">SSL&#x2F;TLS协议的基本运行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%A1%E6%89%8B%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.3.</span> <span class="nav-text">握手阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E5%87%BA%E8%AF%B7%E6%B1%82"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">阶段一：客户端发出请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9B%9E%E5%BA%94"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">阶段二：服务器回应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%89%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9B%9E%E5%BA%94"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">阶段三：客户端回应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E5%9B%9B%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9C%80%E5%90%8E%E5%9B%9E%E5%BA%94"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">阶段四：服务器最后回应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AF%87"><span class="nav-number">1.3.</span> <span class="nav-text">网络安全篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS%E2%80%94%E2%80%94%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC"><span class="nav-number">1.3.1.</span> <span class="nav-text">XSS——跨站脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF%E2%80%94%E2%80%94%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0"><span class="nav-number">1.3.2.</span> <span class="nav-text">CSRF——跨站请求伪造</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">攻击原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E8%8C%83XSS%E5%92%8CCSRF%E2%AD%90%EF%B8%8F"><span class="nav-number">1.3.3.</span> <span class="nav-text">防范XSS和CSRF⭐️</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E4%B8%80%E4%BA%9B%E9%80%9A%E7%94%A8%E7%9A%84%E9%98%B2%E8%8C%83%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">其它一些通用的防范方法</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -591,13 +624,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">57k</span>
+    <span title="站点总字数">58k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">52 分钟</span>
+    <span title="站点阅读时长">53 分钟</span>
 </div>
 
 <!--
