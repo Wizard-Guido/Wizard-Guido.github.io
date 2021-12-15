@@ -1203,7 +1203,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #6affff;
+  background: #53201b;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2598,4 +2598,7 @@ mjx-container + br {
 }
 .links-of-blogroll-item {
   padding: 0;
+}
+.container {
+  background-color: #faf9de;
 }
