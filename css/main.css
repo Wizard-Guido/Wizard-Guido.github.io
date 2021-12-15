@@ -1203,7 +1203,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #17503d;
+  background: #7f29ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2447,6 +2447,7 @@ mjx-container + br {
 }
 .menu .menu-item .badge {
   background: #ccc;
+  background-color: #faf9de;
   border-radius: 10px;
   color: #fff;
   float: right;
@@ -2477,13 +2478,13 @@ mjx-container + br {
 }
 .sub-menu .menu-item a,
 .sub-menu .menu-item span.exturl {
-  background: transparent;
+  background: #edebb7;
   margin: 5px 10px;
   padding: initial;
 }
 .sub-menu .menu-item a:hover,
 .sub-menu .menu-item span.exturl:hover {
-  background: transparent;
+  background: #edebb7;
   color: #fc6423;
 }
 .sub-menu .menu-item-active a {
