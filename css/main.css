@@ -1,5 +1,5 @@
 :root {
-  --body-bg-color: #f5f7f9;
+  --body-bg-color: #faf9de;
   --content-bg-color: #fff;
   --card-bg-color: #f5f5f5;
   --text-color: #555;
@@ -1203,7 +1203,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ed95fb;
+  background: #ecffe9;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2349,7 +2349,7 @@ mjx-container + br {
 }
 .content-wrap {
   background: var(--content-bg-color);
-  background-color: #f5f7f9;
+  background-color: #faf9de;
   border-radius: initial;
   box-shadow: initial;
   box-sizing: border-box;
@@ -2508,7 +2508,7 @@ mjx-container + br {
 }
 .sidebar-inner {
   background: var(--content-bg-color);
-  background-color: #f5f7f9;
+  background-color: #faf9de;
   border-radius: initial;
   box-shadow: initial;
   box-sizing: border-box;
@@ -2527,6 +2527,7 @@ mjx-container + br {
   padding: 0 10px;
 }
 .sidebar-button {
+  background-color: #faf9de;
   border-bottom: 1px dotted #ccc;
   border-top: 1px dotted #ccc;
   margin-top: 10px;
@@ -2538,7 +2539,7 @@ mjx-container + br {
   display: block;
 }
 .sidebar-button a:hover {
-  background: none;
+  background: #edebb7;
   border: 0;
   color: #e34603;
 }
