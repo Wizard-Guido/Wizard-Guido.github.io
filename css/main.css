@@ -1203,7 +1203,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #461b33;
+  background: #f72869;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2316,6 +2316,7 @@ mjx-container + br {
 }
 .header-inner {
   background: var(--content-bg-color);
+  background-color: #faf9de;
   border-radius: initial;
   box-shadow: initial;
   overflow: hidden;
@@ -2381,9 +2382,6 @@ mjx-container + br {
     padding-right: 0;
     width: auto;
   }
-}
-.header-inner {
-  background-color: #faf9de;
 }
 .site-brand-container {
   background: #222;
@@ -2457,7 +2455,7 @@ mjx-container + br {
   vertical-align: middle;
 }
 .main-menu .menu-item-active a::after {
-  background: #bbb;
+  background: #ffeaa7;
   border-radius: 50%;
   content: ' ';
   height: 6px;
@@ -2531,7 +2529,6 @@ mjx-container + br {
   padding: 0 10px;
 }
 .sidebar-button {
-  background-color: #faf9de;
   border-bottom: 1px dotted #ccc;
   border-top: 1px dotted #ccc;
   margin-top: 10px;
@@ -2543,7 +2540,7 @@ mjx-container + br {
   display: block;
 }
 .sidebar-button a:hover {
-  background: #edebb7;
+  background: none;
   border: 0;
   color: #e34603;
 }
