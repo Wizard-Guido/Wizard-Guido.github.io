@@ -1,101 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>DNS原理基础</title>
-    <url>/2021/11/25/DNS%E5%8E%9F%E7%90%86%E5%9F%BA%E7%A1%80/</url>
-    <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
-<a id="more"></a>
-
-<h1 id="Domain-Names-System"><a href="#Domain-Names-System" class="headerlink" title="Domain Names System"></a>Domain Names System</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>DNS用于将域名转换为IP地址。其中：</p>
-<ol>
-<li>IP地址：一组用点分隔的能唯一标识互联网中的计算机的数字组合</li>
-<li>域名：一串用点分隔的名字，用来表示计算机的名称</li>
-</ol>
-<h2 id="域名构成"><a href="#域名构成" class="headerlink" title="域名构成"></a>域名构成</h2><p><strong>域名是层次结构，从上到下（从书写上看是从右到左），分为根域名、顶级域名、二级域名、三级域名等等。</strong></p>
-<blockquote>
-<ol>
-<li><p>根域名：root</p>
-<ol start="2">
-<li><blockquote>
-<p>顶级域名：net, com, edu, org…</p>
-<ol start="3">
-<li><blockquote>
-<p>二级域名：ibm, baidu, alibaba, ….</p>
-<ol start="4">
-<li><blockquote>
-<p>三级域名：www, mail, …</p>
-</blockquote>
-</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-</li>
-</ol>
-</blockquote>
-<p>注意：在域名的每一个层级都有一个域名服务器，如果顶级域名中，有edu域名服务器，com域名服务器。</p>
-<h2 id="查询方式"><a href="#查询方式" class="headerlink" title="查询方式"></a>查询方式</h2><ul>
-<li>递归查询：A只请求B，直到B返回A想要的结果。</li>
-<li>迭代查询：A请求B，B返回结果告知A所需要请求的其他服务器，然后A再请求C、D、E等并拿到响应的返回结果。</li>
-</ul>
-<h2 id="域名缓存"><a href="#域名缓存" class="headerlink" title="域名缓存"></a>域名缓存</h2><ul>
-<li><p>对于域名服务器而言：</p>
-<blockquote>
-<p>在首次进行解析域名时，会使用缓存保存域名和对应的IP地址映射。</p>
-</blockquote>
-</li>
-<li><p>对于本地计算机而言：</p>
-<ul>
-<li><p>对于浏览器：</p>
-<blockquote>
-<p>浏览器会在获取网站域名的实际IP后，用缓存保存下来，以减少网络请求次数</p>
-</blockquote>
-</li>
-<li><p>对于操作系统：</p>
-<blockquote>
-<p>操作系统的缓存就是用户自己配置的hosts文件</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h2><p>大致有七个步骤</p>
-<ol>
-<li><p>首先搜索浏览器的DNS缓存，其缓存中维护了一张域名与IP地址的对应表，若有则返回，并结束操作</p>
-</li>
-<li><p>若没有找到，继续搜索操作系统的DNS缓存，若有则返回，并结束操作</p>
-</li>
-<li><p>若没找到，则操作系统把域名发给本地域名服务器，本地域名服务器在自己的DNS缓存中采用递归方式查找，若有则返回，并结束操作</p>
-</li>
-<li><p>若没找到，则本地服务器向上级域名服务器进行迭代查询</p>
-<blockquote>
-<ol>
-<li>本地域名服务器向根域名服务器发送请求，其会返回顶级域名服务器地址</li>
-<li>本地域名服务器再向顶级域名服务器发送请求，其会返回二级域名服务器地址</li>
-<li>本地域名服务器再向二级域名服务器发送请求，最终返回该域名对应的IP地址</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-<hr>
-<p>至此，请求阶段完成，接下来分三步返回结果至浏览器并缓存。</p>
-<ol start="5">
-<li>本地域名服务器将得到的IP地址返回给操作系统，同时缓存该域名与IP的映射</li>
-<li>操作系统将得到的IP地址返回给浏览器，同时缓存该域名与IP的映射</li>
-<li>浏览器得到该域名对应的IP地址，同时缓存该域名与IP的映射</li>
-</ol>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>Network</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DOM &amp; BOM</title>
     <url>/2021/11/04/DOM%20&amp;%20BOM/</url>
     <content><![CDATA[<p><strong>本章主要介绍DOM概念、操作DOM的代价、浏览器渲染引擎的机制，性能优化以及节流和防抖等常见面试题。</strong></p>
@@ -232,6 +137,101 @@
       </categories>
       <tags>
         <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DNS原理基础</title>
+    <url>/2021/11/25/DNS%E5%8E%9F%E7%90%86%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
+<a id="more"></a>
+
+<h1 id="Domain-Names-System"><a href="#Domain-Names-System" class="headerlink" title="Domain Names System"></a>Domain Names System</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>DNS用于将域名转换为IP地址。其中：</p>
+<ol>
+<li>IP地址：一组用点分隔的能唯一标识互联网中的计算机的数字组合</li>
+<li>域名：一串用点分隔的名字，用来表示计算机的名称</li>
+</ol>
+<h2 id="域名构成"><a href="#域名构成" class="headerlink" title="域名构成"></a>域名构成</h2><p><strong>域名是层次结构，从上到下（从书写上看是从右到左），分为根域名、顶级域名、二级域名、三级域名等等。</strong></p>
+<blockquote>
+<ol>
+<li><p>根域名：root</p>
+<ol start="2">
+<li><blockquote>
+<p>顶级域名：net, com, edu, org…</p>
+<ol start="3">
+<li><blockquote>
+<p>二级域名：ibm, baidu, alibaba, ….</p>
+<ol start="4">
+<li><blockquote>
+<p>三级域名：www, mail, …</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p>注意：在域名的每一个层级都有一个域名服务器，如果顶级域名中，有edu域名服务器，com域名服务器。</p>
+<h2 id="查询方式"><a href="#查询方式" class="headerlink" title="查询方式"></a>查询方式</h2><ul>
+<li>递归查询：A只请求B，直到B返回A想要的结果。</li>
+<li>迭代查询：A请求B，B返回结果告知A所需要请求的其他服务器，然后A再请求C、D、E等并拿到响应的返回结果。</li>
+</ul>
+<h2 id="域名缓存"><a href="#域名缓存" class="headerlink" title="域名缓存"></a>域名缓存</h2><ul>
+<li><p>对于域名服务器而言：</p>
+<blockquote>
+<p>在首次进行解析域名时，会使用缓存保存域名和对应的IP地址映射。</p>
+</blockquote>
+</li>
+<li><p>对于本地计算机而言：</p>
+<ul>
+<li><p>对于浏览器：</p>
+<blockquote>
+<p>浏览器会在获取网站域名的实际IP后，用缓存保存下来，以减少网络请求次数</p>
+</blockquote>
+</li>
+<li><p>对于操作系统：</p>
+<blockquote>
+<p>操作系统的缓存就是用户自己配置的hosts文件</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h2><p>大致有七个步骤</p>
+<ol>
+<li><p>首先搜索浏览器的DNS缓存，其缓存中维护了一张域名与IP地址的对应表，若有则返回，并结束操作</p>
+</li>
+<li><p>若没有找到，继续搜索操作系统的DNS缓存，若有则返回，并结束操作</p>
+</li>
+<li><p>若没找到，则操作系统把域名发给本地域名服务器，本地域名服务器在自己的DNS缓存中采用递归方式查找，若有则返回，并结束操作</p>
+</li>
+<li><p>若没找到，则本地服务器向上级域名服务器进行迭代查询</p>
+<blockquote>
+<ol>
+<li>本地域名服务器向根域名服务器发送请求，其会返回顶级域名服务器地址</li>
+<li>本地域名服务器再向顶级域名服务器发送请求，其会返回二级域名服务器地址</li>
+<li>本地域名服务器再向二级域名服务器发送请求，最终返回该域名对应的IP地址</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<hr>
+<p>至此，请求阶段完成，接下来分三步返回结果至浏览器并缓存。</p>
+<ol start="5">
+<li>本地域名服务器将得到的IP地址返回给操作系统，同时缓存该域名与IP的映射</li>
+<li>操作系统将得到的IP地址返回给浏览器，同时缓存该域名与IP的映射</li>
+<li>浏览器得到该域名对应的IP地址，同时缓存该域名与IP的映射</li>
+</ol>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>

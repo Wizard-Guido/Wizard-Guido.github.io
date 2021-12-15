@@ -1203,7 +1203,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #53201b;
+  background: #ff9d38;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2349,7 +2349,6 @@ mjx-container + br {
 }
 .content-wrap {
   background: var(--content-bg-color);
-  background-color: #faf9de;
   border-radius: initial;
   box-shadow: initial;
   box-sizing: border-box;
@@ -2384,6 +2383,7 @@ mjx-container + br {
 }
 .site-brand-container {
   background: #222;
+  background-color: #faf9de;
 }
 @media (max-width: 991px) {
   .site-brand-container {
@@ -2429,7 +2429,6 @@ mjx-container + br {
   }
 }
 .menu .menu-item {
-  background-color: #faf9de;
   display: block;
   margin: 0;
 }
@@ -2447,7 +2446,6 @@ mjx-container + br {
 }
 .menu .menu-item .badge {
   background: #ccc;
-  background-color: #faf9de;
   border-radius: 10px;
   color: #fff;
   float: right;
@@ -2468,7 +2466,6 @@ mjx-container + br {
 }
 .sub-menu {
   background: var(--content-bg-color);
-  background-color: #faf9de;
   border-bottom: 1px solid #ddd;
   margin: 0;
   padding: 6px 0;
