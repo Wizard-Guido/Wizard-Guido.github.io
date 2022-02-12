@@ -193,48 +193,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HTML基础---学习手记</title>
-    <url>/2021/09/22/HTML%E5%AD%A6%E4%B9%A0%E6%89%8B%E8%AE%B0/</url>
-    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
-<a id="more"></a>
-
-<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD/Layout.jpg" alt="Layout"></p>
-</blockquote>
-<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>controls</em> 显示浏览器提供的控件界面</p>
-<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
-<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>poster</em>—视频的封面</p>
-<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
-<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
-<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
-<p><em><strong>sandbox:</strong></em> 提高安全性</p>
-<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
-<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
-<p><strong>运行机制：</strong></p>
-<pre><code>                1. 检查设备宽度
-                2. 检查sizes列表中哪个媒体条件第一个为真
-                3. 查看对应的槽宽度
-                4. 加载srcset列表中最接近该槽大小的图像
-</code></pre>
-]]></content>
-      <categories>
-        <category>Frontend/前端</category>
-      </categories>
-      <tags>
-        <tag>HTML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Handy CheatSheet</title>
     <url>/2021/10/27/Handy-CheatSheet/</url>
     <content><![CDATA[<h1 id="Algorithm-Time-Complexity"><a href="#Algorithm-Time-Complexity" class="headerlink" title="Algorithm Time Complexity"></a>Algorithm Time Complexity</h1><table>
@@ -318,6 +276,48 @@
       </categories>
       <tags>
         <tag>Algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML基础---学习手记</title>
+    <url>/2021/09/22/HTML%E5%AD%A6%E4%B9%A0%E6%89%8B%E8%AE%B0/</url>
+    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
+<a id="more"></a>
+
+<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD/Layout.jpg" alt="Layout"></p>
+</blockquote>
+<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>controls</em> 显示浏览器提供的控件界面</p>
+<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
+<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>poster</em>—视频的封面</p>
+<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
+<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
+<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
+<p><em><strong>sandbox:</strong></em> 提高安全性</p>
+<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
+<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
+<p><strong>运行机制：</strong></p>
+<pre><code>                1. 检查设备宽度
+                2. 检查sizes列表中哪个媒体条件第一个为真
+                3. 查看对应的槽宽度
+                4. 加载srcset列表中最接近该槽大小的图像
+</code></pre>
+]]></content>
+      <categories>
+        <category>Frontend/前端</category>
+      </categories>
+      <tags>
+        <tag>HTML</tag>
       </tags>
   </entry>
   <entry>
@@ -532,6 +532,88 @@
       </categories>
       <tags>
         <tag>Server</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>React入门篇</title>
+    <url>/2022/02/12/React%E5%85%A5%E9%97%A8%E7%AF%87/</url>
+    <content><![CDATA[<p>前端热门技术栈有很多，其中遵循/类似MVVM或MVC设计模式的前端框架/Library有：React、Vue以及Angular等等。今天，我们首先谈一谈React的基本概念。</p>
+<a id="more"></a>
+
+<h1 id="React-入门"><a href="#React-入门" class="headerlink" title="React 入门"></a>React 入门</h1><h2 id="一、如果ReactJS在HTML中"><a href="#一、如果ReactJS在HTML中" class="headerlink" title="一、如果ReactJS在HTML中"></a>一、如果ReactJS在HTML中</h2><p>如果React的代码要写在HTML中，则需要放在属性<code>type</code>为<code>text/babel</code>的<code>&lt;script&gt;</code>标签中。因为React使用的是<strong>JSX语法</strong>，与JS不兼容，需要被转化为JS语法才能显示在Web页面上。示例代码如下：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;../build/react.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;../build/react-dom.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;../build/browser.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/babel&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// ** JSX code **</span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此外，有三个必须的库需要首先加载。<code>react.js</code>是<strong>React的核心库</strong>。<code>react-dom.js</code>是<strong>提供与DOM相关的功能</strong>，例如将元素插入DOM节点。<code>Browser.js</code>是将JSX语法转换为JS语法，这一步很耗时，实际项目中会在服务端完成它。</p>
+<h2 id="二、ReactDOM-render"><a href="#二、ReactDOM-render" class="headerlink" title="二、ReactDOM.render()"></a>二、ReactDOM.render()</h2><p>它是React中最基础的方法，用于将JSX代码转换为HTML代码，并将其插入到指定的DOM节点。示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;div&gt;...&lt;/div&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="三、JSX语法"><a href="#三、JSX语法" class="headerlink" title="三、JSX语法"></a>三、JSX语法</h2><p>就像上面代码演示的那样，HTML代码和JS代码并存在同一代码中，这就是JSX语法。它允许JS与HTML混写。其<strong>原理在于JSX语法：</strong>当遇到HTML标签（即<code>&lt;&gt;</code>）时会自动识别HTML，并按HTML规则解析；当遇到JS代码块（即<code>&#123;&#125;</code>）时会自动识别JS，并按JS规则解析。</p>
+<p>具体syntax语法学习，请参考官方文档。</p>
+<h2 id="四、组件"><a href="#四、组件" class="headerlink" title="四、组件"></a>四、组件</h2><p>React允许将代码块封装成组件 <strong>component</strong>，然后像插入HTML标签一样，将其插入到DOM节点。示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> HelloMsg = React.createClass(&#123;</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;HelloMsg name=<span class="string">&quot;Word!&quot;</span> /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="五、如何获取真实DOM节点"><a href="#五、如何获取真实DOM节点" class="headerlink" title="五、如何获取真实DOM节点"></a>五、如何获取真实DOM节点</h2><p>尽管操作组件类似于操作HTML标签，但是<strong>组件并非真实的DOM节点</strong>，而<strong>是存在于内存中的一种数据结构</strong>，称为<strong>虚拟DOM即 Virtual DOM</strong>。因此，只有在它被插入到文档/Document之后，才能生效成为真实的DOM。</p>
+<p>这主要是因为React设计的<strong>DOM diffing算法</strong>，大致思想为：所有的DOM操作，会先在虚拟DOM上执行，然后再通过比对虚拟DOM和真实DOM，将真正发生改变的部分在真实DOM中更新。这样的做法大大地提高了网页的性能。</p>
+<p>但是，有时我们也需要在组件中获取真实DOM，React给我们提供了**<code>ref</code>属性**。例如：在类组件中，可以调用<code>this.refs.[refName]</code>来获取真实的DOM节点。示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyComponent = React.createClass(&#123;</span><br><span class="line">  handleClick: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.refs.myTextInput.focus();</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> ref=<span class="string">&quot;myTextInput&quot;</span> /&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;button&quot;</span> value=<span class="string">&quot;Focus the text input&quot;</span> onClick=&#123;<span class="built_in">this</span>.handleClick&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;MyComponent /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="六、State——组件状态机"><a href="#六、State——组件状态机" class="headerlink" title="六、State——组件状态机"></a>六、State——组件状态机</h2><p>组件是有状态的，React的一大创新就是：将组件看成一个状态机，一开始有一个初始状态，然后通过与用户的交互，导致状态更新，进而触发组件重新渲染。这就实现了<strong>由状态驱动的理念</strong>和<strong>单向数据流的特点</strong>即数据只能在状态中改变然后影响组件其它部分。</p>
+<p>表单数据也是属于用户与组件的交互，因此也需要借助状态来读取和更新。示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> Input = React.createClass(&#123;</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">value</span>: <span class="string">&#x27;Hello!&#x27;</span>&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  handleChange: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;<span class="attr">value</span>: event.target.value&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="built_in">this</span>.state.value;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> value=&#123;value&#125; onChange=&#123;<span class="built_in">this</span>.handleChange&#125; /&gt;</span><br><span class="line">        &lt;p&gt;&#123;value&#125;&lt;/p&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Input</span>/&gt;</span></span>, <span class="built_in">document</span>.body);</span><br></pre></td></tr></table></figure>
+<p><strong>注：在React中，只有state/状态数据是可以改变的，而其它的如props/属性是不可变的。</strong></p>
+<h2 id="七、类组件的生命周期"><a href="#七、类组件的生命周期" class="headerlink" title="七、类组件的生命周期"></a>七、类组件的生命周期</h2><p>组件生命周期主要可以分为三个状态：</p>
+<blockquote>
+<ul>
+<li>Mounting/挂载：已插入真实DOM</li>
+<li>Updating/更新：正在被重新渲染</li>
+<li>Unmounting/卸载：已移除真实DOM</li>
+</ul>
+</blockquote>
+<p>并且React为每个状态提供了两种处理函数，**<code>will</code>函数（在进入状态前调用）和<code>did</code>函数（在进入状态后调用）**。主要使用的5个处理函数如下：</p>
+<blockquote>
+<ul>
+<li>componentWillMount()</li>
+<li>componentDidMount()</li>
+<li>componentWillUpdate(object nextProps, object nextState)</li>
+<li>componentDidUpdate(object prevProps, object prevState)</li>
+<li>componentWillUnmount()</li>
+</ul>
+</blockquote>
+<p>同时React还提供了一些特殊的状态的处理函数，例如<code>shouldComponentUpdate(object nextProps, object nextState)</code>在组件判断是否重新渲染时调用。</p>
+<p><strong>注：由于React官方正在逐步废弃Class组件，很多的处理函数已经不被官方推荐使用，因此，我们不多赘述Class组件。随着React官方对Hook的重视，我们在接下来的文章会重点介绍Hook的概念和使用。</strong></p>
+<h2 id="一些不常用的功能"><a href="#一些不常用的功能" class="headerlink" title="一些不常用的功能"></a>一些不常用的功能</h2><h3 id="PropTypes"><a href="#PropTypes" class="headerlink" title="PropTypes"></a>PropTypes</h3><p>尽管组件可以接受任意类型的值来作为它的属性，但是有时，我们<strong>需要组件只接受特定的类型作为它的属性</strong>。<code>PropTypes</code>可以帮助我们验证组件实例的属性是否符合要求。</p>
+<p>具体用法如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyTitle = React.createClass(&#123;</span><br><span class="line">  propTypes: &#123;</span><br><span class="line">    title: React.PropTypes.string.isRequired, <span class="comment">// title属性是必须的，且需为字符串</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>此外，<code>getDefaultProps</code>方法可以用来设置组件属性的默认值。具体用法如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyTitle = React.createClass(&#123;</span><br><span class="line">  getDefaultProps : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      title : <span class="string">&#x27;Hello World&#x27;</span>	   <span class="comment">// 设置属性title的默认值为Hello World</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;MyTitle /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.body</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
       </tags>
   </entry>
   <entry>

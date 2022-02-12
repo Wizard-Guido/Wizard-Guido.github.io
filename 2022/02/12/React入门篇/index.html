@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wizard-guido.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前端热门技术栈有很多，其中遵循&#x2F;类似MVVM或MVC设计模式的前端框架&#x2F;Library有：React、Vue以及Angular等等。今天，我们首先谈一谈React的基本概念。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React入门篇">
+<meta property="og:url" content="https://wizard-guido.github.io/2022/02/12/React%E5%85%A5%E9%97%A8%E7%AF%87/index.html">
+<meta property="og:site_name" content="二进制的流浪">
+<meta property="og:description" content="前端热门技术栈有很多，其中遵循&#x2F;类似MVVM或MVC设计模式的前端框架&#x2F;Library有：React、Vue以及Angular等等。今天，我们首先谈一谈React的基本概念。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-12T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-12T19:13:27.901Z">
+<meta property="article:author" content="Will">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wizard-guido.github.io/2022/02/12/React%E5%85%A5%E9%97%A8%E7%AF%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+<script type="text/javascript">
+  // Wait for the page to load first
+  var _prevOnload = window.onload;
+  window.onload = function() {
+      var switchLang = document.getElementsByClassName("menu-item menu-item-switch_lang")[0];
+      switchLang.onclick = function() {
+          var href = window.location.href;
+          var indexOfEn = href.toLowerCase().indexOf('/en/');
+          if(indexOfEn !== -1) {
+              window.location.href = href.replace('/en/', '/');
+          }
+          else {
+              window.location.href = href.replace('.io', '.io/en');
+          }
+          if(typeof(_prevOnload) === 'function') {
+              _prevOnload();
+          }
+          return false;
+      }
+  }
+</script>
+  <title>React入门篇 | 二进制的流浪</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">二进制的流浪</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-switch_lang">
+
+    <a href="https://wizard-guido.github.io/en/" rel="section"><i class="language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2022/02/12/React%E5%85%A5%E9%97%A8%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Will">
+      <meta itemprop="description" content="这是一个关于二进制流浪的故事...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二进制的流浪">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React入门篇
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-02-12 00:00:00 / 修改时间：19:13:27" itemprop="dateCreated datePublished" datetime="2022-02-12T00:00:00+00:00">2022-02-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FrontEnd-%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">FrontEnd/前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前端热门技术栈有很多，其中遵循/类似MVVM或MVC设计模式的前端框架/Library有：React、Vue以及Angular等等。今天，我们首先谈一谈React的基本概念。</p>
+<a id="more"></a>
+
+<h1 id="React-入门"><a href="#React-入门" class="headerlink" title="React 入门"></a>React 入门</h1><h2 id="一、如果ReactJS在HTML中"><a href="#一、如果ReactJS在HTML中" class="headerlink" title="一、如果ReactJS在HTML中"></a>一、如果ReactJS在HTML中</h2><p>如果React的代码要写在HTML中，则需要放在属性<code>type</code>为<code>text/babel</code>的<code>&lt;script&gt;</code>标签中。因为React使用的是<strong>JSX语法</strong>，与JS不兼容，需要被转化为JS语法才能显示在Web页面上。示例代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;../build/react.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;../build/react-dom.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;../build/browser.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;root&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/babel&quot;</span>&gt;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// ** JSX code **</span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此外，有三个必须的库需要首先加载。<code>react.js</code>是<strong>React的核心库</strong>。<code>react-dom.js</code>是<strong>提供与DOM相关的功能</strong>，例如将元素插入DOM节点。<code>Browser.js</code>是将JSX语法转换为JS语法，这一步很耗时，实际项目中会在服务端完成它。</p>
+<h2 id="二、ReactDOM-render"><a href="#二、ReactDOM-render" class="headerlink" title="二、ReactDOM.render()"></a>二、ReactDOM.render()</h2><p>它是React中最基础的方法，用于将JSX代码转换为HTML代码，并将其插入到指定的DOM节点。示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;div&gt;...&lt;/div&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="三、JSX语法"><a href="#三、JSX语法" class="headerlink" title="三、JSX语法"></a>三、JSX语法</h2><p>就像上面代码演示的那样，HTML代码和JS代码并存在同一代码中，这就是JSX语法。它允许JS与HTML混写。其<strong>原理在于JSX语法：</strong>当遇到HTML标签（即<code>&lt;&gt;</code>）时会自动识别HTML，并按HTML规则解析；当遇到JS代码块（即<code>&#123;&#125;</code>）时会自动识别JS，并按JS规则解析。</p>
+<p>具体syntax语法学习，请参考官方文档。</p>
+<h2 id="四、组件"><a href="#四、组件" class="headerlink" title="四、组件"></a>四、组件</h2><p>React允许将代码块封装成组件 <strong>component</strong>，然后像插入HTML标签一样，将其插入到DOM节点。示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> HelloMsg = React.createClass(&#123;</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;HelloMsg name=<span class="string">&quot;Word!&quot;</span> /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="五、如何获取真实DOM节点"><a href="#五、如何获取真实DOM节点" class="headerlink" title="五、如何获取真实DOM节点"></a>五、如何获取真实DOM节点</h2><p>尽管操作组件类似于操作HTML标签，但是<strong>组件并非真实的DOM节点</strong>，而<strong>是存在于内存中的一种数据结构</strong>，称为<strong>虚拟DOM即 Virtual DOM</strong>。因此，只有在它被插入到文档/Document之后，才能生效成为真实的DOM。</p>
+<p>这主要是因为React设计的<strong>DOM diffing算法</strong>，大致思想为：所有的DOM操作，会先在虚拟DOM上执行，然后再通过比对虚拟DOM和真实DOM，将真正发生改变的部分在真实DOM中更新。这样的做法大大地提高了网页的性能。</p>
+<p>但是，有时我们也需要在组件中获取真实DOM，React给我们提供了**<code>ref</code>属性**。例如：在类组件中，可以调用<code>this.refs.[refName]</code>来获取真实的DOM节点。示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyComponent = React.createClass(&#123;</span><br><span class="line">  handleClick: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.refs.myTextInput.focus();</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> ref=<span class="string">&quot;myTextInput&quot;</span> /&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;button&quot;</span> value=<span class="string">&quot;Focus the text input&quot;</span> onClick=&#123;<span class="built_in">this</span>.handleClick&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;MyComponent /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="六、State——组件状态机"><a href="#六、State——组件状态机" class="headerlink" title="六、State——组件状态机"></a>六、State——组件状态机</h2><p>组件是有状态的，React的一大创新就是：将组件看成一个状态机，一开始有一个初始状态，然后通过与用户的交互，导致状态更新，进而触发组件重新渲染。这就实现了<strong>由状态驱动的理念</strong>和<strong>单向数据流的特点</strong>即数据只能在状态中改变然后影响组件其它部分。</p>
+<p>表单数据也是属于用户与组件的交互，因此也需要借助状态来读取和更新。示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Input = React.createClass(&#123;</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">value</span>: <span class="string">&#x27;Hello!&#x27;</span>&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  handleChange: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.setState(&#123;<span class="attr">value</span>: event.target.value&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> value = <span class="built_in">this</span>.state.value;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> value=&#123;value&#125; onChange=&#123;<span class="built_in">this</span>.handleChange&#125; /&gt;</span><br><span class="line">        &lt;p&gt;&#123;value&#125;&lt;/p&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Input</span>/&gt;</span></span>, <span class="built_in">document</span>.body);</span><br></pre></td></tr></table></figure>
+<p><strong>注：在React中，只有state/状态数据是可以改变的，而其它的如props/属性是不可变的。</strong></p>
+<h2 id="七、类组件的生命周期"><a href="#七、类组件的生命周期" class="headerlink" title="七、类组件的生命周期"></a>七、类组件的生命周期</h2><p>组件生命周期主要可以分为三个状态：</p>
+<blockquote>
+<ul>
+<li>Mounting/挂载：已插入真实DOM</li>
+<li>Updating/更新：正在被重新渲染</li>
+<li>Unmounting/卸载：已移除真实DOM</li>
+</ul>
+</blockquote>
+<p>并且React为每个状态提供了两种处理函数，**<code>will</code>函数（在进入状态前调用）和<code>did</code>函数（在进入状态后调用）**。主要使用的5个处理函数如下：</p>
+<blockquote>
+<ul>
+<li>componentWillMount()</li>
+<li>componentDidMount()</li>
+<li>componentWillUpdate(object nextProps, object nextState)</li>
+<li>componentDidUpdate(object prevProps, object prevState)</li>
+<li>componentWillUnmount()</li>
+</ul>
+</blockquote>
+<p>同时React还提供了一些特殊的状态的处理函数，例如<code>shouldComponentUpdate(object nextProps, object nextState)</code>在组件判断是否重新渲染时调用。</p>
+<p><strong>注：由于React官方正在逐步废弃Class组件，很多的处理函数已经不被官方推荐使用，因此，我们不多赘述Class组件。随着React官方对Hook的重视，我们在接下来的文章会重点介绍Hook的概念和使用。</strong></p>
+<h2 id="一些不常用的功能"><a href="#一些不常用的功能" class="headerlink" title="一些不常用的功能"></a>一些不常用的功能</h2><h3 id="PropTypes"><a href="#PropTypes" class="headerlink" title="PropTypes"></a>PropTypes</h3><p>尽管组件可以接受任意类型的值来作为它的属性，但是有时，我们<strong>需要组件只接受特定的类型作为它的属性</strong>。<code>PropTypes</code>可以帮助我们验证组件实例的属性是否符合要求。</p>
+<p>具体用法如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyTitle = React.createClass(&#123;</span><br><span class="line">  propTypes: &#123;</span><br><span class="line">    title: React.PropTypes.string.isRequired, <span class="comment">// title属性是必须的，且需为字符串</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>此外，<code>getDefaultProps</code>方法可以用来设置组件属性的默认值。具体用法如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> MyTitle = React.createClass(&#123;</span><br><span class="line">  getDefaultProps : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      title : <span class="string">&#x27;Hello World&#x27;</span>	   <span class="comment">// 设置属性title的默认值为Hello World</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;MyTitle /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.body</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/06/HTTP&%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%AF%87/" rel="prev" title="HTTP&网络安全篇">
+      <i class="fa fa-chevron-left"></i> HTTP&网络安全篇
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React-%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">React 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%A6%82%E6%9E%9CReactJS%E5%9C%A8HTML%E4%B8%AD"><span class="nav-number">1.1.</span> <span class="nav-text">一、如果ReactJS在HTML中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81ReactDOM-render"><span class="nav-number">1.2.</span> <span class="nav-text">二、ReactDOM.render()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81JSX%E8%AF%AD%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">三、JSX语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%BB%84%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">四、组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E7%9C%9F%E5%AE%9EDOM%E8%8A%82%E7%82%B9"><span class="nav-number">1.5.</span> <span class="nav-text">五、如何获取真实DOM节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81State%E2%80%94%E2%80%94%E7%BB%84%E4%BB%B6%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.6.</span> <span class="nav-text">六、State——组件状态机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E7%B1%BB%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.7.</span> <span class="nav-text">七、类组件的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E4%B8%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.8.</span> <span class="nav-text">一些不常用的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PropTypes"><span class="nav-number">1.8.1.</span> <span class="nav-text">PropTypes</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Will"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Will</p>
+  <div class="site-description" itemprop="description">这是一个关于二进制流浪的故事...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+  <div class="languages">
+    <label class="lang-select-label">
+      <i class="fa fa-language"></i>
+      <span>简体中文</span>
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </label>
+    <select class="lang-select" data-canonical="">
+      
+        <option value="zh-CN" data-href="/2022/02/12/React%E5%85%A5%E9%97%A8%E7%AF%87/" selected="">
+          简体中文
+        </option>
+      
+        <option value="en" data-href="/en/2022/02/12/React%E5%85%A5%E9%97%A8%E7%AF%87/" selected="">
+          English
+        </option>
+      
+    </select>
+  </div>
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">62k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">57 分钟</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
