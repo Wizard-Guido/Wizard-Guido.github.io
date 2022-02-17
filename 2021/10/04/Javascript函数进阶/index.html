@@ -29,11 +29,15 @@
 <meta property="og:site_name" content="二进制的流浪">
 <meta property="og:description" content="本章将深入J高级，诸如Spread语法、闭包、垃圾回收机制、函数对象、SetTimeout和SetInterval、装饰器模式和转发call&#x2F;apply以及箭头函数。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wizard-guido.github.io/2021/10/04/pic/ctx1.png">
+<meta property="og:image" content="https://wizard-guido.github.io/2021/10/04/pic/ctx2.png">
+<meta property="og:image" content="https://wizard-guido.github.io/2021/10/04/pic/ctx3.png">
 <meta property="article:published_time" content="2021-10-03T23:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-11T21:47:30.144Z">
+<meta property="article:modified_time" content="2022-02-17T21:46:27.722Z">
 <meta property="article:author" content="Will">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wizard-guido.github.io/2021/10/04/pic/ctx1.png">
 
 <link rel="canonical" href="https://wizard-guido.github.io/2021/10/04/Javascript%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/">
 
@@ -254,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-11 21:47:30" itemprop="dateModified" datetime="2021-11-11T21:47:30+00:00">2021-11-11</time>
+                <time title="修改时间：2022-02-17 21:46:27" itemprop="dateModified" datetime="2022-02-17T21:46:27+00:00">2022-02-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -354,14 +358,14 @@
 <li>对<strong>外部词法环境</strong>的引用，与外部代码相关联</li>
 </ol>
 <p>例如：</p>
-<p>![image-20211004201352993](/Users/arieskoo/Library/Application Support/typora-user-images/image-20211004201352993.png)</p>
+<p><img src="../pic/ctx1.png" alt="image-20211004201352993"></p>
 <p>如上图，矩形表示<strong>环境记录</strong>，箭头表示<strong>外部引用</strong>，由于全局词法环境没有外部引用，所以箭头指向了<code>null</code></p>
 <p><strong>注：</strong>词法环境是一个<strong>规范对象</strong>，它仅仅是理论上存在，但我们无法在代码中获取该对象</p>
 <h3 id="Step2-函数声明"><a href="#Step2-函数声明" class="headerlink" title="Step2. 函数声明"></a>Step2. 函数声明</h3><p><strong>注：函数声明的初始化会被立即执行完成</strong>，所以不同于变量声明，函数可以在其被定义前使用。但是不适用于将函数分配给变量的函数表达式，如<code>let say = function()&#123;...&#125;</code></p>
 <h3 id="Step3-内部和外部的词法环境"><a href="#Step3-内部和外部的词法环境" class="headerlink" title="Step3. 内部和外部的词法环境"></a>Step3. 内部和外部的词法环境</h3><p>在一个函数运行时，在其调用刚开始时，会自动创建一个新的词法环境来存储这个调用的局部变量和参数</p>
-<p>![image-20211004230247163](/Users/arieskoo/Library/Application Support/typora-user-images/image-20211004230247163.png)</p>
+<p><img src="../pic/ctx2.png" alt="image-20211004230247163"></p>
 <p>如图所示，内部词法环境存储一个单独的属性<code>name</code>，外部词法环境即全局词法环境存储<code>phrase</code>变量和函数本身。并且<strong>当代码要访问一个变量时，首先会搜索内部词法环境，然后搜索外部词法环境，然后搜索更外部的，直至全局词法环境。</strong>因此内部词法环境引用了<code>outer</code>去访问变量<code>phrase</code>。</p>
-<h3 id="Step4-返回函数"><a href="#Step4-返回函数" class="headerlink" title="Step4. 返回函数"></a>Step4. 返回函数</h3><p>![image-20211004233226300](/Users/arieskoo/Library/Application Support/typora-user-images/image-20211004233226300.png)</p>
+<h3 id="Step4-返回函数"><a href="#Step4-返回函数" class="headerlink" title="Step4. 返回函数"></a>Step4. 返回函数</h3><p><img src="../pic/ctx3.png" alt="image-20211004233226300"></p>
 <p>如果要更新变量的值，变量会在其所在的词法环境中更新其自身的值（即变量将在同一位置更新值）</p>
 <h3 id="Plus-闭包"><a href="#Plus-闭包" class="headerlink" title="Plus: 闭包"></a>Plus: 闭包</h3><p><strong>定义：</strong>闭包是指内部函数总是可以访问在外部函数中声明的变量和参数。JavaScript中的函数会自动通过隐藏的词法环境存储了创建它们的位置，所以他们都可以访问外部的变量。</p>
 <h2 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h2><p>词法环境仅在可达到时才会被保留在内存中，否则词法环境及其中的所有变量都会被从内存中删除。</p>
@@ -697,7 +701,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">57 分钟</span>
+    <span title="站点阅读时长">56 分钟</span>
 </div>
 
 <!--
