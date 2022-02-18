@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wizard-guido.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在Facebook以及社区成员的大力推广下，如今React已经几乎成为前端开发的必备技能。但随着对版本的不断优化和迭代，React官方决定逐步废弃 Class Component 的API，全面拥抱 Function Component 的API 即基于函数的钩子 Hook 。这一趋势也是在意料之中，React建立之初本就是面向函数式的，之后加入的类组件API颇有些“强扭瓜不甜”的味道。本次，我们">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识 React Hook">
+<meta property="og:url" content="https://wizard-guido.github.io/2022/02/12/ReactHookIntroduction/index.html">
+<meta property="og:site_name" content="二进制的流浪">
+<meta property="og:description" content="在Facebook以及社区成员的大力推广下，如今React已经几乎成为前端开发的必备技能。但随着对版本的不断优化和迭代，React官方决定逐步废弃 Class Component 的API，全面拥抱 Function Component 的API 即基于函数的钩子 Hook 。这一趋势也是在意料之中，React建立之初本就是面向函数式的，之后加入的类组件API颇有些“强扭瓜不甜”的味道。本次，我们">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-12T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-18T19:13:21.555Z">
+<meta property="article:author" content="Will">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://wizard-guido.github.io/2022/02/12/ReactHookIntroduction/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+<script type="text/javascript">
+  // Wait for the page to load first
+  var _prevOnload = window.onload;
+  window.onload = function() {
+      var switchLang = document.getElementsByClassName("menu-item menu-item-switch_lang")[0];
+      switchLang.onclick = function() {
+          var href = window.location.href;
+          var indexOfEn = href.toLowerCase().indexOf('/en/');
+          if(indexOfEn !== -1) {
+              window.location.href = href.replace('/en/', '/');
+          }
+          else {
+              window.location.href = href.replace('.io', '.io/en');
+          }
+          if(typeof(_prevOnload) === 'function') {
+              _prevOnload();
+          }
+          return false;
+      }
+  }
+</script>
+  <title>初识 React Hook | 二进制的流浪</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEB2EZELMD"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEB2EZELMD');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">二进制的流浪</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-switch_lang">
+
+    <a href="https://wizard-guido.github.io/en/" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-健身">
+
+    <a href="/training/" rel="section"><i class="fa fa-dumbbell fa-fw"></i>健身</a>
+
+  </li>
+        <li class="menu-item menu-item-摄影">
+
+    <a href="/photography/" rel="section"><i class="fas fa-camera fa-fw"></i>摄影</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2022/02/12/ReactHookIntroduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Will">
+      <meta itemprop="description" content="这是一个关于二进制流浪的故事...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二进制的流浪">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初识 React Hook
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-12 00:00:00" itemprop="dateCreated datePublished" datetime="2022-02-12T00:00:00+00:00">2022-02-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-18 19:13:21" itemprop="dateModified" datetime="2022-02-18T19:13:21+00:00">2022-02-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FrontEnd-%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">FrontEnd/前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在Facebook以及社区成员的大力推广下，如今React已经几乎成为前端开发的必备技能。但随着对版本的不断优化和迭代，React官方决定<strong>逐步废弃 Class Component 的API</strong>，<strong>全面拥抱 Function Component 的API 即基于函数的钩子 Hook</strong> 。这一趋势也是在意料之中，React建立之初本就是面向函数式的，之后加入的类组件API颇有些“强扭瓜不甜”的味道。本次，我们将初步了解一下 React Hook 的用法。</p>
+<a id="more"></a>
+
+<h1 id="React-Hook"><a href="#React-Hook" class="headerlink" title="React Hook"></a>React Hook</h1><h2 id="一、关于React的两套API"><a href="#一、关于React的两套API" class="headerlink" title="一、关于React的两套API"></a>一、关于React的两套API</h2><p>很久以前，React大多数情况下都是使用一套API 即类组件API，然而随着React引入了全新的基于函数的钩子 Hook，函数式组件的使用变得更加广泛。</p>
+<p>因此，现在任何一个组件既可以用类来写，又可以用钩子即函数来写。</p>
+<p>示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// class component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function component</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正如前文所说，尽管两者都可以使用，但是现在官方推荐使用钩子（函数）。</p>
+<p>使用函数式的写法即钩子有很多好处：</p>
+<ol>
+<li><p>视觉上：钩子更简洁，代码量更少</p>
+<p>原因：钩子 Hooks可以更优雅地实现逻辑复用。开发人员可以把逻辑抽象成钩子 Hooks 以实现代码复用，进一步，更可以将其发布为Library，供React生态社区的其他人使用。</p>
+<p>再比如：钩子 Hooks (主要为useEffect) 充当了函数式组件中的“生命周期”的概念，这也大大减少了API</p>
+</li>
+<li><p>使用上：钩子更灵活，用起来更“轻”，类组件则相对更“重”</p>
+</li>
+<li><p>🌈屁：更符合React函数式的本质</p>
+</li>
+</ol>
+<h2 id="二、二者差异"><a href="#二、二者差异" class="headerlink" title="二、二者差异"></a>二、二者差异</h2><h3 id="1-Class-Component"><a href="#1-Class-Component" class="headerlink" title="1. Class Component"></a>1. Class Component</h3><p>类组件是<strong>数据和逻辑的封装</strong>。组件的状态和操作方法是封装在一起的。因此在类组件的写法中，相关的数据和操作方法一般需要写在同一个 class 中。</p>
+<h3 id="2-Function-Component"><a href="#2-Function-Component" class="headerlink" title="2. Function Component"></a>2. Function Component</h3><p>函数组件是<strong>只聚焦于一件事，即返回一个值</strong>。如果有多个操作，每个操作应该单独写成一个函数。并且，<strong>数据的状态应该与操作方法分离</strong>。因此，在React中的函数组件应该只专注于一件事即：<strong>返回组件的HTML代码</strong>。这种根据输入的数据，只进行单纯的数据计算的函数，称为<strong>“纯函数”</strong>（在函数式编程中）。</p>
+<p><strong>Notes：</strong>以上参考了阮一峰老师的Blog。</p>
+<h2 id="三、副效应"><a href="#三、副效应" class="headerlink" title="三、副效应"></a>三、副效应</h2><p>首先考虑一个问题，函数式组件是纯函数，因此只能进行数据计算，那么<strong>诸如生成日志、存储数据、改变应用状态等等不涉及计算的操作</strong>就无法被函数组件直接包含，我们把它们称为<strong>副效应（side effect）</strong>。因为如果函数内部直接包含副效应，它便不再是纯函数了，所以在函数组件内部，我们<strong>通过间接的方法来包含副效应</strong>。</p>
+<h2 id="四、钩子-Hook"><a href="#四、钩子-Hook" class="headerlink" title="四、钩子 Hook"></a>四、钩子 Hook</h2><p>简言之：<strong>钩子（hook）是React函数组件的副效应的解决方案，用来为函数组件引入副效应。</strong></p>
+<p>函数组件只用来返回组件的HTML代码，所有的副效应都通过钩子来引入。</p>
+<p>由于副效应很多，所以相应的钩子也有很多。React为一些常见的副效应提供了专用的钩子。</p>
+<ul>
+<li><strong>useState(): 保存状态</strong></li>
+<li><strong>useContext(): 保存上下文</strong></li>
+<li><strong>useRef(): 保存引用</strong></li>
+<li>…</li>
+</ul>
+<p>以上的这些钩子都是引入某种特定的副效应，而 <strong>useEffect()</strong> 是<strong>通用的副效应钩子</strong>。在找不到对应的钩子时，可以使用它。</p>
+<h2 id="五、useEffect-的用法"><a href="#五、useEffect-的用法" class="headerlink" title="五、useEffect() 的用法"></a>五、useEffect() 的用法</h2><h3 id="1-基本用法——第一个参数"><a href="#1-基本用法——第一个参数" class="headerlink" title="1. 基本用法——第一个参数"></a>1. 基本用法——第一个参数</h3><p>useEffect() 本身是一个函数，由React提供，在函数组件内部调用即可。</p>
+<p>useEffect() 的第一个参数是一个函数，它就是副效应。<strong>组件的首次加载到DOM以及以后组件的每次渲染，React都会自动执行该函数。</strong></p>
+<p>例如，我们希望组件加载以后，网页标题（document.title）会随之改变。那么，改变标题这个操作就是组件的副效应，可以通过 useEffect() 来实现。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">&#x27;加载完成&#x27;</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-基本用法——第二个参数"><a href="#2-基本用法——第二个参数" class="headerlink" title="2. 基本用法——第二个参数"></a>2. 基本用法——第二个参数</h3><p>但是，有些时候，我们不希望 useEffect() 每次渲染都执行，这时候可以使用它的第二个参数。useEffect() 的第二参数是一个数组类型的参数，它可以用于指定副效应函数的<strong>依赖项</strong>，<strong>只有当依赖项发生变化时，组件才会重新渲染</strong>。</p>
+<p>示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`Hello, <span class="subst">$&#123;props.name&#125;</span>`</span>;</span><br><span class="line">  &#125;, [props.name]);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，<strong>如果第二个参数是一个空数组</strong>，就表明副效应函数<strong>没有任何依赖项</strong>。因此，副效应函数<strong>只会在组件加载到DOM后执行一次</strong>，此后即使组件重新渲染，也不再执行。</p>
+<h2 id="六、useEffect-的用途"><a href="#六、useEffect-的用途" class="headerlink" title="六、useEffect() 的用途"></a>六、useEffect() 的用途</h2><p>只要是副效应，都可以使用 useEffect() 来引入。它的常见用途有如下几种：</p>
+<ul>
+<li>获取数据（data fetching）</li>
+<li>事件监听或订阅（setting up a subscription）</li>
+<li>改变 DOM（changing the DOM）</li>
+<li>输出日志（logging）</li>
+</ul>
+<p>示例如下（从远程服务器获取数据）：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [data, setData] = useState(&#123; <span class="attr">hits</span>: [] &#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> fetchData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> result = <span class="keyword">await</span> axios(</span><br><span class="line">        <span class="string">&#x27;https://getdataAPI/?id=1&#x27;</span>,</span><br><span class="line">      );</span><br><span class="line">      </span><br><span class="line">      setData(result.data);</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, []);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &#123;data.hits.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        &lt;li key = &#123;item.id&#125;&gt;</span><br><span class="line">          &lt;a href=&#123;item.url&#125;&gt;&#123;item.title&#125;&lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &#125;)&#125;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+<p>在该示例中，useState() 用来生成一个状态变量和设置状态变量的方法以保存/更新获取的数据。useEffecr() 的副效应函数内部有一个异步函数 async 函数，用来从服务器异步获取数据，等拿到数据以后，再用 setData() 更新状态以出发组件重新渲染。</p>
+<p>注意：此处的第二个参数为一个空数组，因为在该示例中只需获取数据一次即可。</p>
+<h2 id="七、useEffect-的返回值"><a href="#七、useEffect-的返回值" class="headerlink" title="七、useEffect() 的返回值"></a>七、useEffect() 的返回值</h2><p>副效应是随着组件加载而产生的，那么当组件卸载时，有时也需要清理这些副效应。</p>
+<p>useEffect() <strong>允许返回一个函数</strong>，<strong>在组件卸载时会执行该函数</strong>，<strong>清理副效应</strong>（实际上，由于副效应函数在组件每次渲染时都会执行，因此清理副效应不仅会发生在组件卸载时，而且每次副效应执行前，都会执行一次来清理上一次渲染的副效应）。如果不需要清理副效应，那么 useEffect() 不用返回任何值。</p>
+<p>例如，副效应为组件加载时订阅一个事件，那么在组件卸载时，我们需要取消订阅，因此我们需要清理这个副效应。示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> subscription = props.source.subscribe();</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    subscription.unsubscribe();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;, [props.source]);</span><br></pre></td></tr></table></figure>
+<h2 id="八、useEffect-的注意点"><a href="#八、useEffect-的注意点" class="headerlink" title="八、useEffect() 的注意点"></a>八、useEffect() 的注意点</h2><p>使用 useEffect() 时，<strong>如果有多个副效应</strong>，**应该调用多个 useEffect()**，而不是合并写成一个。</p>
+<p><strong>Notes：</strong>以上内容借鉴自阮一峰老师的博客。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/12/ReactIntroduction/" rel="prev" title="React入门篇">
+      <i class="fa fa-chevron-left"></i> React入门篇
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React-Hook"><span class="nav-number">1.</span> <span class="nav-text">React Hook</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%B3%E4%BA%8EReact%E7%9A%84%E4%B8%A4%E5%A5%97API"><span class="nav-number">1.1.</span> <span class="nav-text">一、关于React的两套API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BA%8C%E8%80%85%E5%B7%AE%E5%BC%82"><span class="nav-number">1.2.</span> <span class="nav-text">二、二者差异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Class-Component"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. Class Component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Function-Component"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. Function Component</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%89%AF%E6%95%88%E5%BA%94"><span class="nav-number">1.3.</span> <span class="nav-text">三、副效应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%92%A9%E5%AD%90-Hook"><span class="nav-number">1.4.</span> <span class="nav-text">四、钩子 Hook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81useEffect-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">1.5.</span> <span class="nav-text">五、useEffect() 的用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 基本用法——第一个参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E2%80%94%E2%80%94%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 基本用法——第二个参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81useEffect-%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-number">1.6.</span> <span class="nav-text">六、useEffect() 的用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81useEffect-%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">1.7.</span> <span class="nav-text">七、useEffect() 的返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81useEffect-%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">1.8.</span> <span class="nav-text">八、useEffect() 的注意点</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Will"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Will</p>
+  <div class="site-description" itemprop="description">这是一个关于二进制流浪的故事...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+  <div class="languages">
+    <label class="lang-select-label">
+      <i class="fa fa-language"></i>
+      <span>简体中文</span>
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </label>
+    <select class="lang-select" data-canonical="">
+      
+        <option value="zh-CN" data-href="/2022/02/12/ReactHookIntroduction/" selected="">
+          简体中文
+        </option>
+      
+        <option value="en" data-href="/en/2022/02/12/ReactHookIntroduction/" selected="">
+          English
+        </option>
+      
+    </select>
+  </div>
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">66k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:01</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
