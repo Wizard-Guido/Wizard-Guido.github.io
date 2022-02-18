@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>DNS原理基础</title>
-    <url>/2021/11/25/Basic%20Principle%20of%20DNS/</url>
+    <url>/2021/11/25/BasicPrincipleofDNS/</url>
     <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
 <a id="more"></a>
 
@@ -97,7 +97,7 @@
   </entry>
   <entry>
     <title>DOM &amp; BOM</title>
-    <url>/2021/11/04/DOM%20&amp;%20BOM/</url>
+    <url>/2021/11/04/DOM&amp;BOM/</url>
     <content><![CDATA[<p><strong>本章主要介绍DOM概念、操作DOM的代价、浏览器渲染引擎的机制，性能优化以及节流和防抖等常见面试题。</strong></p>
 <a id="more"></a>
 
@@ -194,7 +194,7 @@
   </entry>
   <entry>
     <title>前端知识-杂谈</title>
-    <url>/2021/09/21/Frontend%20Tech/</url>
+    <url>/2021/09/21/FrontendTech/</url>
     <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
 <a id="more"></a>
 
@@ -209,7 +209,7 @@
   </entry>
   <entry>
     <title>HTML基础---学习手记</title>
-    <url>/2021/09/22/HTML%20Notes/</url>
+    <url>/2021/09/22/HTMLNotes/</url>
     <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
 <a id="more"></a>
 
@@ -349,6 +349,53 @@
 ]]></content>
   </entry>
   <entry>
+    <title>基于MAC的NGINX配置使用---反向代理解决跨域</title>
+    <url>/2021/10/19/NignxConfig/</url>
+    <content><![CDATA[<p><strong>关于Engine X（即Nignx）代理服务器配置说明</strong></p>
+<a id="more"></a>
+
+<h1 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h1><ol>
+<li><p>Terminal执行以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew search nginx</span><br><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
+<li><p>安装完成后，Terminal输出信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Docroot is: &#x2F;usr&#x2F;local&#x2F;var&#x2F;www</span><br><span class="line"></span><br><span class="line">The default port has been set in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;nginx.conf to 8080 so that</span><br><span class="line">nginx can run without sudo.</span><br><span class="line"></span><br><span class="line">nginx will load all files in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;servers&#x2F;.</span><br><span class="line"></span><br><span class="line">To start nginx:</span><br><span class="line">  brew services start nginx</span><br><span class="line">Or, if you don&#39;t want&#x2F;need a background service you can just run:</span><br><span class="line">  &#x2F;usr&#x2F;local&#x2F;opt&#x2F;nginx&#x2F;bin&#x2F;nginx -g &#39;daemon off;&#39;</span><br></pre></td></tr></table></figure>
+<h1 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h1></li>
+<li><p>第一次安装后启动nginx，Terminal执行以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew services start nginx</span><br></pre></td></tr></table></figure>
+<p>以后再次启动nginx只需执行以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>如果出现不成功的情况，可采取以下方法：先结束主进程再重启</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -ax | grep nginx # 查看进程号</span><br><span class="line">sudo kill -s QUIT 主进程ID号</span><br><span class="line">sudo nginx</span><br></pre></td></tr></table></figure></li>
+<li><p>访问Nginx默认端口8080</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">localhost:8080</span><br></pre></td></tr></table></figure></li>
+<li><p>其他常用命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nginx -s stop # 停止nginx</span><br><span class="line">nginx -s reload # 重启nginx</span><br><span class="line">nginx # 启动nginx</span><br></pre></td></tr></table></figure></li>
+<li><p>配置<code>nginx.conf</code>文件</p>
+<ul>
+<li><p>进入Finder，按住<code>shift</code>+<code>command</code>+G，然后搜索<code>local/etc</code>，找到nginx文件夹</p>
+</li>
+<li><p>找到nginx.conf文件，进入修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen: 80; &#x2F;&#x2F; 默认80端口，选择一个未被使用的接口即可</span><br><span class="line">	server_name: localhost;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourfronend.com; &#x2F;&#x2F; 此处为你浏览器所在的地址</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;api&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourbackend.com; &#x2F;&#x2F; 此处为你浏览器所请求的地址</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>保存文件，重启Nginx</p>
+</li>
+<li><p>访问Nignx的监听端口，本例为<code>http://localhost:80</code></p>
+</li>
+<li><p>你会看到前端地址所在的内容</p>
+</li>
+<li><p>进行跨域测试</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Frontend/前端</category>
+      </categories>
+      <tags>
+        <tag>ClientServer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python virtualenv notes</title>
     <url>/2021/02/20/Python%20virtualenv%20notes/</url>
     <content><![CDATA[<h1 id="Python3-virtual-environment-construction"><a href="#Python3-virtual-environment-construction" class="headerlink" title="Python3 virtual environment construction"></a>Python3 virtual environment construction</h1><a id="more"></a>
@@ -470,53 +517,6 @@
       </tags>
   </entry>
   <entry>
-    <title>基于MAC的NGINX配置使用---反向代理解决跨域</title>
-    <url>/2021/10/19/Nignx%20Config/</url>
-    <content><![CDATA[<p><strong>关于Engine X（即Nignx）代理服务器配置说明</strong></p>
-<a id="more"></a>
-
-<h1 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h1><ol>
-<li><p>Terminal执行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew search nginx</span><br><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>安装完成后，Terminal输出信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Docroot is: &#x2F;usr&#x2F;local&#x2F;var&#x2F;www</span><br><span class="line"></span><br><span class="line">The default port has been set in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;nginx.conf to 8080 so that</span><br><span class="line">nginx can run without sudo.</span><br><span class="line"></span><br><span class="line">nginx will load all files in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;servers&#x2F;.</span><br><span class="line"></span><br><span class="line">To start nginx:</span><br><span class="line">  brew services start nginx</span><br><span class="line">Or, if you don&#39;t want&#x2F;need a background service you can just run:</span><br><span class="line">  &#x2F;usr&#x2F;local&#x2F;opt&#x2F;nginx&#x2F;bin&#x2F;nginx -g &#39;daemon off;&#39;</span><br></pre></td></tr></table></figure>
-<h1 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h1></li>
-<li><p>第一次安装后启动nginx，Terminal执行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew services start nginx</span><br></pre></td></tr></table></figure>
-<p>以后再次启动nginx只需执行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>如果出现不成功的情况，可采取以下方法：先结束主进程再重启</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -ax | grep nginx # 查看进程号</span><br><span class="line">sudo kill -s QUIT 主进程ID号</span><br><span class="line">sudo nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>访问Nginx默认端口8080</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">localhost:8080</span><br></pre></td></tr></table></figure></li>
-<li><p>其他常用命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nginx -s stop # 停止nginx</span><br><span class="line">nginx -s reload # 重启nginx</span><br><span class="line">nginx # 启动nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>配置<code>nginx.conf</code>文件</p>
-<ul>
-<li><p>进入Finder，按住<code>shift</code>+<code>command</code>+G，然后搜索<code>local/etc</code>，找到nginx文件夹</p>
-</li>
-<li><p>找到nginx.conf文件，进入修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen: 80; &#x2F;&#x2F; 默认80端口，选择一个未被使用的接口即可</span><br><span class="line">	server_name: localhost;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourfronend.com; &#x2F;&#x2F; 此处为你浏览器所在的地址</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;api&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourbackend.com; &#x2F;&#x2F; 此处为你浏览器所请求的地址</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>保存文件，重启Nginx</p>
-</li>
-<li><p>访问Nignx的监听端口，本例为<code>http://localhost:80</code></p>
-</li>
-<li><p>你会看到前端地址所在的内容</p>
-</li>
-<li><p>进行跨域测试</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Frontend/前端</category>
-      </categories>
-      <tags>
-        <tag>ClientServer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Python设置本地测试服务器</title>
     <url>/2021/09/16/Python-localServer/</url>
     <content><![CDATA[<p><strong>关于使用Python搭建简易本地服务器指南，可用于异步测试等。</strong></p>
@@ -633,7 +633,7 @@
   </entry>
   <entry>
     <title>Redux入门操作详解</title>
-    <url>/2021/11/28/Redux%20Introduction/</url>
+    <url>/2021/11/28/ReduxIntroduction/</url>
     <content><![CDATA[<p><strong>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。</strong>随着 JavaScript 单页应用开发日趋复杂，<strong>JavaScript 需要管理比任何时候都要多的 state （状态）</strong>。 这些 state 可能包括<strong>服务器响应、缓存数据、本地生成尚未持久化到服务器的数据</strong>，也包括<strong>UI 状态，如激活的路由，被选中的标签，是否显示加载动效或者分页器</strong>等等。<strong>本次主要讲解当前针对react框架的redux，即REACT-REDUX。</strong></p>
 <a id="more"></a>
 
@@ -903,7 +903,7 @@
   </entry>
   <entry>
     <title>HTTP&amp;网络安全篇</title>
-    <url>/2021/12/06/HTTP%20&amp;%20Network/</url>
+    <url>/2021/12/06/HTTP&amp;Network/</url>
     <content><![CDATA[<p><strong>本篇文章主要针对常见的一些计算机网络概念进行梳理和总结，便于今后对于web开发的深入理解。</strong></p>
 <a id="more"></a>
 
@@ -1087,7 +1087,7 @@
   </entry>
   <entry>
     <title>JavaScript琐碎基础---学习手记</title>
-    <url>/2021/09/24/JavaScript%20Basics/</url>
+    <url>/2021/09/24/JavaScriptBasics/</url>
     <content><![CDATA[<p><strong>JavaScript语语法基础部分一览，包括面试常见的“深浅拷贝”、数据结构操作（如数组插入等）需熟记于心。</strong></p>
 <a id="more"></a>
 
@@ -1456,7 +1456,7 @@
   </entry>
   <entry>
     <title>JavaScript函数进阶---学习笔记</title>
-    <url>/2021/10/04/Javascript%20Function/</url>
+    <url>/2021/10/04/JavascriptFunction/</url>
     <content><![CDATA[<p><strong>本章将深入J高级，诸如Spread语法、闭包、垃圾回收机制、函数对象、SetTimeout和SetInterval、装饰器模式和转发call/apply以及箭头函数。</strong></p>
 <a id="more"></a>
 
