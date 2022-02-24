@@ -260,7 +260,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-24 17:43:43" itemprop="dateModified" datetime="2022-02-24T17:43:43+00:00">2022-02-24</time>
+                <time title="修改时间：2022-02-24 17:51:07" itemprop="dateModified" datetime="2022-02-24T17:51:07+00:00">2022-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,7 +278,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -304,73 +304,15 @@
           </div>
         
       <!-- 自定义结束 -->
-          <a id="more"></a>
-
-<h1 id="事件循环——微任务和宏任务"><a href="#事件循环——微任务和宏任务" class="headerlink" title="事件循环——微任务和宏任务"></a>事件循环——微任务和宏任务</h1><p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。</p>
-<h2 id="一、事件循环"><a href="#一、事件循环" class="headerlink" title="一、事件循环"></a>一、事件循环</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>事件循环是 JavaScript 引擎在等待任务、执行任务、以及进入休眠等待更多任务，这三个状态之间转换的无限循环。</p>
-<p><strong>引擎的一般流程（循环）：</strong></p>
-<blockquote>
-<ol>
-<li>设置任务</li>
-<li>引擎处理任务（如果有多个任务，则它们会组成一个队列即<strong>“宏任务队列”</strong>，按照先进先出的原则来处理任务即先进入的任务会被先执行）</li>
-<li>所有任务处理完成，引擎进入休眠等待新任务出现（休眠期间几乎不消耗任何CPU资源），然后转到第1步</li>
-</ol>
-</blockquote>
-<p><strong>注意：</strong></p>
-<ul>
-<li><strong>引擎执行任务时永远不会进行渲染（render）</strong>。即使任务执行需要很长时间，它也会等到任务完成之后才会绘制对 DOM 的更改。</li>
-<li>如果一项任务执行时间过长，则在该任务完成前，浏览器将无法执行后续其它任务。因此，在预设的某个时间段后，浏览器会抛出一个诸如“页面未响应”之类的警告，建议终止这个任务。（这种情况通常发生在有大量复杂计算或导致死循环的程序错误时）</li>
-</ul>
-<h2 id="二、拆分CPU过载任务"><a href="#二、拆分CPU过载任务" class="headerlink" title="二、拆分CPU过载任务"></a>二、拆分CPU过载任务</h2><p><strong>问题场景：</strong>如果 JS 引擎正在执行一个 CPU 过载的任务即该任务需要耗费大量的 CPU 资源和时间。那么在该任务完成前，引擎无法处理其它的DOM相关的任务，例如处理用户事件，这会表现为“网页卡顿很长一段时间，并且无法响应用户的其它交互行为”。这种情况是需要被避免的。</p>
-<p><strong>解决方法：</strong>这时，我们可以通过<strong>将大任务拆分为多个小任务</strong>来避免这个问题。每完成一个小任务，就使用<code>setTimeout</code>（延时参数设置为0）方法来再次安排一个小任务，直到所有小任务都被完成。</p>
-<p><strong>示例代码如下：</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 一个大任务</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">1e9</span>; j++) &#123;</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<p>上面的代码块展示了一个耗时很长的大任务，该任务可能会使浏览器显示一个“脚本执行时间过长”的警告。</p>
-<p><strong>下面，我们使用<code>setTimeout</code>方法来拆分这个大任务：</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(count, <span class="number">0</span>); <span class="comment">// (**)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<p>现在，JS 引擎可以分批处理每个小任务，并且不影响后续其它任务的执行。原因在于：</p>
-<ol>
-<li>引擎首先执行（*）的小任务</li>
-<li>完成一个小任务后，如果该任务不是最后一个小任务，则调用<code>setTimeout</code>来安排一个新的小任务</li>
-<li>执行宏任务队列中的剩余任务，然后重复步骤一、二，直到所有小任务都完成。</li>
-</ol>
-<p>可见，关键在于**<code>setTimeout</code><strong>函数，</strong><code>setTimeout</code>会在时间到达时，为 JS 引擎安排一个回调函数事件，该事件会被插入到宏任务队列中**。在此之前，如果有其他事件发生，如用户点击事件，则会被先安排入宏任务队列，并按照先进先出的原则，优先执行，从而避免“脚本执行时间过长”、浏览器“挂起（hang）”的问题。</p>
-<p><strong>此外注意：</strong>多个嵌套的<code>setTimeout</code>调用在浏览器中的最小延迟为 4ms。因此即使我们设置了延迟为0，但还是至少需要 4ms的延迟。所以如果安排的越早，运行会越快，上述代码可以改写一下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (i &lt; <span class="number">1e9</span> - <span class="number">1e6</span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(count); <span class="comment">// 安排新的调用</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<h2 id="三、宏任务-amp-微任务"><a href="#三、宏任务-amp-微任务" class="headerlink" title="三、宏任务&amp;微任务"></a>三、宏任务&amp;微任务</h2><p>除了<strong>宏任务（macrotask）</strong>，还有<strong>微任务（microtask）</strong>。</p>
-<p><strong>微任务</strong>仅来自我们的代码：</p>
-<ol>
-<li>由 Promise 创建的 <strong>promise 对象的<code>.then/catch/finally</code>的处理程序</strong></li>
-<li><strong><code>await</code>的幕后</strong>（因此 await 是 promise 的另一种形式）</li>
-<li>**特殊函数<code>queueMicrotask(func)</code>**，它会对<code>func</code>进行排队，以在微任务队列中执行</li>
-</ol>
-<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p><strong>每个宏任务之后，引擎会立即执行微任务队列中的所有微任务，然后再执行其他的宏任务或渲染或其它操作。</strong></p>
-<p>举例如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;3&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">	.then(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;2&#x27;</span>));</span><br><span class="line"></span><br><span class="line">alert(<span class="string">&#x27;1&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>对上述代码，引擎的执行顺序是：</p>
-<ol>
-<li>首先执行同步代码<code>alert(&#39;1&#39;)</code>，所以首先显示“1”</li>
-<li>然后执行 Promise 中的<code>then</code>中的回调函数，因为<code>then</code>是一个微任务，它会在微任务队列中，等一个宏任务执行结束后，会被立即执行，所以第二个显示的是“2”</li>
-<li>最后异步调用<code>setTimeout</code>中的回调函数会被从宏任务队列中取出执行，所以最后显示的是“3”</li>
-</ol>
-<p><strong>注：</strong>微任务会在执行任何其他操作（宏任务或渲染）前被完成，因此它<strong>确保了微任务之间的应用程序环境基本相同</strong>（即没有新的网络数据、没有DOM更改等）。</p>
-<h2 id="四、总结事件循环算法"><a href="#四、总结事件循环算法" class="headerlink" title="四、总结事件循环算法"></a>四、总结事件循环算法</h2><ol>
-<li><p><strong>宏任务队列</strong>遵循先进先出原则，首先取出并执行最早的任务</p>
-</li>
-<li><p><strong>执行微任务队列中所有的微任务</strong>：</p>
-<ul>
-<li>微任务队列也遵循先进先出原则，首先取出并执行最早的微任务</li>
-</ul>
-</li>
-<li><p><strong>渲染（如果DOM改变）</strong></p>
-</li>
-<li><p>重复前三个步骤</p>
-</li>
-<li><p>直到<strong>宏任务队列为空</strong>，则 JS 引擎<strong>休眠</strong>等待新任务</p>
-</li>
-</ol>
-<h2 id="五、安排新的宏任务"><a href="#五、安排新的宏任务" class="headerlink" title="五、安排新的宏任务"></a>五、安排新的宏任务</h2><p>可以使用零延迟的<code>setTimeout</code>。它同时还可以将大任务拆分为多个小任务，以便浏览器能够对用户事件作出反应。</p>
-
+          <p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/22/EventLoop/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
