@@ -6,12 +6,17 @@
     <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
 <a id="more"></a>
 
-<h1 id="Domain-Names-System"><a href="#Domain-Names-System" class="headerlink" title="Domain Names System"></a>Domain Names System</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>DNS用于将域名转换为IP地址。其中：</p>
+<h1 id="Domain-Names-System"><a href="#Domain-Names-System" class="headerlink" title="Domain Names System"></a>Domain Names System</h1><h2 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h2><p>DNS用于将域名转换为IP地址。其中：</p>
 <ol>
 <li>IP地址：一组用点分隔的能唯一标识互联网中的计算机的数字组合</li>
 <li>域名：一串用点分隔的名字，用来表示计算机的名称</li>
 </ol>
-<h2 id="域名构成"><a href="#域名构成" class="headerlink" title="域名构成"></a>域名构成</h2><p><strong>域名是层次结构，从上到下（从书写上看是从右到左），分为根域名、顶级域名、二级域名、三级域名等等。</strong></p>
+<p><strong>根据《计算机网络》的定义：</strong>DNS是</p>
+<ol>
+<li><strong>一个由分层的 DNS 服务器实现的分布式数据库</strong></li>
+<li><strong>一个是的主机能够查询分布式数据库的应用层协议</strong></li>
+</ol>
+<h2 id="二、域名构成"><a href="#二、域名构成" class="headerlink" title="二、域名构成"></a>二、域名构成</h2><p><strong>域名是层次结构，从上到下（从书写上看是从右到左），分为根域名、顶级域名、二级域名、三级域名等等。</strong></p>
 <blockquote>
 <ol>
 <li><p>根域名：root</p>
@@ -37,7 +42,9 @@
 </ol>
 </blockquote>
 <p>注意：在域名的每一个层级都有一个域名服务器，如果顶级域名中，有edu域名服务器，com域名服务器。</p>
-<h2 id="查询方式"><a href="#查询方式" class="headerlink" title="查询方式"></a>查询方式</h2><ul>
+<p>从上面可以看出，DNS 系统是一个典型的树状结构，从根域名服务器开始一级一级的查询。跟服务器用于一切域名的起始解释权，通过下图可以大致了解解释权机制（SOA）。</p>
+<p><img src="/cover/dns.jpg" alt="DNS"></p>
+<h2 id="三、查询方式"><a href="#三、查询方式" class="headerlink" title="三、查询方式"></a>三、查询方式</h2><ul>
 <li>递归查询：A只请求B，直到B返回A想要的结果。</li>
 <li>迭代查询：A请求B，B返回结果告知A所需要请求的其他服务器，然后A再请求C、D、E等并拿到响应的返回结果。</li>
 </ul>
@@ -62,7 +69,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h2><p>大致有七个步骤</p>
+<h2 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h2><p>大致有七个步骤：</p>
 <ol>
 <li><p>首先搜索浏览器的DNS缓存，其缓存中维护了一张域名与IP地址的对应表，若有则返回，并结束操作</p>
 </li>
@@ -87,6 +94,8 @@
 <li>操作系统将得到的IP地址返回给浏览器，同时缓存该域名与IP的映射</li>
 <li>浏览器得到该域名对应的IP地址，同时缓存该域名与IP的映射</li>
 </ol>
+<h2 id="四、DNS-负载均衡基本原理"><a href="#四、DNS-负载均衡基本原理" class="headerlink" title="四、DNS 负载均衡基本原理"></a>四、DNS 负载均衡基本原理</h2><p>DNS 也用于在冗余的服务器之间进行负载分配。繁忙的站点被冗余分布在多台服务器上，每台服务器均运行在不同的端系统上，每个都有着不同的 IP 地址。</p>
+<p>DNS 服务器为同一个主机名/域名配置了多个 IP 地址，在应答 DNS 查询时，DNS 服务器对每个查询将以 DNS 文件中主机记录对应的 IP 地址按顺序返回不同的解析结果，将客户端访问引导到不同的机器上取，使得不同的客户端访问不同的服务器，从而达到负载均衡的目的。</p>
 ]]></content>
       <categories>
         <category>FrontEnd/前端</category>
@@ -193,6 +202,21 @@
       </tags>
   </entry>
   <entry>
+    <title>前端知识-杂谈</title>
+    <url>/2021/09/21/FrontendTech/</url>
+    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
+<a id="more"></a>
+
+<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>CONCEPT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>事件循环 &amp; 微任务、宏任务</title>
     <url>/2022/02/22/EventLoop/</url>
     <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
@@ -268,21 +292,6 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端知识-杂谈</title>
-    <url>/2021/09/21/FrontendTech/</url>
-    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
-<a id="more"></a>
-
-<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>CONCEPT</tag>
       </tags>
   </entry>
   <entry>
