@@ -297,8 +297,11 @@
   <entry>
     <title>Git快速入门篇</title>
     <url>/2022/05/26/Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87/</url>
-    <content><![CDATA[<h1 id="Git快速入门篇"><a href="#Git快速入门篇" class="headerlink" title="Git快速入门篇"></a>Git快速入门篇</h1><h2 id="1-Git基础"><a href="#1-Git基础" class="headerlink" title="1. Git基础"></a>1. Git基础</h2><p>Git是一款<strong>分布式版本控制工具</strong>，常用于管理软件代码版本。</p>
-<h3 id="1-2-Git文件的状态"><a href="#1-2-Git文件的状态" class="headerlink" title="1.2 Git文件的状态"></a>1.2 Git文件的状态</h3><p><img src="/pic/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Git.png" alt="Git"></p>
+    <content><![CDATA[<p>最近在某互联网公司实习，因为团队协作离不开Git，所以对于新人来说，我们需要对 Git 的基本操作非常熟悉，并且对其基本原理有一定的把握。本章将主要介绍** Git 的基本概念和操作**，在之后的章节中我们也会对 GitLab 的配置做详细的介绍，因为公司团队协作用的主要就是 GitLab。</p>
+<a id="more"></a>
+
+<h1 id="Git快速入门篇"><a href="#Git快速入门篇" class="headerlink" title="Git快速入门篇"></a>Git快速入门篇</h1><h2 id="1-Git基础"><a href="#1-Git基础" class="headerlink" title="1. Git基础"></a>1. Git基础</h2><p>Git是一款<strong>分布式版本控制工具</strong>，常用于管理软件代码版本。</p>
+<h3 id="1-2-Git文件的状态"><a href="#1-2-Git文件的状态" class="headerlink" title="1.2 Git文件的状态"></a>1.2 Git文件的状态</h3><p><img src="/pic/Git.png" alt="Git"></p>
 <table>
 <thead>
 <tr>
