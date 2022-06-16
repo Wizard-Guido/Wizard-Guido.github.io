@@ -105,99 +105,6 @@
       </tags>
   </entry>
   <entry>
-    <title>事件循环 &amp; 微任务、宏任务</title>
-    <url>/2022/02/22/EventLoop/</url>
-    <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
-<a id="more"></a>
-
-<h1 id="事件循环——微任务和宏任务"><a href="#事件循环——微任务和宏任务" class="headerlink" title="事件循环——微任务和宏任务"></a>事件循环——微任务和宏任务</h1><p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。</p>
-<h2 id="一、事件循环"><a href="#一、事件循环" class="headerlink" title="一、事件循环"></a>一、事件循环</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>事件循环是 JavaScript 引擎在等待任务、执行任务、以及进入休眠等待更多任务，这三个状态之间转换的无限循环。</p>
-<p><strong>引擎的一般流程（循环）：</strong></p>
-<blockquote>
-<ol>
-<li>设置任务</li>
-<li>引擎处理任务（如果有多个任务，则它们会组成一个队列即<strong>“宏任务队列”</strong>，按照先进先出的原则来处理任务即先进入的任务会被先执行）</li>
-<li>所有任务处理完成，引擎进入休眠等待新任务出现（休眠期间几乎不消耗任何CPU资源），然后转到第1步</li>
-</ol>
-</blockquote>
-<p><strong>注意：</strong></p>
-<ul>
-<li><strong>引擎执行任务时永远不会进行渲染（render）</strong>。即使任务执行需要很长时间，它也会等到任务完成之后才会绘制对 DOM 的更改。</li>
-<li>如果一项任务执行时间过长，则在该任务完成前，浏览器将无法执行后续其它任务。因此，在预设的某个时间段后，浏览器会抛出一个诸如“页面未响应”之类的警告，建议终止这个任务。（这种情况通常发生在有大量复杂计算或导致死循环的程序错误时）</li>
-</ul>
-<h2 id="二、拆分CPU过载任务"><a href="#二、拆分CPU过载任务" class="headerlink" title="二、拆分CPU过载任务"></a>二、拆分CPU过载任务</h2><p><strong>问题场景：</strong>如果 JS 引擎正在执行一个 CPU 过载的任务即该任务需要耗费大量的 CPU 资源和时间。那么在该任务完成前，引擎无法处理其它的DOM相关的任务，例如处理用户事件，这会表现为“网页卡顿很长一段时间，并且无法响应用户的其它交互行为”。这种情况是需要被避免的。</p>
-<p><strong>解决方法：</strong>这时，我们可以通过<strong>将大任务拆分为多个小任务</strong>来避免这个问题。每完成一个小任务，就使用<code>setTimeout</code>（延时参数设置为0）方法来再次安排一个小任务，直到所有小任务都被完成。</p>
-<p><strong>示例代码如下：</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 一个大任务</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">1e9</span>; j++) &#123;</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<p>上面的代码块展示了一个耗时很长的大任务，该任务可能会使浏览器显示一个“脚本执行时间过长”的警告。</p>
-<p><strong>下面，我们使用<code>setTimeout</code>方法来拆分这个大任务：</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(count, <span class="number">0</span>); <span class="comment">// (**)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<p>现在，JS 引擎可以分批处理每个小任务，并且不影响后续其它任务的执行。原因在于：</p>
-<ol>
-<li>引擎首先执行（*）的小任务</li>
-<li>完成一个小任务后，如果该任务不是最后一个小任务，则调用<code>setTimeout</code>来安排一个新的小任务</li>
-<li>执行宏任务队列中的剩余任务，然后重复步骤一、二，直到所有小任务都完成。</li>
-</ol>
-<p>可见，关键在于**<code>setTimeout</code><strong>函数，</strong><code>setTimeout</code>会在时间到达时，为 JS 引擎安排一个回调函数事件，该事件会被插入到宏任务队列中**。在此之前，如果有其他事件发生，如用户点击事件，则会被先安排入宏任务队列，并按照先进先出的原则，优先执行，从而避免“脚本执行时间过长”、浏览器“挂起（hang）”的问题。</p>
-<p><strong>此外注意：</strong>多个嵌套的<code>setTimeout</code>调用在浏览器中的最小延迟为 4ms。因此即使我们设置了延迟为0，但还是至少需要 4ms的延迟。所以如果安排的越早，运行会越快，上述代码可以改写一下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (i &lt; <span class="number">1e9</span> - <span class="number">1e6</span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(count); <span class="comment">// 安排新的调用</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
-<h2 id="三、宏任务-amp-微任务"><a href="#三、宏任务-amp-微任务" class="headerlink" title="三、宏任务&amp;微任务"></a>三、宏任务&amp;微任务</h2><p>除了<strong>宏任务（macrotask）</strong>，还有<strong>微任务（microtask）</strong>。</p>
-<p><strong>微任务</strong>仅来自我们的代码：</p>
-<ol>
-<li>由 Promise 创建的 <strong>promise 对象的<code>.then/catch/finally</code>的处理程序</strong></li>
-<li><strong><code>await</code>的幕后</strong>（因此 await 是 promise 的另一种形式）</li>
-<li>**特殊函数<code>queueMicrotask(func)</code>**，它会对<code>func</code>进行排队，以在微任务队列中执行</li>
-</ol>
-<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p><strong>每个宏任务之后，引擎会立即执行微任务队列中的所有微任务，然后再执行其他的宏任务或渲染或其它操作。</strong></p>
-<p>举例如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;3&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">	.then(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;2&#x27;</span>));</span><br><span class="line"></span><br><span class="line">alert(<span class="string">&#x27;1&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>对上述代码，引擎的执行顺序是：</p>
-<ol>
-<li>首先执行同步代码<code>alert(&#39;1&#39;)</code>，所以首先显示“1”</li>
-<li>然后执行 Promise 中的<code>then</code>中的回调函数，因为<code>then</code>是一个微任务，它会在微任务队列中，等一个宏任务执行结束后，会被立即执行，所以第二个显示的是“2”</li>
-<li>最后异步调用<code>setTimeout</code>中的回调函数会被从宏任务队列中取出执行，所以最后显示的是“3”</li>
-</ol>
-<p><strong>注：</strong>微任务会在执行任何其他操作（宏任务或渲染）前被完成，因此它<strong>确保了微任务之间的应用程序环境基本相同</strong>（即没有新的网络数据、没有DOM更改等）。</p>
-<h2 id="四、总结事件循环算法"><a href="#四、总结事件循环算法" class="headerlink" title="四、总结事件循环算法"></a>四、总结事件循环算法</h2><ol>
-<li><p><strong>宏任务队列</strong>遵循先进先出原则，首先取出并执行最早的任务</p>
-</li>
-<li><p><strong>执行微任务队列中所有的微任务</strong>：</p>
-<ul>
-<li>微任务队列也遵循先进先出原则，首先取出并执行最早的微任务</li>
-</ul>
-</li>
-<li><p><strong>渲染（如果DOM改变）</strong></p>
-</li>
-<li><p>重复前三个步骤</p>
-</li>
-<li><p>直到<strong>宏任务队列为空</strong>，则 JS 引擎<strong>休眠</strong>等待新任务</p>
-</li>
-</ol>
-<h2 id="五、安排新的宏任务"><a href="#五、安排新的宏任务" class="headerlink" title="五、安排新的宏任务"></a>五、安排新的宏任务</h2><p>可以使用零延迟的<code>setTimeout</code>。它同时还可以将大任务拆分为多个小任务，以便浏览器能够对用户事件作出反应。</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端知识-杂谈</title>
-    <url>/2021/09/21/FrontendTech/</url>
-    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
-<a id="more"></a>
-
-<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>CONCEPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DOM &amp; BOM</title>
     <url>/2021/11/04/DOM&amp;BOM/</url>
     <content><![CDATA[<p><strong>本章主要介绍DOM概念、操作DOM的代价、浏览器渲染引擎的机制，性能优化以及节流和防抖等常见面试题。</strong></p>
@@ -292,6 +199,99 @@
       </categories>
       <tags>
         <tag>DOM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事件循环 &amp; 微任务、宏任务</title>
+    <url>/2022/02/22/EventLoop/</url>
+    <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
+<a id="more"></a>
+
+<h1 id="事件循环——微任务和宏任务"><a href="#事件循环——微任务和宏任务" class="headerlink" title="事件循环——微任务和宏任务"></a>事件循环——微任务和宏任务</h1><p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。</p>
+<h2 id="一、事件循环"><a href="#一、事件循环" class="headerlink" title="一、事件循环"></a>一、事件循环</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>事件循环是 JavaScript 引擎在等待任务、执行任务、以及进入休眠等待更多任务，这三个状态之间转换的无限循环。</p>
+<p><strong>引擎的一般流程（循环）：</strong></p>
+<blockquote>
+<ol>
+<li>设置任务</li>
+<li>引擎处理任务（如果有多个任务，则它们会组成一个队列即<strong>“宏任务队列”</strong>，按照先进先出的原则来处理任务即先进入的任务会被先执行）</li>
+<li>所有任务处理完成，引擎进入休眠等待新任务出现（休眠期间几乎不消耗任何CPU资源），然后转到第1步</li>
+</ol>
+</blockquote>
+<p><strong>注意：</strong></p>
+<ul>
+<li><strong>引擎执行任务时永远不会进行渲染（render）</strong>。即使任务执行需要很长时间，它也会等到任务完成之后才会绘制对 DOM 的更改。</li>
+<li>如果一项任务执行时间过长，则在该任务完成前，浏览器将无法执行后续其它任务。因此，在预设的某个时间段后，浏览器会抛出一个诸如“页面未响应”之类的警告，建议终止这个任务。（这种情况通常发生在有大量复杂计算或导致死循环的程序错误时）</li>
+</ul>
+<h2 id="二、拆分CPU过载任务"><a href="#二、拆分CPU过载任务" class="headerlink" title="二、拆分CPU过载任务"></a>二、拆分CPU过载任务</h2><p><strong>问题场景：</strong>如果 JS 引擎正在执行一个 CPU 过载的任务即该任务需要耗费大量的 CPU 资源和时间。那么在该任务完成前，引擎无法处理其它的DOM相关的任务，例如处理用户事件，这会表现为“网页卡顿很长一段时间，并且无法响应用户的其它交互行为”。这种情况是需要被避免的。</p>
+<p><strong>解决方法：</strong>这时，我们可以通过<strong>将大任务拆分为多个小任务</strong>来避免这个问题。每完成一个小任务，就使用<code>setTimeout</code>（延时参数设置为0）方法来再次安排一个小任务，直到所有小任务都被完成。</p>
+<p><strong>示例代码如下：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 一个大任务</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; <span class="number">1e9</span>; j++) &#123;</span><br><span class="line">    j++;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
+<p>上面的代码块展示了一个耗时很长的大任务，该任务可能会使浏览器显示一个“脚本执行时间过长”的警告。</p>
+<p><strong>下面，我们使用<code>setTimeout</code>方法来拆分这个大任务：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(count, <span class="number">0</span>); <span class="comment">// (**)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
+<p>现在，JS 引擎可以分批处理每个小任务，并且不影响后续其它任务的执行。原因在于：</p>
+<ol>
+<li>引擎首先执行（*）的小任务</li>
+<li>完成一个小任务后，如果该任务不是最后一个小任务，则调用<code>setTimeout</code>来安排一个新的小任务</li>
+<li>执行宏任务队列中的剩余任务，然后重复步骤一、二，直到所有小任务都完成。</li>
+</ol>
+<p>可见，关键在于**<code>setTimeout</code><strong>函数，</strong><code>setTimeout</code>会在时间到达时，为 JS 引擎安排一个回调函数事件，该事件会被插入到宏任务队列中**。在此之前，如果有其他事件发生，如用户点击事件，则会被先安排入宏任务队列，并按照先进先出的原则，优先执行，从而避免“脚本执行时间过长”、浏览器“挂起（hang）”的问题。</p>
+<p><strong>此外注意：</strong>多个嵌套的<code>setTimeout</code>调用在浏览器中的最小延迟为 4ms。因此即使我们设置了延迟为0，但还是至少需要 4ms的延迟。所以如果安排的越早，运行会越快，上述代码可以改写一下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (i &lt; <span class="number">1e9</span> - <span class="number">1e6</span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(count); <span class="comment">// 安排新的调用</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 小任务 (*)</span></span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125; <span class="keyword">while</span> (i % <span class="number">1e6</span> !== <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (i === <span class="number">1e9</span>) &#123;</span><br><span class="line">      alert(<span class="string">&#x27;Done in &#x27;</span> + (<span class="built_in">Date</span>.now() - start) + <span class="string">&#x27;ms!&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">count();</span><br></pre></td></tr></table></figure>
+<h2 id="三、宏任务-amp-微任务"><a href="#三、宏任务-amp-微任务" class="headerlink" title="三、宏任务&amp;微任务"></a>三、宏任务&amp;微任务</h2><p>除了<strong>宏任务（macrotask）</strong>，还有<strong>微任务（microtask）</strong>。</p>
+<p><strong>微任务</strong>仅来自我们的代码：</p>
+<ol>
+<li>由 Promise 创建的 <strong>promise 对象的<code>.then/catch/finally</code>的处理程序</strong></li>
+<li><strong><code>await</code>的幕后</strong>（因此 await 是 promise 的另一种形式）</li>
+<li>**特殊函数<code>queueMicrotask(func)</code>**，它会对<code>func</code>进行排队，以在微任务队列中执行</li>
+</ol>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p><strong>每个宏任务之后，引擎会立即执行微任务队列中的所有微任务，然后再执行其他的宏任务或渲染或其它操作。</strong></p>
+<p>举例如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;3&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">	.then(<span class="function">() =&gt;</span> alert(<span class="string">&#x27;2&#x27;</span>));</span><br><span class="line"></span><br><span class="line">alert(<span class="string">&#x27;1&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>对上述代码，引擎的执行顺序是：</p>
+<ol>
+<li>首先执行同步代码<code>alert(&#39;1&#39;)</code>，所以首先显示“1”</li>
+<li>然后执行 Promise 中的<code>then</code>中的回调函数，因为<code>then</code>是一个微任务，它会在微任务队列中，等一个宏任务执行结束后，会被立即执行，所以第二个显示的是“2”</li>
+<li>最后异步调用<code>setTimeout</code>中的回调函数会被从宏任务队列中取出执行，所以最后显示的是“3”</li>
+</ol>
+<p><strong>注：</strong>微任务会在执行任何其他操作（宏任务或渲染）前被完成，因此它<strong>确保了微任务之间的应用程序环境基本相同</strong>（即没有新的网络数据、没有DOM更改等）。</p>
+<h2 id="四、总结事件循环算法"><a href="#四、总结事件循环算法" class="headerlink" title="四、总结事件循环算法"></a>四、总结事件循环算法</h2><ol>
+<li><p><strong>宏任务队列</strong>遵循先进先出原则，首先取出并执行最早的任务</p>
+</li>
+<li><p><strong>执行微任务队列中所有的微任务</strong>：</p>
+<ul>
+<li>微任务队列也遵循先进先出原则，首先取出并执行最早的微任务</li>
+</ul>
+</li>
+<li><p><strong>渲染（如果DOM改变）</strong></p>
+</li>
+<li><p>重复前三个步骤</p>
+</li>
+<li><p>直到<strong>宏任务队列为空</strong>，则 JS 引擎<strong>休眠</strong>等待新任务</p>
+</li>
+</ol>
+<h2 id="五、安排新的宏任务"><a href="#五、安排新的宏任务" class="headerlink" title="五、安排新的宏任务"></a>五、安排新的宏任务</h2><p>可以使用零延迟的<code>setTimeout</code>。它同时还可以将大任务拆分为多个小任务，以便浏览器能够对用户事件作出反应。</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端知识-杂谈</title>
+    <url>/2021/09/21/FrontendTech/</url>
+    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
+<a id="more"></a>
+
+<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>CONCEPT</tag>
       </tags>
   </entry>
   <entry>
@@ -684,6 +684,39 @@
       </tags>
   </entry>
   <entry>
+    <title>使用Python设置本地测试服务器</title>
+    <url>/2021/09/16/Python-localServer/</url>
+    <content><![CDATA[<p><strong>关于使用Python搭建简易本地服务器指南，可用于异步测试等。</strong></p>
+<a id="more"></a>
+
+<h2 id="测试本地文件的问题"><a href="#测试本地文件的问题" class="headerlink" title="测试本地文件的问题"></a>测试本地文件的问题</h2><ul>
+<li><strong>它们具有异步请求功能</strong>。如果您只是从本地文件运行示例，某些浏览器（包括 Chrome）将不会运行异步请求。这是因为安全限制。</li>
+<li><strong>它们具有服务器端语言</strong>。服务器端语言（例如 PHP 或 Python）需要一个特殊的服务器来解释代码并交付结果。</li>
+</ul>
+<h2 id="利用Python建立简单本地HTTP服务器"><a href="#利用Python建立简单本地HTTP服务器" class="headerlink" title="利用Python建立简单本地HTTP服务器"></a>利用Python建立简单本地HTTP服务器</h2><ul>
+<li><p>安装Python</p>
+</li>
+<li><p>运行命令行（我是mac），输入以下命令检查是否安装：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure></li>
+<li><p>cd到目标文件目录</p>
+</li>
+<li><p>启动服务器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure></li>
+<li><p>默认端口号是8000，通过localhost:8000来访问此服务器</p>
+</li>
+<li><p><strong>PS:</strong> 切换端口号使用如下命令（以7800端口号为例）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 7800</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><em><strong>最后， Python的http.server只是静态文件服务器，他无法运行python、php、javascript等语言的代码，所以要在本地运行服务器端语言代码，可以使用Python Web框架，比如Django等</strong></em></p>
+]]></content>
+      <categories>
+        <category>Frontend/前端</category>
+      </categories>
+      <tags>
+        <tag>Server</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python virtualenv notes</title>
     <url>/2021/02/20/Pythonvirtualenvnotes/</url>
     <content><![CDATA[<h1 id="Python3-virtual-environment-construction"><a href="#Python3-virtual-environment-construction" class="headerlink" title="Python3 virtual environment construction"></a>Python3 virtual environment construction</h1><a id="more"></a>
@@ -805,39 +838,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Python设置本地测试服务器</title>
-    <url>/2021/09/16/Python-localServer/</url>
-    <content><![CDATA[<p><strong>关于使用Python搭建简易本地服务器指南，可用于异步测试等。</strong></p>
-<a id="more"></a>
-
-<h2 id="测试本地文件的问题"><a href="#测试本地文件的问题" class="headerlink" title="测试本地文件的问题"></a>测试本地文件的问题</h2><ul>
-<li><strong>它们具有异步请求功能</strong>。如果您只是从本地文件运行示例，某些浏览器（包括 Chrome）将不会运行异步请求。这是因为安全限制。</li>
-<li><strong>它们具有服务器端语言</strong>。服务器端语言（例如 PHP 或 Python）需要一个特殊的服务器来解释代码并交付结果。</li>
-</ul>
-<h2 id="利用Python建立简单本地HTTP服务器"><a href="#利用Python建立简单本地HTTP服务器" class="headerlink" title="利用Python建立简单本地HTTP服务器"></a>利用Python建立简单本地HTTP服务器</h2><ul>
-<li><p>安装Python</p>
-</li>
-<li><p>运行命令行（我是mac），输入以下命令检查是否安装：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure></li>
-<li><p>cd到目标文件目录</p>
-</li>
-<li><p>启动服务器</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure></li>
-<li><p>默认端口号是8000，通过localhost:8000来访问此服务器</p>
-</li>
-<li><p><strong>PS:</strong> 切换端口号使用如下命令（以7800端口号为例）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 7800</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><em><strong>最后， Python的http.server只是静态文件服务器，他无法运行python、php、javascript等语言的代码，所以要在本地运行服务器端语言代码，可以使用Python Web框架，比如Django等</strong></em></p>
-]]></content>
-      <categories>
-        <category>Frontend/前端</category>
-      </categories>
-      <tags>
-        <tag>Server</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>再探 React Hooks</title>
     <url>/2022/02/21/ReactHookIntro2/</url>
     <content><![CDATA[<p><strong>在之前的一章我们已经了解了 React Hook 的一些基本特性/优点和一些使用方法。在这一章中，我们将深入介绍另外几个常用的钩子。</strong></p>
@@ -900,6 +900,75 @@
 
 
 <p><strong>Notes：</strong>以上内容借鉴了阮一峰老师的文章。</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初识 React Hook</title>
+    <url>/2022/02/12/ReactHookIntroduction/</url>
+    <content><![CDATA[<p>在Facebook以及社区成员的大力推广下，如今React已经几乎成为前端开发的必备技能。但随着对版本的不断优化和迭代，React官方决定<strong>逐步废弃 Class Component 的API</strong>，<strong>全面拥抱 Function Component 的API 即基于函数的钩子 Hook</strong> 。这一趋势也是在意料之中，React建立之初本就是面向函数式的，之后加入的类组件API颇有些“强扭瓜不甜”的味道。本次，我们将初步了解一下 React Hook 的用法。</p>
+<a id="more"></a>
+
+<h1 id="React-Hook"><a href="#React-Hook" class="headerlink" title="React Hook"></a>React Hook</h1><h2 id="一、关于React的两套API"><a href="#一、关于React的两套API" class="headerlink" title="一、关于React的两套API"></a>一、关于React的两套API</h2><p>很久以前，React大多数情况下都是使用一套API 即类组件API，然而随着React引入了全新的基于函数的钩子 Hook，函数式组件的使用变得更加广泛。</p>
+<p>因此，现在任何一个组件既可以用类来写，又可以用钩子即函数来写。</p>
+<p>示例代码如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// class component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function component</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正如前文所说，尽管两者都可以使用，但是现在官方推荐使用钩子（函数）。</p>
+<p>使用函数式的写法即钩子有很多好处：</p>
+<ol>
+<li><p>视觉上：钩子更简洁，代码量更少</p>
+<p>原因：钩子 Hooks可以更优雅地实现逻辑复用。开发人员可以把逻辑抽象成钩子 Hooks 以实现代码复用，进一步，更可以将其发布为Library，供React生态社区的其他人使用。</p>
+<p>再比如：钩子 Hooks (主要为useEffect) 充当了函数式组件中的“生命周期”的概念，这也大大减少了API</p>
+</li>
+<li><p>使用上：钩子更灵活，用起来更“轻”，类组件则相对更“重”</p>
+</li>
+<li><p>🌈屁：更符合React函数式的本质</p>
+</li>
+</ol>
+<h2 id="二、二者差异"><a href="#二、二者差异" class="headerlink" title="二、二者差异"></a>二、二者差异</h2><h3 id="1-Class-Component"><a href="#1-Class-Component" class="headerlink" title="1. Class Component"></a>1. Class Component</h3><p>类组件是<strong>数据和逻辑的封装</strong>。组件的状态和操作方法是封装在一起的。因此在类组件的写法中，相关的数据和操作方法一般需要写在同一个 class 中。</p>
+<h3 id="2-Function-Component"><a href="#2-Function-Component" class="headerlink" title="2. Function Component"></a>2. Function Component</h3><p>函数组件是<strong>只聚焦于一件事，即返回一个值</strong>。如果有多个操作，每个操作应该单独写成一个函数。并且，<strong>数据的状态应该与操作方法分离</strong>。因此，在React中的函数组件应该只专注于一件事即：<strong>返回组件的HTML代码</strong>。这种根据输入的数据，只进行单纯的数据计算的函数，称为<strong>“纯函数”</strong>（在函数式编程中）。</p>
+<p><strong>Notes：</strong>以上参考了阮一峰老师的Blog。</p>
+<h2 id="三、副效应"><a href="#三、副效应" class="headerlink" title="三、副效应"></a>三、副效应</h2><p>首先考虑一个问题，函数式组件是纯函数，因此只能进行数据计算，那么<strong>诸如生成日志、存储数据、改变应用状态等等不涉及计算的操作</strong>就无法被函数组件直接包含，我们把它们称为<strong>副效应（side effect）</strong>。因为如果函数内部直接包含副效应，它便不再是纯函数了，所以在函数组件内部，我们<strong>通过间接的方法来包含副效应</strong>。</p>
+<h2 id="四、钩子-Hook"><a href="#四、钩子-Hook" class="headerlink" title="四、钩子 Hook"></a>四、钩子 Hook</h2><p>简言之：<strong>钩子（hook）是React函数组件的副效应的解决方案，用来为函数组件引入副效应。</strong></p>
+<p>函数组件只用来返回组件的HTML代码，所有的副效应都通过钩子来引入。</p>
+<p>由于副效应很多，所以相应的钩子也有很多。React为一些常见的副效应提供了专用的钩子。</p>
+<ul>
+<li><strong>useState(): 保存状态</strong></li>
+<li><strong>useContext(): 保存上下文</strong></li>
+<li><strong>useRef(): 保存引用</strong></li>
+<li>…</li>
+</ul>
+<p>以上的这些钩子都是引入某种特定的副效应，而 <strong>useEffect()</strong> 是<strong>通用的副效应钩子</strong>。在找不到对应的钩子时，可以使用它。</p>
+<h2 id="五、useEffect-的用法"><a href="#五、useEffect-的用法" class="headerlink" title="五、useEffect() 的用法"></a>五、useEffect() 的用法</h2><h3 id="1-基本用法——第一个参数"><a href="#1-基本用法——第一个参数" class="headerlink" title="1. 基本用法——第一个参数"></a>1. 基本用法——第一个参数</h3><p>useEffect() 本身是一个函数，由React提供，在函数组件内部调用即可。</p>
+<p>useEffect() 的第一个参数是一个函数，它就是副效应。<strong>组件的首次加载到DOM以及以后组件的每次渲染，React都会自动执行该函数。</strong></p>
+<p>例如，我们希望组件加载以后，网页标题（document.title）会随之改变。那么，改变标题这个操作就是组件的副效应，可以通过 useEffect() 来实现。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">&#x27;加载完成&#x27;</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-基本用法——第二个参数"><a href="#2-基本用法——第二个参数" class="headerlink" title="2. 基本用法——第二个参数"></a>2. 基本用法——第二个参数</h3><p>但是，有些时候，我们不希望 useEffect() 每次渲染都执行，这时候可以使用它的第二个参数。useEffect() 的第二参数是一个数组类型的参数，它可以用于指定副效应函数的<strong>依赖项</strong>，<strong>只有当依赖项发生变化时，组件才会重新渲染</strong>。</p>
+<p>示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`Hello, <span class="subst">$&#123;props.name&#125;</span>`</span>;</span><br><span class="line">  &#125;, [props.name]);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，<strong>如果第二个参数是一个空数组</strong>，就表明副效应函数<strong>没有任何依赖项</strong>。因此，副效应函数<strong>只会在组件加载到DOM后执行一次</strong>，此后即使组件重新渲染，也不再执行。</p>
+<h2 id="六、useEffect-的用途"><a href="#六、useEffect-的用途" class="headerlink" title="六、useEffect() 的用途"></a>六、useEffect() 的用途</h2><p>只要是副效应，都可以使用 useEffect() 来引入。它的常见用途有如下几种：</p>
+<ul>
+<li>获取数据（data fetching）</li>
+<li>事件监听或订阅（setting up a subscription）</li>
+<li>改变 DOM（changing the DOM）</li>
+<li>输出日志（logging）</li>
+</ul>
+<p>示例如下（从远程服务器获取数据）：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [data, setData] = useState(&#123; <span class="attr">hits</span>: [] &#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> fetchData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> result = <span class="keyword">await</span> axios(</span><br><span class="line">        <span class="string">&#x27;https://getdataAPI/?id=1&#x27;</span>,</span><br><span class="line">      );</span><br><span class="line">      </span><br><span class="line">      setData(result.data);</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, []);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &#123;data.hits.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        &lt;li key = &#123;item.id&#125;&gt;</span><br><span class="line">          &lt;a href=&#123;item.url&#125;&gt;&#123;item.title&#125;&lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &#125;)&#125;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+<p>在该示例中，useState() 用来生成一个状态变量和设置状态变量的方法以保存/更新获取的数据。useEffecr() 的副效应函数内部有一个异步函数 async 函数，用来从服务器异步获取数据，等拿到数据以后，再用 setData() 更新状态以出发组件重新渲染。</p>
+<p>注意：此处的第二个参数为一个空数组，因为在该示例中只需获取数据一次即可。</p>
+<h2 id="七、useEffect-的返回值"><a href="#七、useEffect-的返回值" class="headerlink" title="七、useEffect() 的返回值"></a>七、useEffect() 的返回值</h2><p>副效应是随着组件加载而产生的，那么当组件卸载时，有时也需要清理这些副效应。</p>
+<p>useEffect() <strong>允许返回一个函数</strong>，<strong>在组件卸载时会执行该函数</strong>，<strong>清理副效应</strong>（实际上，由于副效应函数在组件每次渲染时都会执行，因此清理副效应不仅会发生在组件卸载时，而且每次副效应执行前，都会执行一次来清理上一次渲染的副效应）。如果不需要清理副效应，那么 useEffect() 不用返回任何值。</p>
+<p>例如，副效应为组件加载时订阅一个事件，那么在组件卸载时，我们需要取消订阅，因此我们需要清理这个副效应。示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> subscription = props.source.subscribe();</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    subscription.unsubscribe();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;, [props.source]);</span><br></pre></td></tr></table></figure>
+<h2 id="八、useEffect-的注意点"><a href="#八、useEffect-的注意点" class="headerlink" title="八、useEffect() 的注意点"></a>八、useEffect() 的注意点</h2><p>使用 useEffect() 时，<strong>如果有多个副效应</strong>，**应该调用多个 useEffect()**，而不是合并写成一个。</p>
+<p><strong>Notes：</strong>以上内容借鉴自阮一峰老师的博客。</p>
 ]]></content>
       <categories>
         <category>FrontEnd/前端</category>
@@ -991,66 +1060,68 @@
       </tags>
   </entry>
   <entry>
-    <title>初识 React Hook</title>
-    <url>/2022/02/12/ReactHookIntroduction/</url>
-    <content><![CDATA[<p>在Facebook以及社区成员的大力推广下，如今React已经几乎成为前端开发的必备技能。但随着对版本的不断优化和迭代，React官方决定<strong>逐步废弃 Class Component 的API</strong>，<strong>全面拥抱 Function Component 的API 即基于函数的钩子 Hook</strong> 。这一趋势也是在意料之中，React建立之初本就是面向函数式的，之后加入的类组件API颇有些“强扭瓜不甜”的味道。本次，我们将初步了解一下 React Hook 的用法。</p>
+    <title>Redux入门操作详解</title>
+    <url>/2021/11/28/ReduxIntroduction/</url>
+    <content><![CDATA[<p><strong>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。</strong>随着 JavaScript 单页应用开发日趋复杂，<strong>JavaScript 需要管理比任何时候都要多的 state （状态）</strong>。 这些 state 可能包括<strong>服务器响应、缓存数据、本地生成尚未持久化到服务器的数据</strong>，也包括<strong>UI 状态，如激活的路由，被选中的标签，是否显示加载动效或者分页器</strong>等等。<strong>本次主要讲解当前针对react框架的redux，即REACT-REDUX。</strong></p>
 <a id="more"></a>
 
-<h1 id="React-Hook"><a href="#React-Hook" class="headerlink" title="React Hook"></a>React Hook</h1><h2 id="一、关于React的两套API"><a href="#一、关于React的两套API" class="headerlink" title="一、关于React的两套API"></a>一、关于React的两套API</h2><p>很久以前，React大多数情况下都是使用一套API 即类组件API，然而随着React引入了全新的基于函数的钩子 Hook，函数式组件的使用变得更加广泛。</p>
-<p>因此，现在任何一个组件既可以用类来写，又可以用钩子即函数来写。</p>
-<p>示例代码如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// class component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function component</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>正如前文所说，尽管两者都可以使用，但是现在官方推荐使用钩子（函数）。</p>
-<p>使用函数式的写法即钩子有很多好处：</p>
-<ol>
-<li><p>视觉上：钩子更简洁，代码量更少</p>
-<p>原因：钩子 Hooks可以更优雅地实现逻辑复用。开发人员可以把逻辑抽象成钩子 Hooks 以实现代码复用，进一步，更可以将其发布为Library，供React生态社区的其他人使用。</p>
-<p>再比如：钩子 Hooks (主要为useEffect) 充当了函数式组件中的“生命周期”的概念，这也大大减少了API</p>
-</li>
-<li><p>使用上：钩子更灵活，用起来更“轻”，类组件则相对更“重”</p>
-</li>
-<li><p>🌈屁：更符合React函数式的本质</p>
-</li>
-</ol>
-<h2 id="二、二者差异"><a href="#二、二者差异" class="headerlink" title="二、二者差异"></a>二、二者差异</h2><h3 id="1-Class-Component"><a href="#1-Class-Component" class="headerlink" title="1. Class Component"></a>1. Class Component</h3><p>类组件是<strong>数据和逻辑的封装</strong>。组件的状态和操作方法是封装在一起的。因此在类组件的写法中，相关的数据和操作方法一般需要写在同一个 class 中。</p>
-<h3 id="2-Function-Component"><a href="#2-Function-Component" class="headerlink" title="2. Function Component"></a>2. Function Component</h3><p>函数组件是<strong>只聚焦于一件事，即返回一个值</strong>。如果有多个操作，每个操作应该单独写成一个函数。并且，<strong>数据的状态应该与操作方法分离</strong>。因此，在React中的函数组件应该只专注于一件事即：<strong>返回组件的HTML代码</strong>。这种根据输入的数据，只进行单纯的数据计算的函数，称为<strong>“纯函数”</strong>（在函数式编程中）。</p>
-<p><strong>Notes：</strong>以上参考了阮一峰老师的Blog。</p>
-<h2 id="三、副效应"><a href="#三、副效应" class="headerlink" title="三、副效应"></a>三、副效应</h2><p>首先考虑一个问题，函数式组件是纯函数，因此只能进行数据计算，那么<strong>诸如生成日志、存储数据、改变应用状态等等不涉及计算的操作</strong>就无法被函数组件直接包含，我们把它们称为<strong>副效应（side effect）</strong>。因为如果函数内部直接包含副效应，它便不再是纯函数了，所以在函数组件内部，我们<strong>通过间接的方法来包含副效应</strong>。</p>
-<h2 id="四、钩子-Hook"><a href="#四、钩子-Hook" class="headerlink" title="四、钩子 Hook"></a>四、钩子 Hook</h2><p>简言之：<strong>钩子（hook）是React函数组件的副效应的解决方案，用来为函数组件引入副效应。</strong></p>
-<p>函数组件只用来返回组件的HTML代码，所有的副效应都通过钩子来引入。</p>
-<p>由于副效应很多，所以相应的钩子也有很多。React为一些常见的副效应提供了专用的钩子。</p>
-<ul>
-<li><strong>useState(): 保存状态</strong></li>
-<li><strong>useContext(): 保存上下文</strong></li>
-<li><strong>useRef(): 保存引用</strong></li>
-<li>…</li>
-</ul>
-<p>以上的这些钩子都是引入某种特定的副效应，而 <strong>useEffect()</strong> 是<strong>通用的副效应钩子</strong>。在找不到对应的钩子时，可以使用它。</p>
-<h2 id="五、useEffect-的用法"><a href="#五、useEffect-的用法" class="headerlink" title="五、useEffect() 的用法"></a>五、useEffect() 的用法</h2><h3 id="1-基本用法——第一个参数"><a href="#1-基本用法——第一个参数" class="headerlink" title="1. 基本用法——第一个参数"></a>1. 基本用法——第一个参数</h3><p>useEffect() 本身是一个函数，由React提供，在函数组件内部调用即可。</p>
-<p>useEffect() 的第一个参数是一个函数，它就是副效应。<strong>组件的首次加载到DOM以及以后组件的每次渲染，React都会自动执行该函数。</strong></p>
-<p>例如，我们希望组件加载以后，网页标题（document.title）会随之改变。那么，改变标题这个操作就是组件的副效应，可以通过 useEffect() 来实现。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">&#x27;加载完成&#x27;</span>;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-基本用法——第二个参数"><a href="#2-基本用法——第二个参数" class="headerlink" title="2. 基本用法——第二个参数"></a>2. 基本用法——第二个参数</h3><p>但是，有些时候，我们不希望 useEffect() 每次渲染都执行，这时候可以使用它的第二个参数。useEffect() 的第二参数是一个数组类型的参数，它可以用于指定副效应函数的<strong>依赖项</strong>，<strong>只有当依赖项发生变化时，组件才会重新渲染</strong>。</p>
-<p>示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Welcome</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">document</span>.title = <span class="string">`Hello, <span class="subst">$&#123;props.name&#125;</span>`</span>;</span><br><span class="line">  &#125;, [props.name]);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, &#123;props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是，<strong>如果第二个参数是一个空数组</strong>，就表明副效应函数<strong>没有任何依赖项</strong>。因此，副效应函数<strong>只会在组件加载到DOM后执行一次</strong>，此后即使组件重新渲染，也不再执行。</p>
-<h2 id="六、useEffect-的用途"><a href="#六、useEffect-的用途" class="headerlink" title="六、useEffect() 的用途"></a>六、useEffect() 的用途</h2><p>只要是副效应，都可以使用 useEffect() 来引入。它的常见用途有如下几种：</p>
-<ul>
-<li>获取数据（data fetching）</li>
-<li>事件监听或订阅（setting up a subscription）</li>
-<li>改变 DOM（changing the DOM）</li>
-<li>输出日志（logging）</li>
-</ul>
-<p>示例如下（从远程服务器获取数据）：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [data, setData] = useState(&#123; <span class="attr">hits</span>: [] &#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> fetchData = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> result = <span class="keyword">await</span> axios(</span><br><span class="line">        <span class="string">&#x27;https://getdataAPI/?id=1&#x27;</span>,</span><br><span class="line">      );</span><br><span class="line">      </span><br><span class="line">      setData(result.data);</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    fetchData();</span><br><span class="line">  &#125;, []);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &#123;data.hits.map(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        &lt;li key = &#123;item.id&#125;&gt;</span><br><span class="line">          &lt;a href=&#123;item.url&#125;&gt;&#123;item.title&#125;&lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">      &#125;)&#125;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
-<p>在该示例中，useState() 用来生成一个状态变量和设置状态变量的方法以保存/更新获取的数据。useEffecr() 的副效应函数内部有一个异步函数 async 函数，用来从服务器异步获取数据，等拿到数据以后，再用 setData() 更新状态以出发组件重新渲染。</p>
-<p>注意：此处的第二个参数为一个空数组，因为在该示例中只需获取数据一次即可。</p>
-<h2 id="七、useEffect-的返回值"><a href="#七、useEffect-的返回值" class="headerlink" title="七、useEffect() 的返回值"></a>七、useEffect() 的返回值</h2><p>副效应是随着组件加载而产生的，那么当组件卸载时，有时也需要清理这些副效应。</p>
-<p>useEffect() <strong>允许返回一个函数</strong>，<strong>在组件卸载时会执行该函数</strong>，<strong>清理副效应</strong>（实际上，由于副效应函数在组件每次渲染时都会执行，因此清理副效应不仅会发生在组件卸载时，而且每次副效应执行前，都会执行一次来清理上一次渲染的副效应）。如果不需要清理副效应，那么 useEffect() 不用返回任何值。</p>
-<p>例如，副效应为组件加载时订阅一个事件，那么在组件卸载时，我们需要取消订阅，因此我们需要清理这个副效应。示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> subscription = props.source.subscribe();</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    subscription.unsubscribe();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;, [props.source]);</span><br></pre></td></tr></table></figure>
-<h2 id="八、useEffect-的注意点"><a href="#八、useEffect-的注意点" class="headerlink" title="八、useEffect() 的注意点"></a>八、useEffect() 的注意点</h2><p>使用 useEffect() 时，<strong>如果有多个副效应</strong>，**应该调用多个 useEffect()**，而不是合并写成一个。</p>
-<p><strong>Notes：</strong>以上内容借鉴自阮一峰老师的博客。</p>
+<h1 id="React-Redux"><a href="#React-Redux" class="headerlink" title="React-Redux"></a>React-Redux</h1><p><strong>首先，react-redux与redux的核心理念一致，只是一些API的使用上存在差异，react-redux使得在react中使用redux更为简便。</strong></p>
+<h2 id="Redux的三大原则——Three-Principles"><a href="#Redux的三大原则——Three-Principles" class="headerlink" title="Redux的三大原则——Three Principles"></a>Redux的三大原则——Three Principles</h2><h3 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h3><p>整个应用的<code>state</code>被存储在一棵object tree上，并且这个object tree只存在于<code>store</code>，且<code>store</code>是唯一的，仅此一个。</p>
+<h3 id="State只读"><a href="#State只读" class="headerlink" title="State只读"></a>State只读</h3><p>唯一改变state的方法是触发<strong>action</strong>，action是一个用于描述已发生事件的对象，其形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code></p>
+<h3 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h3><p><strong>为了描述action如何改变state tree，需要编写reducers。</strong></p>
+<p>Reducer只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
+<h2 id="React-Redux实际操作步骤"><a href="#React-Redux实际操作步骤" class="headerlink" title="React-Redux实际操作步骤"></a>React-Redux实际操作步骤</h2><h3 id="步骤一"><a href="#步骤一" class="headerlink" title="步骤一"></a>步骤一</h3><p>在src下新建名为<code>redux</code>的文件，并创建好4个common JS文件，分别为<code>store.js</code>, <code>reducer.js</code>, <code>action.js</code>以及<code>constant.js</code>。其中<code>constant.js</code>用于存储常量，其余三个代表redux的三个核心。</p>
+<p>注：如果不只一个<code>action/reducer</code>，可以分别创建action和reducer的文件夹。</p>
+<p>在<code>index.js</code>中引入<code>store.js</code>，并从<code>react-redux</code>中引入<code>Provider</code>，<code>Provider</code>组件用于给<code>App</code>下的每个需要用到redux的组件传递<code>store</code>。实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./redux/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">    <span class="comment">//为所有组件提供store</span></span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;/Provider&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="步骤二——编写store"><a href="#步骤二——编写store" class="headerlink" title="步骤二——编写store"></a>步骤二——编写store</h3><p>在store文件中引入能创建<code>store</code>实例的<code>creatStore</code>、能修改状态的<code>reducer</code>和能执行异步的<code>thunk</code>和中间件<code>applyMiddleware</code>（如果需要）。</p>
+<p>注：<strong>对于多个状态需要维护的情况，从<code>redux</code>中引入<code>combineReducers</code>方法，该方法可以通过对象<code>&#123;&#125;</code>的键值对<code>key:value</code>形式，维护任意多个状态（即reducer）。</strong></p>
+<p>实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore, applyMiddleware, combineReducers&#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> countReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/count&#x27;</span></span><br><span class="line"><span class="keyword">import</span> personReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/person&#x27;</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> allReducers = combineReducers(&#123;<span class="attr">count</span>: countReducer, <span class="attr">people</span>: personReducer&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(allReducers, applyMiddleware(thunk))</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
+<h3 id="步骤三——编写action"><a href="#步骤三——编写action" class="headerlink" title="步骤三——编写action"></a>步骤三——编写action</h3><p>引入store文件，和常量文件constant（如果有）。编写action函数，其会返回一个action对象，形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code>。</p>
+<p>实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;../store&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;INCREMENT, DECREMENT&#125; <span class="keyword">from</span> <span class="string">&#x27;../constant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:INCREMENT, data&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createDecrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:DECREMENT, data&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAsyncAction = <span class="function">(<span class="params">data, time</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            store.dispatch(&#123;<span class="attr">type</span>:INCREMENT, data&#125;)</span><br><span class="line">        &#125;, time)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="步骤四——编写reducer"><a href="#步骤四——编写reducer" class="headerlink" title="步骤四——编写reducer"></a>步骤四——编写reducer</h3><p><strong>reducer负责维护状态。</strong>编写reducer函数，需要设置初始化的状态值，并对函数传入<code>action</code>参数，根据<code>action</code>对象的<code>type</code>和<code>data</code>对状态进行操作，并返回操作后的状态。</p>
+<p>实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> initNumber = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">countReducer</span>(<span class="params">preState=initNumber, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;type, data&#125; = action;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;increment&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState + data;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;decrement&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState - data;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> preState;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>至此，redux部分的基本三大件已经写完。接下来需要编写组建模块。</p>
+<h3 id="步骤五——编写Container-Component"><a href="#步骤五——编写Container-Component" class="headerlink" title="步骤五——编写Container/Component"></a>步骤五——编写Container/Component</h3><p>首先，引入<code>action</code>，并从<code>react-redux</code>中引入<code>connect</code>函数，该函数用于创建并暴露一个Container容器，同时将state和action传入组件中，并且它们都会被传入到组件自身的<code>prorps</code>属性中。实例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入connect</span></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"><span class="comment">// 引入action</span></span><br><span class="line"><span class="keyword">import</span> &#123;createIncrementAction, createDecrementAction, createIncrementAsyncAction&#125; <span class="keyword">from</span> <span class="string">&#x27;../../redux/actions/count&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Count</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">  	<span class="comment">// 传入state</span></span><br><span class="line">    state =&gt; (&#123;<span class="attr">count</span>: state.count, <span class="attr">people</span>: state.people&#125;),</span><br><span class="line">  	<span class="comment">// 传入action</span></span><br><span class="line">    &#123;<span class="attr">increment</span>: createIncrementAction,</span><br><span class="line">     decrement: createDecrementAction,</span><br><span class="line">     asyncIncrement: createIncrementAsyncAction</span><br><span class="line">    &#125;</span><br><span class="line">    )(Count)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ]]></content>
       <categories>
         <category>FrontEnd/前端</category>
@@ -1372,77 +1443,6 @@
       </categories>
       <tags>
         <tag>FrontEnd</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redux入门操作详解</title>
-    <url>/2021/11/28/ReduxIntroduction/</url>
-    <content><![CDATA[<p><strong>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。</strong>随着 JavaScript 单页应用开发日趋复杂，<strong>JavaScript 需要管理比任何时候都要多的 state （状态）</strong>。 这些 state 可能包括<strong>服务器响应、缓存数据、本地生成尚未持久化到服务器的数据</strong>，也包括<strong>UI 状态，如激活的路由，被选中的标签，是否显示加载动效或者分页器</strong>等等。<strong>本次主要讲解当前针对react框架的redux，即REACT-REDUX。</strong></p>
-<a id="more"></a>
-
-<h1 id="React-Redux"><a href="#React-Redux" class="headerlink" title="React-Redux"></a>React-Redux</h1><p><strong>首先，react-redux与redux的核心理念一致，只是一些API的使用上存在差异，react-redux使得在react中使用redux更为简便。</strong></p>
-<h2 id="Redux的三大原则——Three-Principles"><a href="#Redux的三大原则——Three-Principles" class="headerlink" title="Redux的三大原则——Three Principles"></a>Redux的三大原则——Three Principles</h2><h3 id="单一数据源"><a href="#单一数据源" class="headerlink" title="单一数据源"></a>单一数据源</h3><p>整个应用的<code>state</code>被存储在一棵object tree上，并且这个object tree只存在于<code>store</code>，且<code>store</code>是唯一的，仅此一个。</p>
-<h3 id="State只读"><a href="#State只读" class="headerlink" title="State只读"></a>State只读</h3><p>唯一改变state的方法是触发<strong>action</strong>，action是一个用于描述已发生事件的对象，其形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code></p>
-<h3 id="使用纯函数来执行修改"><a href="#使用纯函数来执行修改" class="headerlink" title="使用纯函数来执行修改"></a>使用纯函数来执行修改</h3><p><strong>为了描述action如何改变state tree，需要编写reducers。</strong></p>
-<p>Reducer只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。</p>
-<h2 id="React-Redux实际操作步骤"><a href="#React-Redux实际操作步骤" class="headerlink" title="React-Redux实际操作步骤"></a>React-Redux实际操作步骤</h2><h3 id="步骤一"><a href="#步骤一" class="headerlink" title="步骤一"></a>步骤一</h3><p>在src下新建名为<code>redux</code>的文件，并创建好4个common JS文件，分别为<code>store.js</code>, <code>reducer.js</code>, <code>action.js</code>以及<code>constant.js</code>。其中<code>constant.js</code>用于存储常量，其余三个代表redux的三个核心。</p>
-<p>注：如果不只一个<code>action/reducer</code>，可以分别创建action和reducer的文件夹。</p>
-<p>在<code>index.js</code>中引入<code>store.js</code>，并从<code>react-redux</code>中引入<code>Provider</code>，<code>Provider</code>组件用于给<code>App</code>下的每个需要用到redux的组件传递<code>store</code>。实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./redux/store&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;Provider&#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">    <span class="comment">//为所有组件提供store</span></span><br><span class="line">    &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;/Provider&gt;,</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>));</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="步骤二——编写store"><a href="#步骤二——编写store" class="headerlink" title="步骤二——编写store"></a>步骤二——编写store</h3><p>在store文件中引入能创建<code>store</code>实例的<code>creatStore</code>、能修改状态的<code>reducer</code>和能执行异步的<code>thunk</code>和中间件<code>applyMiddleware</code>（如果需要）。</p>
-<p>注：<strong>对于多个状态需要维护的情况，从<code>redux</code>中引入<code>combineReducers</code>方法，该方法可以通过对象<code>&#123;&#125;</code>的键值对<code>key:value</code>形式，维护任意多个状态（即reducer）。</strong></p>
-<p>实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore, applyMiddleware, combineReducers&#125; <span class="keyword">from</span> <span class="string">&#x27;redux&#x27;</span></span><br><span class="line"><span class="keyword">import</span> countReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/count&#x27;</span></span><br><span class="line"><span class="keyword">import</span> personReducer <span class="keyword">from</span> <span class="string">&#x27;./reducers/person&#x27;</span></span><br><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">&#x27;redux-thunk&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> allReducers = combineReducers(&#123;<span class="attr">count</span>: countReducer, <span class="attr">people</span>: personReducer&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = createStore(allReducers, applyMiddleware(thunk))</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store</span><br></pre></td></tr></table></figure>
-<h3 id="步骤三——编写action"><a href="#步骤三——编写action" class="headerlink" title="步骤三——编写action"></a>步骤三——编写action</h3><p>引入store文件，和常量文件constant（如果有）。编写action函数，其会返回一个action对象，形式为<code>&#123;type:&quot;&quot;, data:&quot;&quot;&#125;</code>。</p>
-<p>实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;../store&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;INCREMENT, DECREMENT&#125; <span class="keyword">from</span> <span class="string">&#x27;../constant&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:INCREMENT, data&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createDecrementAction = <span class="function"><span class="params">data</span> =&gt;</span> (&#123;<span class="attr">type</span>:DECREMENT, data&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createIncrementAsyncAction = <span class="function">(<span class="params">data, time</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            store.dispatch(&#123;<span class="attr">type</span>:INCREMENT, data&#125;)</span><br><span class="line">        &#125;, time)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="步骤四——编写reducer"><a href="#步骤四——编写reducer" class="headerlink" title="步骤四——编写reducer"></a>步骤四——编写reducer</h3><p><strong>reducer负责维护状态。</strong>编写reducer函数，需要设置初始化的状态值，并对函数传入<code>action</code>参数，根据<code>action</code>对象的<code>type</code>和<code>data</code>对状态进行操作，并返回操作后的状态。</p>
-<p>实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> initNumber = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">countReducer</span>(<span class="params">preState=initNumber, action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;type, data&#125; = action;</span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;increment&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState + data;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;decrement&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> preState - data;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> preState;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>至此，redux部分的基本三大件已经写完。接下来需要编写组建模块。</p>
-<h3 id="步骤五——编写Container-Component"><a href="#步骤五——编写Container-Component" class="headerlink" title="步骤五——编写Container/Component"></a>步骤五——编写Container/Component</h3><p>首先，引入<code>action</code>，并从<code>react-redux</code>中引入<code>connect</code>函数，该函数用于创建并暴露一个Container容器，同时将state和action传入组件中，并且它们都会被传入到组件自身的<code>prorps</code>属性中。实例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 引入connect</span></span><br><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">&#x27;react-redux&#x27;</span></span><br><span class="line"><span class="comment">// 引入action</span></span><br><span class="line"><span class="keyword">import</span> &#123;createIncrementAction, createDecrementAction, createIncrementAsyncAction&#125; <span class="keyword">from</span> <span class="string">&#x27;../../redux/actions/count&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Count</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(</span><br><span class="line">  	<span class="comment">// 传入state</span></span><br><span class="line">    state =&gt; (&#123;<span class="attr">count</span>: state.count, <span class="attr">people</span>: state.people&#125;),</span><br><span class="line">  	<span class="comment">// 传入action</span></span><br><span class="line">    &#123;<span class="attr">increment</span>: createIncrementAction,</span><br><span class="line">     decrement: createDecrementAction,</span><br><span class="line">     asyncIncrement: createIncrementAsyncAction</span><br><span class="line">    &#125;</span><br><span class="line">    )(Count)</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
       </tags>
   </entry>
   <entry>
