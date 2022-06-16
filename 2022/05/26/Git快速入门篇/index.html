@@ -22,20 +22,24 @@
     var CONFIG = {"hostname":"wizard-guido.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Algorithm Time Complexity   Algorithm Best Time Complexity Ave TC Worst TC    Selection Sort Ω($n^2$) Θ($n^2$) O($n^2$)   Bubble Sort Ω($n$) Θ($n^2$) O($n^2$)   Insertion Sort Ω($n$) Θ($n^2$) O($n^2$)">
+  <meta name="description" content="Git快速入门篇1. Git基础Git是一款分布式版本控制工具，常用于管理软件代码版本。 1.2 Git文件的状态    未加入Git 工作区Working Directory 暂存区Staging Area 本地仓库Repository    未跟踪或者被.gitignore忽略的文件 修改过的且被Tracked的文件 修改过的文件在 git add 之后会暂存到暂存区。暂存区的文件会形成快照，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Handy CheatSheet">
-<meta property="og:url" content="https://wizard-guido.github.io/2021/10/27/Handy-CheatSheet/index.html">
+<meta property="og:title" content="Git快速入门篇">
+<meta property="og:url" content="https://wizard-guido.github.io/2022/05/26/Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87/index.html">
 <meta property="og:site_name" content="二进制的流浪">
-<meta property="og:description" content="Algorithm Time Complexity   Algorithm Best Time Complexity Ave TC Worst TC    Selection Sort Ω($n^2$) Θ($n^2$) O($n^2$)   Bubble Sort Ω($n$) Θ($n^2$) O($n^2$)   Insertion Sort Ω($n$) Θ($n^2$) O($n^2$)">
+<meta property="og:description" content="Git快速入门篇1. Git基础Git是一款分布式版本控制工具，常用于管理软件代码版本。 1.2 Git文件的状态    未加入Git 工作区Working Directory 暂存区Staging Area 本地仓库Repository    未跟踪或者被.gitignore忽略的文件 修改过的且被Tracked的文件 修改过的文件在 git add 之后会暂存到暂存区。暂存区的文件会形成快照，">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-10-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-22T22:50:58.497Z">
+<meta property="og:image" content="https://wizard-guido.github.io/pic/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Git.png">
+<meta property="og:image" content="https://wizard-guido.github.io/pic/Git1.png">
+<meta property="og:image" content="https://wizard-guido.github.io/pic/GitWorkFlow.png">
+<meta property="article:published_time" content="2022-05-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-16T09:32:15.287Z">
 <meta property="article:author" content="Will">
-<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wizard-guido.github.io/pic/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Git.png">
 
-<link rel="canonical" href="https://wizard-guido.github.io/2021/10/27/Handy-CheatSheet/">
+<link rel="canonical" href="https://wizard-guido.github.io/2022/05/26/Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87/">
 
 
 <script id="page-configurations">
@@ -70,7 +74,7 @@
       }
   }
 </script>
-  <title>Handy CheatSheet | 二进制的流浪</title>
+  <title>Git快速入门篇 | 二进制的流浪</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEB2EZELMD"></script>
     <script>
@@ -233,7 +237,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2021/10/27/Handy-CheatSheet/">
+    <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2022/05/26/Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -246,7 +250,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Handy CheatSheet
+          Git快速入门篇
         </h1>
 
         <div class="post-meta">
@@ -256,14 +260,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-10-27 00:00:00" itemprop="dateCreated datePublished" datetime="2021-10-27T00:00:00+08:00">2021-10-27</time>
+              <time title="创建时间：2022-05-26 00:00:00" itemprop="dateCreated datePublished" datetime="2022-05-26T00:00:00+08:00">2022-05-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-23 06:50:58" itemprop="dateModified" datetime="2022-02-23T06:50:58+08:00">2022-02-23</time>
+                <time title="修改时间：2022-06-16 17:32:15" itemprop="dateModified" datetime="2022-06-16T17:32:15+08:00">2022-06-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -271,7 +275,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm-%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">Algorithm/算法</span></a>
+                  <a href="/categories/FrontEnd-%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">FrontEnd/前端</span></a>
                 </span>
             </span>
 
@@ -281,14 +285,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>572</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -300,81 +304,206 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Algorithm-Time-Complexity"><a href="#Algorithm-Time-Complexity" class="headerlink" title="Algorithm Time Complexity"></a>Algorithm Time Complexity</h1><table>
+        <h1 id="Git快速入门篇"><a href="#Git快速入门篇" class="headerlink" title="Git快速入门篇"></a>Git快速入门篇</h1><h2 id="1-Git基础"><a href="#1-Git基础" class="headerlink" title="1. Git基础"></a>1. Git基础</h2><p>Git是一款<strong>分布式版本控制工具</strong>，常用于管理软件代码版本。</p>
+<h3 id="1-2-Git文件的状态"><a href="#1-2-Git文件的状态" class="headerlink" title="1.2 Git文件的状态"></a>1.2 Git文件的状态</h3><p><img src="/pic/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Git.png" alt="Git"></p>
+<table>
 <thead>
 <tr>
-<th align="center">Algorithm</th>
-<th align="center">Best Time Complexity</th>
-<th align="center">Ave TC</th>
-<th align="center">Worst TC</th>
+<th>未加入Git</th>
+<th>工作区Working Directory</th>
+<th>暂存区Staging Area</th>
+<th>本地仓库Repository</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">Selection Sort</td>
-<td align="center">Ω($n^2$)</td>
-<td align="center">Θ($n^2$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
+<td>未跟踪或者被.gitignore忽略的文件</td>
+<td>修改过的且被Tracked的文件</td>
+<td>修改过的文件在 git add 之后会暂存到暂存区。暂存区的文件会形成快照，为后面提交做准备。</td>
+<td>暂存区的文件在 git commit 之后会保存到本地仓库，并形成 commit 信息，包括：完整快照、时间、提交人信息、log等。</td>
 </tr>
 <tr>
-<td align="center">Bubble Sort</td>
-<td align="center">Ω($n$)</td>
-<td align="center">Θ($n^2$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
+<td>未跟踪的文件通常显示为红色</td>
+<td>工作区的文件通常显示为红色</td>
+<td>暂存区的文件通常显示为绿色</td>
+<td></td>
 </tr>
 <tr>
-<td align="center">Insertion Sort</td>
-<td align="center">Ω($n$)</td>
-<td align="center">Θ($n^2$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>Heap Sort</strong></td>
-<td align="center">Ω($nlogn$)</td>
-<td align="center">Θ($nlogn$)</td>
-<td align="center"><strong>O($nlogn$)</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>Quick Sort</strong></td>
-<td align="center">Ω($nlogn$)</td>
-<td align="center">Θ($nlogn$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>Merge Sort</strong></td>
-<td align="center">Ω($nlogn$)</td>
-<td align="center">Θ($nlogn$)</td>
-<td align="center"><strong>O($nlogn$)</strong></td>
-</tr>
-<tr>
-<td align="center">Bucket Sort</td>
-<td align="center">Ω($n+k$)</td>
-<td align="center">Θ($n+k$)</td>
-<td align="center">O($n^2$)</td>
-</tr>
-<tr>
-<td align="center">Radix Sort</td>
-<td align="center">Ω($nk$)</td>
-<td align="center">Θ($nk$)</td>
-<td align="center">O($nk$)</td>
+<td>Untracked(未跟踪)</td>
+<td>Modified(已修改)</td>
+<td>Staged(已暂存)</td>
+<td>Committed(已提交)</td>
 </tr>
 </tbody></table>
-<a id="more"></a>
-
-<h1 id="Time-Complexity-Rank"><a href="#Time-Complexity-Rank" class="headerlink" title="Time Complexity Rank"></a>Time Complexity Rank</h1><ol>
-<li>O($logn$)    ——————–    e.g. Binary Tree</li>
-<li>O($n$)          ——————–    e.g. Simple Search</li>
-<li>O($nlogn$)  ——————–    e.g. Quick Sort</li>
+<h3 id="1-3-本地仓库和远程仓库"><a href="#1-3-本地仓库和远程仓库" class="headerlink" title="1.3 本地仓库和远程仓库"></a>1.3 本地仓库和远程仓库</h3><p><img src="/pic/Git1.png" alt="Git1"></p>
+<h3 id="1-4-分支Branch"><a href="#1-4-分支Branch" class="headerlink" title="1.4 分支Branch"></a>1.4 分支Branch</h3><p>分支是 Git 中最重要的概念，通常每个仓库都有一个 master 分支。</p>
+<ul>
+<li>分支可以让工作并行，不同分支的工作不会相互影响</li>
+<li>两个分支合并时可能会出现冲突，解决冲突之后才能完成合并</li>
+</ul>
+<h2 id="2-Git常用命令"><a href="#2-Git常用命令" class="headerlink" title="2. Git常用命令"></a>2. Git常用命令</h2><h3 id="2-1-Create-repositories"><a href="#2-1-Create-repositories" class="headerlink" title="2.1 Create repositories"></a>2.1 Create repositories</h3><ul>
+<li><p>git init</p>
+<blockquote>
+<p>Turn an existing directory into a git repository</p>
+<p>将当前的文件夹初始化为 git 本地仓库</p>
+</blockquote>
+</li>
+<li><p>git clone</p>
+<blockquote>
+<p>Clone a repository that exists on GitHub, including all of the files, branches, and commits</p>
+<p>将 GitHub 上的仓库拷贝到本地</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-2-gitignore"><a href="#2-2-gitignore" class="headerlink" title="2.2 .gitignore"></a>2.2 .gitignore</h3><p>The <code>.gitignore</code> file are used to exclude files from being tracked with Git.</p>
+<p><code>gitignore</code> 文件用来设置一些文件不被 Git 所管理。</p>
+<h3 id="2-3-Branches"><a href="#2-3-Branches" class="headerlink" title="2.3 Branches"></a>2.3 Branches</h3><table>
+<thead>
+<tr>
+<th>CMD</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>git branch [branch-name]</td>
+<td>新建分支</td>
+</tr>
+<tr>
+<td>git checkout [branch-name]</td>
+<td>切换到指定分支</td>
+</tr>
+<tr>
+<td>git merge [branch-name]</td>
+<td>合并指定分支到当前分支</td>
+</tr>
+<tr>
+<td>git branch -d [branch-name]</td>
+<td>删除指定分支</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-Snchronize-changes"><a href="#2-4-Snchronize-changes" class="headerlink" title="2.4 Snchronize changes"></a>2.4 Snchronize changes</h3><table>
+<thead>
+<tr>
+<th>CMD</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>git fetch</td>
+<td>从远程分支下载所有历史记录</td>
+</tr>
+<tr>
+<td>git merge</td>
+<td>合并远程分支到当前本地分支</td>
+</tr>
+<tr>
+<td>git push</td>
+<td>上传本地分支的 commits 到 GitHub</td>
+</tr>
+<tr>
+<td>git pull</td>
+<td>更新本地工作分支，使其与远程相应的分支同步，它是 git fetch 和 git merge 的结合</td>
+</tr>
+</tbody></table>
+<h2 id="3-Git-Workflow"><a href="#3-Git-Workflow" class="headerlink" title="3. Git Workflow"></a>3. Git Workflow</h2><p><strong>经典分支模型：</strong></p>
+<table>
+<thead>
+<tr>
+<th>分支</th>
+<th>说明</th>
+<th>命名规范</th>
+<th>checkout from</th>
+<th>merge to</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>master</td>
+<td>主干，最稳定的分支，可随时用作release发版，只能从其他分支合入，不能在上面做任何提交</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>develop</td>
+<td>开发主干，是稳定的最新的分支。主要合并其他的分支如 feature 分支和 bugfix 分支</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>feature</td>
+<td>新功能分支</td>
+<td>feature/*</td>
+<td>develop</td>
+<td>develop</td>
+</tr>
+<tr>
+<td>release</td>
+<td>发布分支，对应一次新版本的发布，只接受 bugfix</td>
+<td>release/*</td>
+<td>develop</td>
+<td>develop, master</td>
+</tr>
+<tr>
+<td>hotfix</td>
+<td>紧急修复分支，生产环境中发现的紧急 bug 的修复</td>
+<td>hotfix/*</td>
+<td>master, release</td>
+<td>develop, master</td>
+</tr>
+</tbody></table>
+<p><img src="/pic/GitWorkFlow.png" alt="GitWorkFlow"></p>
+<h2 id="4-经典场景"><a href="#4-经典场景" class="headerlink" title="4. 经典场景"></a>4. 经典场景</h2><h3 id="4-1-多人协作"><a href="#4-1-多人协作" class="headerlink" title="4.1 多人协作"></a>4.1 多人协作</h3><p>基本步骤如下：</p>
+<ol>
+<li>克隆仓库</li>
+<li>如果远程分支被其他人的分支合并更新，则需要拉取远程分支，合并更新当前的本地分支</li>
+<li>推送更新</li>
 </ol>
-<hr>
-<ol start="4">
-<li>O($n^2$)        ——————–     e.g. Selection Sort (Not Recommended Time Complexity)</li>
-</ol>
-<h1 id="Java-IDEA-IDE-ShortCut"><a href="#Java-IDEA-IDE-ShortCut" class="headerlink" title="Java IDEA IDE ShortCut"></a>Java IDEA IDE ShortCut</h1><ol>
-<li>sout + enter</li>
-<li>psvm + enter</li>
-<li>fori + enter</li>
-<li>iter + enter</li>
-</ol>
+<h3 id="4-2-回滚"><a href="#4-2-回滚" class="headerlink" title="4.2 回滚"></a>4.2 回滚</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>git reset [hashValue]</td>
+<td>恢复到某一次提交</td>
+<td>将该次提交之后的所有提交都丢弃（HEAD 指针会移动到指定的那一次提交，并丢弃之后的提交）</td>
+</tr>
+<tr>
+<td>git revert [hashValue]</td>
+<td>恢复某一次提交</td>
+<td>将某一次提交的修改恢复回去（HEAD 指针会在当前提交之后创建一个新的提交并移动到该位置，该新的提交的状态与指定的某一次的提交的状态一致）</td>
+</tr>
+<tr>
+<td>git reflog</td>
+<td>与 git reset 结合使用</td>
+<td>用 git reflog 查看所有 git 相关操作的记录，包括对应的 Hash 值，然后搭配 git reset 可以恢复到任意位置</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-重写历史"><a href="#4-3-重写历史" class="headerlink" title="4.3 重写历史"></a>4.3 重写历史</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>git commit –amend</td>
+<td>修改最后一次提交</td>
+</tr>
+<tr>
+<td>git rebase -i</td>
+<td>1. 修改多个提交信息 2. 重新排序提交 3. 压缩提交 4. 拆分提交</td>
+</tr>
+</tbody></table>
+<h2 id="Git-相关资料"><a href="#Git-相关资料" class="headerlink" title="Git 相关资料"></a>Git 相关资料</h2><ul>
+<li><p>Git  官方手册——<a target="_blank" rel="noopener" href="https://git-scm.com/docs">https://git-scm.com/docs</a></p>
+</li>
+<li><p>Git 可视化学习——<a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">https://learngitbranching.js.org/?locale=zh_CN</a></p>
+</li>
+</ul>
 
     </div>
 
@@ -384,7 +513,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           </div>
 
         
@@ -393,13 +522,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/10/19/NignxConfig/" rel="prev" title="基于MAC的NGINX配置使用---反向代理解决跨域">
-      <i class="fa fa-chevron-left"></i> 基于MAC的NGINX配置使用---反向代理解决跨域
+    <a href="/2022/02/22/EventLoop/" rel="prev" title="事件循环 & 微任务、宏任务">
+      <i class="fa fa-chevron-left"></i> 事件循环 & 微任务、宏任务
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/11/04/DOM&BOM/" rel="next" title="DOM & BOM">
-      DOM & BOM <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -459,7 +585,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Time-Complexity"><span class="nav-number">1.</span> <span class="nav-text">Algorithm Time Complexity</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Time-Complexity-Rank"><span class="nav-number">2.</span> <span class="nav-text">Time Complexity Rank</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-IDEA-IDE-ShortCut"><span class="nav-number">3.</span> <span class="nav-text">Java IDEA IDE ShortCut</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">Git快速入门篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Git%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text">1. Git基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Git%E6%96%87%E4%BB%B6%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.2 Git文件的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%92%8C%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.3 本地仓库和远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%88%86%E6%94%AFBranch"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.4 分支Branch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">2. Git常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Create-repositories"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Create repositories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-gitignore"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 .gitignore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Branches"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Branches</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Snchronize-changes"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Snchronize changes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Git-Workflow"><span class="nav-number">1.3.</span> <span class="nav-text">3. Git Workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E7%BB%8F%E5%85%B8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.4.</span> <span class="nav-text">4. 经典场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 多人协作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%9B%9E%E6%BB%9A"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 回滚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 重写历史</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-number">1.5.</span> <span class="nav-text">Git 相关资料</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -518,11 +644,11 @@
     </label>
     <select class="lang-select" data-canonical="">
       
-        <option value="zh-CN" data-href="/2021/10/27/Handy-CheatSheet/" selected="">
+        <option value="zh-CN" data-href="/2022/05/26/Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87/" selected="">
           简体中文
         </option>
       
-        <option value="en" data-href="/en/2021/10/27/Handy-CheatSheet/" selected="">
+        <option value="en" data-href="/en/2022/05/26/Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87/" selected="">
           English
         </option>
       
@@ -612,59 +738,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 
@@ -679,7 +752,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'Wizard-Guido.github.io',
       owner       : 'Wizard-Guido',
       admin       : ['Wizard-Guido'],
-      id          : 'ab67622f4f915f2e63b503256de302d5',
+      id          : 'ddf73bfce6e633e913a14ece707fe78d',
         language: 'zh-CN',
       distractionFreeMode: false
     });
