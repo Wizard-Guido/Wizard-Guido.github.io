@@ -1,103 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>DOM &amp; BOM</title>
-    <url>/2021/11/04/DOM&amp;BOM/</url>
-    <content><![CDATA[<p><strong>本章主要介绍DOM概念、操作DOM的代价、浏览器渲染引擎的机制，性能优化以及节流和防抖等常见面试题。</strong></p>
-<a id="more"></a>
-
-<h1 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h1><h2 id="1-什么是DOM"><a href="#1-什么是DOM" class="headerlink" title="1. 什么是DOM"></a>1. 什么是DOM</h2><p><code>DOM</code>就是<code>Document Object Model</code>，<strong>文档对象模型</strong>，里边是接口，即方法函数。</p>
-<p>官方定义：DOM是一个**独立于语言的、用于操作XML和HTML文档的程序接口(API)**。在浏览器中主要用于与HTML文档打交道，并且使用DOM API用来访问文档中的数据。<br>DOM是个与ES语言无关的API，它在浏览器中的接口却是用JavaScript来实现的，DOM就成了现在JS编码中的重要部分。</p>
-<h2 id="2-JS修改DOM元素代价很高"><a href="#2-JS修改DOM元素代价很高" class="headerlink" title="2. JS修改DOM元素代价很高"></a>2. JS修改DOM元素代价很高</h2><p>每次操作DOM之前，就会先<strong>访问DOM</strong>，所以也会消耗性能。<br>在此基础上，因为<strong>修改DOM</strong>会导致浏览器重新计算页面的几何变化、引发浏览器模板引擎的<strong>重排</strong>(回流 - 回滚流程)和<strong>重绘</strong>，进而更加消耗性能。</p>
-<h2 id="3-浏览器渲染引擎的工作原理和流程"><a href="#3-浏览器渲染引擎的工作原理和流程" class="headerlink" title="3. 浏览器渲染引擎的工作原理和流程"></a>3. 浏览器渲染引擎的工作原理和流程</h2><p>浏览器下载完页面中的所有资源（比如HTML、JavaScript、CSS、图片等）后，会发生如下的6步过程：</p>
-<ol>
-<li><p>解析HTML，构建DOM树（DOM Tree）</p>
-</li>
-<li><p>解析CSS，生成CSS规则树（CSSOM Tree）</p>
-</li>
-<li><p>合并DOM树和CSS规则树，生成渲染树render树（render Tree）</p>
-</li>
-<li><p>布局render树，根据生成的render树来对各元素尺寸、位置进行计算，得到每个节点的几何信息。（根据视口的大小来计算元素的位置和大小）（重排会走这一步）</p>
-</li>
-<li><p>绘制render树，绘制页面像素信息（根据render树上每个节点的几何信息，得到每个节点的像素数）（重绘会走这一步）</p>
-</li>
-<li><p>浏览器会将各层节点的像素信息发送给GPU，GPU将各层合成、绘制展示到页面上</p>
-</li>
-</ol>
-<h3 id="3-1-浏览器渲染引擎是如何生成渲染树（render-Tree）的？"><a href="#3-1-浏览器渲染引擎是如何生成渲染树（render-Tree）的？" class="headerlink" title="3.1 浏览器渲染引擎是如何生成渲染树（render Tree）的？"></a>3.1 浏览器渲染引擎是如何生成渲染树（render Tree）的？</h3><ol>
-<li>从DOM Tree的根节点开始遍历每一个可见节点（除meta、link、script等这些标签；除display:none;的元素）</li>
-<li>对于每个可见节点，在CSSOM中找到对应规则并将样式规则应用到对应节点上。</li>
-<li>根据每一个可见节点，以及其对应的样式，组合生成渲染树。</li>
-</ol>
-<p><strong>不可见节点：</strong> 不会渲染输出的节点（不会显示在屏幕上的节点）有以下几种</p>
-<ul>
-<li>meta、link、script等标签;</li>
-<li>通过css进行隐藏的节点，即display:none；（opacity对人类不可见，计算机还能看见，所以还会渲染。）（那visibility为隐藏的元素会不会被渲染呢？做个试验，一个div设置visibility不可见，左浮动，周围全是文字，看文字环绕是否让出一块空白区域。最后试验证明确实绕出了一段空白的位置，说明visibility和opacity设置的不可见只是对人类肉眼不可见，计算机还是会在生成render Tree的时候计算位置信息并把他绘制出来。试验结果如下图:)</li>
-</ul>
-<h2 id="4-什么是浏览器渲染引擎的重排和重绘？"><a href="#4-什么是浏览器渲染引擎的重排和重绘？" class="headerlink" title="4. 什么是浏览器渲染引擎的重排和重绘？"></a>4. 什么是浏览器渲染引擎的重排和重绘？</h2><h3 id="4-1-重排"><a href="#4-1-重排" class="headerlink" title="4.1 重排"></a>4.1 重排</h3><p>当<strong>DOM的变化影响了元素的几何属性（宽、高和位置）</strong>，浏览器需要重新计算元素的几何属性，同样其他相邻元素的几何属性和<strong>位置</strong>也会因此受到影响。浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。这个过程称为“重排”。</p>
-<h3 id="4-2-重绘"><a href="#4-2-重绘" class="headerlink" title="4.2 重绘"></a>4.2 重绘</h3><p>完成重排后，浏览器会重新绘制受影响的部分到屏幕中，该过程称为<strong>重绘</strong>。<br>因为重排在重绘的上一步，所以<strong>重排发生后自然会导致重绘</strong>。</p>
-<h2 id="5-什么时候会引发重排？"><a href="#5-什么时候会引发重排？" class="headerlink" title="5. 什么时候会引发重排？"></a>5. 什么时候会引发重排？</h2><p>当页面布局和几何属性改变时就需要重排：<br>（核心就是：只要某个属性能导致位置信息发生改变，就会触发重排 ）</p>
-<ol>
-<li><p>添加或删除可见的DOM元素。(一堆人排队，添加即中间插入了一个人/删除即中间一个人走了，势必会影响后边排队的人的位置信息也发生改变)</p>
-</li>
-<li><p>元素位置改变（重排就是因为位置信息改变了）</p>
-</li>
-<li><p>元素尺寸改变( 外边距、内边距、边框厚度、宽度、高度等)</p>
-</li>
-<li><p>内容改变，例：文本数量/内容改变、或图片被另一个不同尺寸的图片替代、字体大小改变、（文字加粗？）导致DOM元素位置、面积改变。【计算会消耗CPU的能力】</p>
-</li>
-<li><p>页面渲染器初始化（这算重走流程吧，肯定要重排）</p>
-</li>
-<li><p>浏览器窗口尺寸改变（位置信息会被迫调整，发生重排。见下图的gif图，一个页面中div元素的位置不受视口调整而修改，也会引发重排）【消耗GPU的计算能力】。试验：resize视口，一个页面中div元素的位置不受视口调整而修改，也会引发重排</p>
-</li>
-</ol>
-<h2 id="6-什么时候会引发重绘？"><a href="#6-什么时候会引发重绘？" class="headerlink" title="6. 什么时候会引发重绘？"></a>6. 什么时候会引发重绘？</h2><ol>
-<li><p><strong>重排必然引发重绘</strong>，这是肯定的。因为浏览器的工作流程就是排版后渲染。重排会回流（回滚流程）到排版阶段，排版后需要重新绘制页面。</p>
-</li>
-<li><p>单独触发重绘的情况：<br>除元素尺寸、位置发生改变以外的情况，（比如字体颜色、背景色等发生改变）。（我怀疑文字加粗也会触发重排，但是我没有证据。理论上来说如果在一个固定尺寸的div内加粗文字，应该不会影响后边元素的重排，但可能该div内部的其他相邻文字或元素会发生重排。）</p>
-</li>
-</ol>
-<h2 id="7-浏览器的性能优化"><a href="#7-浏览器的性能优化" class="headerlink" title="7. 浏览器的性能优化"></a>7. 浏览器的性能优化</h2><h3 id="7-1-优化"><a href="#7-1-优化" class="headerlink" title="7.1 优化"></a>7.1 优化</h3><p>现代浏览器是相当完善的了，因为多次操作DOM会触发重排重绘、消耗性能。所以除了我们人为的、有意识的去控制操作DOM次数以外，浏览器在设计上进行了优化，也会智能的“节流”操作DOM，比如实现队列化修改、批量执行。</p>
-<p>解释来说就是，<strong>浏览器会有一个“队列”，用以存放（攒着）需要操作DOM的js程序。每当执行一次js操作dom的代码，这个队列里就先暂存一个程序。等到一段时间后，浏览器再集中、批量的链接一次”ES岛”和”DOM岛”（就是让JS引擎去链接渲染引擎），进而触发一次DOM操作。</strong>你可以形象的理解为“过一段时间发一班车”。</p>
-<h3 id="7-2-用户打断优化的操作"><a href="#7-2-用户打断优化的操作" class="headerlink" title="7.2 用户打断优化的操作"></a>7.2 用户打断优化的操作</h3><p>但是我们人类感知不到啊，可能会因为误操作打断浏览器的“节流”步骤。迫使浏览器中断当前的“等待”，去赶紧、立马进行一次dom操作。让浏览器赶紧执行完他攒在“队列”里的JS操作DOM的程序后返回最新的DOM位置信息给我们。这就好像电梯门定时自动关闭，但是你却手动按了关门按钮强迫关门一样。</p>
-<p>这种情况就发生在我们获取DOM信息的时候：</p>
-<p><strong>打断浏览器优化，强迫触发重排的属性：</strong></p>
-<blockquote>
-<p>offsetTop、offsetLeft、offsetWidth、offsetHeight<br>scrollTop、scrollLeft、scrollWidth、scrollHeight<br>clientTop、clientLeft、clientWidth、clientHeight<br>getComputedStyle()</p>
-</blockquote>
-<p><strong>因为要跟浏览器请求最新的DOM信息，所以浏览器就得赶紧让JS引擎去渲染引擎那里进行一次DOM操作。</strong></p>
-<h2 id="8-为什么操作DOM非常昂贵？"><a href="#8-为什么操作DOM非常昂贵？" class="headerlink" title="8. 为什么操作DOM非常昂贵？"></a>8. 为什么操作DOM非常昂贵？</h2><ol>
-<li>ES和 DOM是两种东西，每次连接都需要消耗性能</li>
-<li>操作DOM会导致重排和重绘，重排会占用、消耗CPU; 重绘会占用、消耗GPU</li>
-</ol>
-<h2 id="9-防抖-amp-节流-—-源自思否-安歌"><a href="#9-防抖-amp-节流-—-源自思否-安歌" class="headerlink" title="9. 防抖 &amp; 节流 — 源自思否-安歌"></a>9. 防抖 &amp; 节流 — 源自思否-安歌</h2><h3 id="9-1-解释"><a href="#9-1-解释" class="headerlink" title="9.1 解释"></a>9.1 解释</h3><p>案例：<strong>大多网站会提供这么一个按钮：用于返回顶部。</strong></p>
-<p>这个按钮只会在滚动到距离顶部一定位置之后才出现，那么我们现在抽象出这个功能需求– <strong>监听浏览器滚动事件，返回当前滚条与顶部的距离</strong>。可以用一个函数实现。</p>
-<p>但是，在运行的时候会发现存在一个问题：<strong>这个函数的默认执行频率，太！高！了！。</strong> 高到什么程度呢？以chrome为例，我们可以点击选中一个页面的滚动条，然后点击一次键盘的【向下方向键】，会发现函数执行了<strong>8-9次</strong>！</p>
-<p>然而实际上我们并不需要如此高频的反馈，毕竟浏览器的性能是有限的，不应该浪费在这里，所以接着讨论如何优化这种场景。</p>
-<h3 id="9-2-防抖（debounce）"><a href="#9-2-防抖（debounce）" class="headerlink" title="9.2 防抖（debounce）"></a>9.2 防抖（debounce）</h3><p><strong>简言之，防抖是如果在短时间内大量触发相同事件，不立即执行，而是等待一个给定时间段后再执行，如果给定时间内又触法该事件则重新计时</strong></p>
-<p>基于上述场景，首先提出第一种思路：<strong>在第一次触发事件时，不立即执行函数，而是给出一个期限值比如200ms</strong>，然后：</p>
-<ul>
-<li>如果在200ms内没有再次触发滚动事件，那么就执行函数</li>
-<li>如果在200ms内再次触发滚动事件，那么当前的计时取消，重新开始计时</li>
-</ul>
-<p><strong>效果</strong>：如果短时间内大量触发同一事件，只会执行一次函数。</p>
-<h3 id="9-3-节流（throttle）"><a href="#9-3-节流（throttle）" class="headerlink" title="9.3 节流（throttle）"></a>9.3 节流（throttle）</h3><p><strong>简言之，节流是如果在短时间内大量触发相同事件，即每隔相同一段时间执行一次</strong></p>
-<p>继续思考，使用上面的防抖方案来处理问题的结果是：</p>
-<ul>
-<li>如果在限定时间段内，不断触发滚动事件（比如某个用户闲着无聊，按住滚动不断的拖来拖去），只要不停止触发，理论上就永远不会输出当前距离顶部的距离。</li>
-</ul>
-<p>新需求：<strong>即使用户不断拖动滚动条，也能在某个时间间隔之后给出反馈呢？</strong></p>
-<p>其实很简单：我们可以设计一种<strong>类似控制阀门一样定期开放的函数，也就是让函数执行一次后，在某个时间段内暂时失效，过了这段时间后再重新激活</strong>（类似于技能冷却时间）。</p>
-<p><strong>效果</strong>：如果短时间内大量触发同一事件，那么<strong>在函数执行一次之后，该函数在指定的时间期限内不再工作</strong>，直至过了这段时间才重新生效。</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>DOM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>DNS原理基础</title>
     <url>/2021/11/25/BasicPrincipleofDNS/</url>
     <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
@@ -202,6 +105,118 @@
       </tags>
   </entry>
   <entry>
+    <title>DOM &amp; BOM</title>
+    <url>/2021/11/04/DOM&amp;BOM/</url>
+    <content><![CDATA[<p><strong>本章主要介绍DOM概念、操作DOM的代价、浏览器渲染引擎的机制，性能优化以及节流和防抖等常见面试题。</strong></p>
+<a id="more"></a>
+
+<h1 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h1><h2 id="1-什么是DOM"><a href="#1-什么是DOM" class="headerlink" title="1. 什么是DOM"></a>1. 什么是DOM</h2><p><code>DOM</code>就是<code>Document Object Model</code>，<strong>文档对象模型</strong>，里边是接口，即方法函数。</p>
+<p>官方定义：DOM是一个**独立于语言的、用于操作XML和HTML文档的程序接口(API)**。在浏览器中主要用于与HTML文档打交道，并且使用DOM API用来访问文档中的数据。<br>DOM是个与ES语言无关的API，它在浏览器中的接口却是用JavaScript来实现的，DOM就成了现在JS编码中的重要部分。</p>
+<h2 id="2-JS修改DOM元素代价很高"><a href="#2-JS修改DOM元素代价很高" class="headerlink" title="2. JS修改DOM元素代价很高"></a>2. JS修改DOM元素代价很高</h2><p>每次操作DOM之前，就会先<strong>访问DOM</strong>，所以也会消耗性能。<br>在此基础上，因为<strong>修改DOM</strong>会导致浏览器重新计算页面的几何变化、引发浏览器模板引擎的<strong>重排</strong>(回流 - 回滚流程)和<strong>重绘</strong>，进而更加消耗性能。</p>
+<h2 id="3-浏览器渲染引擎的工作原理和流程"><a href="#3-浏览器渲染引擎的工作原理和流程" class="headerlink" title="3. 浏览器渲染引擎的工作原理和流程"></a>3. 浏览器渲染引擎的工作原理和流程</h2><p>浏览器下载完页面中的所有资源（比如HTML、JavaScript、CSS、图片等）后，会发生如下的6步过程：</p>
+<ol>
+<li><p>解析HTML，构建DOM树（DOM Tree）</p>
+</li>
+<li><p>解析CSS，生成CSS规则树（CSSOM Tree）</p>
+</li>
+<li><p>合并DOM树和CSS规则树，生成渲染树render树（render Tree）</p>
+</li>
+<li><p>布局render树，根据生成的render树来对各元素尺寸、位置进行计算，得到每个节点的几何信息。（根据视口的大小来计算元素的位置和大小）（重排会走这一步）</p>
+</li>
+<li><p>绘制render树，绘制页面像素信息（根据render树上每个节点的几何信息，得到每个节点的像素数）（重绘会走这一步）</p>
+</li>
+<li><p>浏览器会将各层节点的像素信息发送给GPU，GPU将各层合成、绘制展示到页面上</p>
+</li>
+</ol>
+<h3 id="3-1-浏览器渲染引擎是如何生成渲染树（render-Tree）的？"><a href="#3-1-浏览器渲染引擎是如何生成渲染树（render-Tree）的？" class="headerlink" title="3.1 浏览器渲染引擎是如何生成渲染树（render Tree）的？"></a>3.1 浏览器渲染引擎是如何生成渲染树（render Tree）的？</h3><ol>
+<li>从DOM Tree的根节点开始遍历每一个可见节点（除meta、link、script等这些标签；除display:none;的元素）</li>
+<li>对于每个可见节点，在CSSOM中找到对应规则并将样式规则应用到对应节点上。</li>
+<li>根据每一个可见节点，以及其对应的样式，组合生成渲染树。</li>
+</ol>
+<p><strong>不可见节点：</strong> 不会渲染输出的节点（不会显示在屏幕上的节点）有以下几种</p>
+<ul>
+<li>meta、link、script等标签;</li>
+<li>通过css进行隐藏的节点，即display:none；（opacity对人类不可见，计算机还能看见，所以还会渲染。）（那visibility为隐藏的元素会不会被渲染呢？做个试验，一个div设置visibility不可见，左浮动，周围全是文字，看文字环绕是否让出一块空白区域。最后试验证明确实绕出了一段空白的位置，说明visibility和opacity设置的不可见只是对人类肉眼不可见，计算机还是会在生成render Tree的时候计算位置信息并把他绘制出来。试验结果如下图:)</li>
+</ul>
+<h2 id="4-什么是浏览器渲染引擎的重排和重绘？"><a href="#4-什么是浏览器渲染引擎的重排和重绘？" class="headerlink" title="4. 什么是浏览器渲染引擎的重排和重绘？"></a>4. 什么是浏览器渲染引擎的重排和重绘？</h2><h3 id="4-1-重排"><a href="#4-1-重排" class="headerlink" title="4.1 重排"></a>4.1 重排</h3><p>当<strong>DOM的变化影响了元素的几何属性（宽、高和位置）</strong>，浏览器需要重新计算元素的几何属性，同样其他相邻元素的几何属性和<strong>位置</strong>也会因此受到影响。浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。这个过程称为“重排”。</p>
+<h3 id="4-2-重绘"><a href="#4-2-重绘" class="headerlink" title="4.2 重绘"></a>4.2 重绘</h3><p>完成重排后，浏览器会重新绘制受影响的部分到屏幕中，该过程称为<strong>重绘</strong>。<br>因为重排在重绘的上一步，所以<strong>重排发生后自然会导致重绘</strong>。</p>
+<h2 id="5-什么时候会引发重排？"><a href="#5-什么时候会引发重排？" class="headerlink" title="5. 什么时候会引发重排？"></a>5. 什么时候会引发重排？</h2><p>当页面布局和几何属性改变时就需要重排：<br>（核心就是：只要某个属性能导致位置信息发生改变，就会触发重排 ）</p>
+<ol>
+<li><p>添加或删除可见的DOM元素。(一堆人排队，添加即中间插入了一个人/删除即中间一个人走了，势必会影响后边排队的人的位置信息也发生改变)</p>
+</li>
+<li><p>元素位置改变（重排就是因为位置信息改变了）</p>
+</li>
+<li><p>元素尺寸改变( 外边距、内边距、边框厚度、宽度、高度等)</p>
+</li>
+<li><p>内容改变，例：文本数量/内容改变、或图片被另一个不同尺寸的图片替代、字体大小改变、（文字加粗？）导致DOM元素位置、面积改变。【计算会消耗CPU的能力】</p>
+</li>
+<li><p>页面渲染器初始化（这算重走流程吧，肯定要重排）</p>
+</li>
+<li><p>浏览器窗口尺寸改变（位置信息会被迫调整，发生重排。见下图的gif图，一个页面中div元素的位置不受视口调整而修改，也会引发重排）【消耗GPU的计算能力】。试验：resize视口，一个页面中div元素的位置不受视口调整而修改，也会引发重排</p>
+</li>
+</ol>
+<h2 id="6-什么时候会引发重绘？"><a href="#6-什么时候会引发重绘？" class="headerlink" title="6. 什么时候会引发重绘？"></a>6. 什么时候会引发重绘？</h2><ol>
+<li><p><strong>重排必然引发重绘</strong>，这是肯定的。因为浏览器的工作流程就是排版后渲染。重排会回流（回滚流程）到排版阶段，排版后需要重新绘制页面。</p>
+</li>
+<li><p>单独触发重绘的情况：<br>除元素尺寸、位置发生改变以外的情况，（比如字体颜色、背景色等发生改变）。（我怀疑文字加粗也会触发重排，但是我没有证据。理论上来说如果在一个固定尺寸的div内加粗文字，应该不会影响后边元素的重排，但可能该div内部的其他相邻文字或元素会发生重排。）</p>
+</li>
+</ol>
+<h2 id="7-浏览器的性能优化"><a href="#7-浏览器的性能优化" class="headerlink" title="7. 浏览器的性能优化"></a>7. 浏览器的性能优化</h2><h3 id="7-1-优化"><a href="#7-1-优化" class="headerlink" title="7.1 优化"></a>7.1 优化</h3><p>现代浏览器是相当完善的了，因为多次操作DOM会触发重排重绘、消耗性能。所以除了我们人为的、有意识的去控制操作DOM次数以外，浏览器在设计上进行了优化，也会智能的“节流”操作DOM，比如实现队列化修改、批量执行。</p>
+<p>解释来说就是，<strong>浏览器会有一个“队列”，用以存放（攒着）需要操作DOM的js程序。每当执行一次js操作dom的代码，这个队列里就先暂存一个程序。等到一段时间后，浏览器再集中、批量的链接一次”ES岛”和”DOM岛”（就是让JS引擎去链接渲染引擎），进而触发一次DOM操作。</strong>你可以形象的理解为“过一段时间发一班车”。</p>
+<h3 id="7-2-用户打断优化的操作"><a href="#7-2-用户打断优化的操作" class="headerlink" title="7.2 用户打断优化的操作"></a>7.2 用户打断优化的操作</h3><p>但是我们人类感知不到啊，可能会因为误操作打断浏览器的“节流”步骤。迫使浏览器中断当前的“等待”，去赶紧、立马进行一次dom操作。让浏览器赶紧执行完他攒在“队列”里的JS操作DOM的程序后返回最新的DOM位置信息给我们。这就好像电梯门定时自动关闭，但是你却手动按了关门按钮强迫关门一样。</p>
+<p>这种情况就发生在我们获取DOM信息的时候：</p>
+<p><strong>打断浏览器优化，强迫触发重排的属性：</strong></p>
+<blockquote>
+<p>offsetTop、offsetLeft、offsetWidth、offsetHeight<br>scrollTop、scrollLeft、scrollWidth、scrollHeight<br>clientTop、clientLeft、clientWidth、clientHeight<br>getComputedStyle()</p>
+</blockquote>
+<p><strong>因为要跟浏览器请求最新的DOM信息，所以浏览器就得赶紧让JS引擎去渲染引擎那里进行一次DOM操作。</strong></p>
+<h2 id="8-为什么操作DOM非常昂贵？"><a href="#8-为什么操作DOM非常昂贵？" class="headerlink" title="8. 为什么操作DOM非常昂贵？"></a>8. 为什么操作DOM非常昂贵？</h2><ol>
+<li>ES和 DOM是两种东西，每次连接都需要消耗性能</li>
+<li>操作DOM会导致重排和重绘，重排会占用、消耗CPU; 重绘会占用、消耗GPU</li>
+</ol>
+<h2 id="9-防抖-amp-节流-—-源自思否-安歌"><a href="#9-防抖-amp-节流-—-源自思否-安歌" class="headerlink" title="9. 防抖 &amp; 节流 — 源自思否-安歌"></a>9. 防抖 &amp; 节流 — 源自思否-安歌</h2><h3 id="9-1-解释"><a href="#9-1-解释" class="headerlink" title="9.1 解释"></a>9.1 解释</h3><p>案例：<strong>大多网站会提供这么一个按钮：用于返回顶部。</strong></p>
+<p>这个按钮只会在滚动到距离顶部一定位置之后才出现，那么我们现在抽象出这个功能需求– <strong>监听浏览器滚动事件，返回当前滚条与顶部的距离</strong>。可以用一个函数实现。</p>
+<p>但是，在运行的时候会发现存在一个问题：<strong>这个函数的默认执行频率，太！高！了！。</strong> 高到什么程度呢？以chrome为例，我们可以点击选中一个页面的滚动条，然后点击一次键盘的【向下方向键】，会发现函数执行了<strong>8-9次</strong>！</p>
+<p>然而实际上我们并不需要如此高频的反馈，毕竟浏览器的性能是有限的，不应该浪费在这里，所以接着讨论如何优化这种场景。</p>
+<h3 id="9-2-防抖（debounce）"><a href="#9-2-防抖（debounce）" class="headerlink" title="9.2 防抖（debounce）"></a>9.2 防抖（debounce）</h3><p><strong>简言之，防抖是如果在短时间内大量触发相同事件，不立即执行，而是等待一个给定时间段后再执行，如果给定时间内又触法该事件则重新计时</strong></p>
+<p>基于上述场景，首先提出第一种思路：<strong>在第一次触发事件时，不立即执行函数，而是给出一个期限值比如200ms</strong>，然后：</p>
+<ul>
+<li>如果在200ms内没有再次触发滚动事件，那么就执行函数</li>
+<li>如果在200ms内再次触发滚动事件，那么当前的计时取消，重新开始计时</li>
+</ul>
+<p><strong>效果</strong>：如果短时间内大量触发同一事件，只会执行一次函数。</p>
+<h3 id="9-3-节流（throttle）"><a href="#9-3-节流（throttle）" class="headerlink" title="9.3 节流（throttle）"></a>9.3 节流（throttle）</h3><p><strong>简言之，节流是如果在短时间内大量触发相同事件，即每隔相同一段时间执行一次</strong></p>
+<p>继续思考，使用上面的防抖方案来处理问题的结果是：</p>
+<ul>
+<li>如果在限定时间段内，不断触发滚动事件（比如某个用户闲着无聊，按住滚动不断的拖来拖去），只要不停止触发，理论上就永远不会输出当前距离顶部的距离。</li>
+</ul>
+<p>新需求：<strong>即使用户不断拖动滚动条，也能在某个时间间隔之后给出反馈呢？</strong></p>
+<p>其实很简单：我们可以设计一种<strong>类似控制阀门一样定期开放的函数，也就是让函数执行一次后，在某个时间段内暂时失效，过了这段时间后再重新激活</strong>（类似于技能冷却时间）。</p>
+<p><strong>效果</strong>：如果短时间内大量触发同一事件，那么<strong>在函数执行一次之后，该函数在指定的时间期限内不再工作</strong>，直至过了这段时间才重新生效。</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>DOM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端知识-杂谈</title>
+    <url>/2021/09/21/FrontendTech/</url>
+    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
+<a id="more"></a>
+
+<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>CONCEPT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>事件循环 &amp; 微任务、宏任务</title>
     <url>/2022/02/22/EventLoop/</url>
     <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
@@ -277,21 +292,6 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端知识-杂谈</title>
-    <url>/2021/09/21/FrontendTech/</url>
-    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
-<a id="more"></a>
-
-<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>CONCEPT</tag>
       </tags>
   </entry>
   <entry>
@@ -841,6 +841,8 @@
     <title>React进阶之路——Diff算法详解</title>
     <url>/2022/08/02/ReactDiff%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p><strong>React Fiber</strong> 是 React 16 之后推出的新架构，而 <strong>Reconciliation</strong> 是 React 的 Diff 算法，<strong>Fiber 和 Reconciliation 都是 React 的核心机制</strong>。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。</p>
+<a id="more"></a>
+
 <h1 id="React-Diff-算法"><a href="#React-Diff-算法" class="headerlink" title="React Diff 算法"></a>React Diff 算法</h1><h2 id="1-DOM-Virtual-DOM-Fiber"><a href="#1-DOM-Virtual-DOM-Fiber" class="headerlink" title="1. DOM, Virtual DOM, Fiber"></a>1. DOM, Virtual DOM, Fiber</h2><h3 id="1-1-DOM"><a href="#1-1-DOM" class="headerlink" title="1.1 DOM"></a>1.1 DOM</h3><p>在 DOM 树上，当有很多 DOM 节点元素需要更新时，浏览器会重新渲染所有的样式和 HTML 元素。</p>
 <h3 id="1-2-Virtual-DOM"><a href="#1-2-Virtual-DOM" class="headerlink" title="1.2 Virtual DOM"></a>1.2 Virtual DOM</h3><p>Virtual DOM 的出现就是为了解决这一问题，Virtual DOM 是真实 DOM 的模拟，真实 DOM 树由真实的 DOM 元素组成，而 Virtual DOM 树是由 Virtual DOM 元素（即 React Element）组成。当 React 组件状态发生变化时，会产生一个新的 Virtual DOM 树，然后 React 会利用 diff 算法对新旧两棵  Virtual DOM 树进行比较，找到差异，并将差异更新到真实的 DOM 树上，从而完成 DOM 节点元素的更新。</p>
 <p>React Element:</p>

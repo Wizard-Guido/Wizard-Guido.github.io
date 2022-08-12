@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"wizard-guido.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="React Fiber 是 React 16 之后推出的新架构，而 Reconciliation 是 React 的 Diff 算法，Fiber 和 Reconciliation 都是 React 的核心机制。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。 React Diff 算法1. DOM, Virtual DOM, Fiber1.1 DOM在 DOM 树">
+  <meta name="description" content="React Fiber 是 React 16 之后推出的新架构，而 Reconciliation 是 React 的 Diff 算法，Fiber 和 Reconciliation 都是 React 的核心机制。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React进阶之路——Diff算法详解">
 <meta property="og:url" content="https://wizard-guido.github.io/2022/08/02/ReactDiff%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="二进制的流浪">
-<meta property="og:description" content="React Fiber 是 React 16 之后推出的新架构，而 Reconciliation 是 React 的 Diff 算法，Fiber 和 Reconciliation 都是 React 的核心机制。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。 React Diff 算法1. DOM, Virtual DOM, Fiber1.1 DOM在 DOM 树">
+<meta property="og:description" content="React Fiber 是 React 16 之后推出的新架构，而 Reconciliation 是 React 的 Diff 算法，Fiber 和 Reconciliation 都是 React 的核心机制。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-08-12T13:49:04.534Z">
+<meta property="article:modified_time" content="2022-08-12T14:02:39.413Z">
 <meta property="article:author" content="Will">
 <meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
@@ -263,7 +263,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-12 21:49:04" itemprop="dateModified" datetime="2022-08-12T21:49:04+08:00">2022-08-12</time>
+                <time title="修改时间：2022-08-12 22:02:39" itemprop="dateModified" datetime="2022-08-12T22:02:39+08:00">2022-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,6 +301,8 @@
 
       
         <p><strong>React Fiber</strong> 是 React 16 之后推出的新架构，而 <strong>Reconciliation</strong> 是 React 的 Diff 算法，<strong>Fiber 和 Reconciliation 都是 React 的核心机制</strong>。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。</p>
+<a id="more"></a>
+
 <h1 id="React-Diff-算法"><a href="#React-Diff-算法" class="headerlink" title="React Diff 算法"></a>React Diff 算法</h1><h2 id="1-DOM-Virtual-DOM-Fiber"><a href="#1-DOM-Virtual-DOM-Fiber" class="headerlink" title="1. DOM, Virtual DOM, Fiber"></a>1. DOM, Virtual DOM, Fiber</h2><h3 id="1-1-DOM"><a href="#1-1-DOM" class="headerlink" title="1.1 DOM"></a>1.1 DOM</h3><p>在 DOM 树上，当有很多 DOM 节点元素需要更新时，浏览器会重新渲染所有的样式和 HTML 元素。</p>
 <h3 id="1-2-Virtual-DOM"><a href="#1-2-Virtual-DOM" class="headerlink" title="1.2 Virtual DOM"></a>1.2 Virtual DOM</h3><p>Virtual DOM 的出现就是为了解决这一问题，Virtual DOM 是真实 DOM 的模拟，真实 DOM 树由真实的 DOM 元素组成，而 Virtual DOM 树是由 Virtual DOM 元素（即 React Element）组成。当 React 组件状态发生变化时，会产生一个新的 Virtual DOM 树，然后 React 会利用 diff 算法对新旧两棵  Virtual DOM 树进行比较，找到差异，并将差异更新到真实的 DOM 树上，从而完成 DOM 节点元素的更新。</p>
 <p>React Element:</p>
