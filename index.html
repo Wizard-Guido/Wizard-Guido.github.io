@@ -229,6 +229,219 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN,en,default">
+    <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2022/08/02/ReactDiff%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Will">
+      <meta itemprop="description" content="这是一个关于二进制流浪的故事...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二进制的流浪">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/02/ReactDiff%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">React进阶之路——Diff算法详解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2022-08-02T00:00:00+08:00">2022-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-12 21:49:04" itemprop="dateModified" datetime="2022-08-12T21:49:04+08:00">2022-08-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FrontEnd-%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">FrontEnd/前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      <!-- 自定义：用于添加摘要图片，文章中不显示 -->
+        
+          <div class="out-img-topic">
+            <img src=/cover/reactRecon.png class="img-topic">
+          </div>
+        
+      <!-- 自定义结束 -->
+          <p><strong>React Fiber</strong> 是 React 16 之后推出的新架构，而 <strong>Reconciliation</strong> 是 React 的 Diff 算法，<strong>Fiber 和 Reconciliation 都是 React 的核心机制</strong>。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。</p>
+<h1 id="React-Diff-算法"><a href="#React-Diff-算法" class="headerlink" title="React Diff 算法"></a>React Diff 算法</h1><h2 id="1-DOM-Virtual-DOM-Fiber"><a href="#1-DOM-Virtual-DOM-Fiber" class="headerlink" title="1. DOM, Virtual DOM, Fiber"></a>1. DOM, Virtual DOM, Fiber</h2><h3 id="1-1-DOM"><a href="#1-1-DOM" class="headerlink" title="1.1 DOM"></a>1.1 DOM</h3><p>在 DOM 树上，当有很多 DOM 节点元素需要更新时，浏览器会重新渲染所有的样式和 HTML 元素。</p>
+<h3 id="1-2-Virtual-DOM"><a href="#1-2-Virtual-DOM" class="headerlink" title="1.2 Virtual DOM"></a>1.2 Virtual DOM</h3><p>Virtual DOM 的出现就是为了解决这一问题，Virtual DOM 是真实 DOM 的模拟，真实 DOM 树由真实的 DOM 元素组成，而 Virtual DOM 树是由 Virtual DOM 元素（即 React Element）组成。当 React 组件状态发生变化时，会产生一个新的 Virtual DOM 树，然后 React 会利用 diff 算法对新旧两棵  Virtual DOM 树进行比较，找到差异，并将差异更新到真实的 DOM 树上，从而完成 DOM 节点元素的更新。</p>
+<p>React Element:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> type ReactElement = &#123;|</span><br><span class="line">  $$typeof: any,</span><br><span class="line">  type: any,</span><br><span class="line">  key: any,</span><br><span class="line">  ref: any,</span><br><span class="line">  props: any,</span><br><span class="line">  <span class="comment">// ReactFiber</span></span><br><span class="line">  _owner: any,</span><br><span class="line">  ...</span><br><span class="line">|&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-Fiber-对象"><a href="#1-3-Fiber-对象" class="headerlink" title="1.3 Fiber 对象"></a>1.3 Fiber 对象</h3><p>每个 React Element 被创建的同时，都会创建一个 fiber node （fiber node 为 fiber 对象的实例）与之相关联。</p>
+<p>Fiber 对象是一个<strong>数据结构</strong>，用于保存组件状态、组件对应的 DOM 信息、以及工作任务。值得注意的是，和 react element 不一样，fiber node 不需要在每次页面状态更新时都重新创建一遍。在执行 Reconciliation 算法期间，组件 render 方法所返回的 react element 信息都会被合并到对应的 fiber node 中。</p>
+<p>Fiber 对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> type Fiber = &#123;|</span><br><span class="line">    tag: WorkTag;</span><br><span class="line">    key: <span class="literal">null</span> | string;</span><br><span class="line">    type: any;</span><br><span class="line">    stateNode: any;</span><br><span class="line">    updateQueue: mixed;</span><br><span class="line">    memoizedState: any;</span><br><span class="line">    memoizedProps: any,</span><br><span class="line">    pendingProps: any;</span><br><span class="line">    nextEffect: Fiber | <span class="literal">null</span>,</span><br><span class="line">    firstEffect: Fiber | <span class="literal">null</span>,</span><br><span class="line">    lastEffect: Fiber | <span class="literal">null</span>,</span><br><span class="line">    <span class="keyword">return</span>: Fiber | <span class="literal">null</span>;</span><br><span class="line">    child: Fiber | <span class="literal">null</span>;</span><br><span class="line">    sibling: Fiber | <span class="literal">null</span>;</span><br><span class="line">    ...</span><br><span class="line">|&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="2-React-核心工作流"><a href="#2-React-核心工作流" class="headerlink" title="2. React 核心工作流"></a>2. React 核心工作流</h2><ol>
+<li>任务调度器 Scheduler: 决定组件渲染的优先级</li>
+<li>协调器 Reconciler: 比较并找出新旧两棵 Virtual DOM 树的差异，并把差异告诉 Renderer</li>
+<li>渲染器 Renderer: 将差异更新到真实 DOM上</li>
+</ol>
+<p>组件 ———&gt; 任务调度器（Scheduler）<strong>决定高优先级任务</strong>———&gt; 调和器（Reconciler）<strong>新旧两棵 Virtual DOM 树差异比较</strong>———&gt; 渲染器（Renderer）———&gt; <strong>将差异更新到真实 DOM 树上</strong></p>
+<h2 id="3-Reconciliation"><a href="#3-Reconciliation" class="headerlink" title="3. Reconciliation"></a>3. Reconciliation</h2><p>在使用 React 时，组件会被渲染成一棵 React Element 树，当组件状态发生变化时，组件会被再次渲染并生成一棵新的不同的 React Element 树。此时，React 会使用 Diff 算法去高效地更新真实的 DOM 树。这个 Diff 算法就是 Reconciliation 算法。</p>
+<p>Reconciliation 算法主要做了两件事：</p>
+<ul>
+<li><strong>找出两棵 React Element 树的差异</strong></li>
+<li><strong>将差异更新到真实 DOM 树上</strong></li>
+</ul>
+<h3 id="3-1-Stack-Reconciler-栈调和器"><a href="#3-1-Stack-Reconciler-栈调和器" class="headerlink" title="3.1 Stack Reconciler 栈调和器"></a>3.1 Stack Reconciler 栈调和器</h3><p>React 15.x 以及之前的版本的 Reconciliation 算法都采用了 Stack Reconciler 来实现，但这个时期的栈调和器存在一些缺陷，例如<strong>不能暂停渲染任务</strong>、<strong>不能切分任务</strong>、<strong>无法有效平衡组件更新渲染和动画相关任务的执行顺序（即不能划分任务的优先级，这可能会导致重要任务卡顿和动画掉帧等问题）</strong>。</p>
+<h3 id="3-2-Fiber-Reconciler"><a href="#3-2-Fiber-Reconciler" class="headerlink" title="3.2 Fiber Reconciler"></a>3.2 Fiber Reconciler</h3><p>Fiber Reconciler 解决了一些 Stack Reconciler 中的固有问题，在 React 16 版本推出了全新的 Reconciliation 算法调和器——Fiber 调和器来替代栈调和器。Fiber Reconciler 会<strong>利用 Scheduler （调度器）来帮忙处理组件的渲染和更新工作</strong>。此外，每棵 react element tree 都有<strong>一棵对应的 fiber node tree</strong>。在 diff 两棵 react element tree 的差异时，<strong>Fiber Reconciler 会基于 fiber node tree 来使用 diff 算法</strong>，通过 fiber node 的 <strong>return, child, sibling 等属性</strong>能更方便地<strong>遍历 fiber node tree</strong>，从而更高效地完成 diff 算法。</p>
+<h3 id="3-3-Fiber-Reconciler-优点"><a href="#3-3-Fiber-Reconciler-优点" class="headerlink" title="3.3 Fiber Reconciler 优点"></a>3.3 Fiber Reconciler 优点</h3><ol>
+<li>能够把可中断的任务<strong>切片处理</strong></li>
+<li>能够<strong>调整任务优先级</strong>，重置并复用任务</li>
+<li>可以在父子组件任务间前进后退切换任务</li>
+<li>render 方法可以<strong>返回多个元素</strong>（即数组）——Fragments</li>
+<li>支持异常边界处理</li>
+</ol>
+<h2 id="4-Reconciliation-工作流程"><a href="#4-Reconciliation-工作流程" class="headerlink" title="4. Reconciliation 工作流程"></a>4. Reconciliation 工作流程</h2><p>前面也提到了 Reconciliation 主要有两个作用：<strong>找出两棵 react element tree</strong> 的差异、<strong>将差异更新到真实 DOM</strong> 。</p>
+<h3 id="4-1-找出两棵-VDOM-树的差异"><a href="#4-1-找出两棵-VDOM-树的差异" class="headerlink" title="4.1 找出两棵 VDOM 树的差异"></a>4.1 找出两棵 VDOM 树的差异</h3><h4 id="4-1-1-三大策略"><a href="#4-1-1-三大策略" class="headerlink" title="4.1.1 三大策略"></a>4.1.1 三大策略</h4><p>在对比两棵 VDOM 树的差异上，React 制定了三个策略：</p>
+<ol>
+<li><p><strong>只对同级的 react element 进行对比</strong>，如果一个 DOM 节点在新旧两棵树上处于不同的层级，那么 React 不会尝试复用它</p>
+</li>
+<li><p><strong>两个不同类型的 DOM 节点（即 type 字段不同），React 也不会尝试复用它</strong>，而是会销毁旧有类型的 DOM 节点及其子孙节点，并新建最新类型的 DOM 节点及其子孙节点</p>
+</li>
+<li><p><strong>通过 <code>key</code> 属性来判断哪些同级多个元素在渲染更新后能保持稳定</strong>。示例如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 更新前</span></span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;p key=<span class="string">&quot;qianduan&quot;</span>&gt;前端&lt;/p&gt;</span><br><span class="line">	&lt;h3 key=<span class="string">&quot;nodejs&quot;</span>&gt;NodeJS&lt;/h3&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新后</span></span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;h3 key=<span class="string">&quot;nodejs&quot;</span>&gt;NodeJS&lt;/h3&gt;</span><br><span class="line">		&lt;p key=<span class="string">&quot;qianduan&quot;</span>&gt;前端&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>如果没有 key 属性，React 会认为 节点类型变更，因此会销毁并重建新类型的节点。</p>
+<p>但是如果加上 key 属性，React 则可以通过 key 属性判断对应节点是否存在，从而可以复用相应节点，在上面的示例中，两个节点都可以复用，只需要互换下位置即可。</p>
+</li>
+</ol>
+<h4 id="4-1-2-Diff-具体过程"><a href="#4-1-2-Diff-具体过程" class="headerlink" title="4.1.2 Diff 具体过程"></a>4.1.2 Diff 具体过程</h4><p>在对比同级节点时，有以下两种情况：</p>
+<ol>
+<li>同级只有一个节点</li>
+<li>同级有多个节点</li>
+</ol>
+<p><strong>同级只有一个节点：</strong></p>
+<p>对比新旧两节点的类型，</p>
+<ol>
+<li>若类型 type 和 key （若无 key，则看 index）相同，则复用该节点，然后仅对比并更新有改变的属性。</li>
+<li>若类型 type 和 key （若无 key，则看 index）有一个不相同，则会销毁原来的节点及其子孙节点，并重建一个新的节点及其子孙节点。</li>
+</ol>
+<p><strong>同级有多个节点：</strong></p>
+<p>当同级有多个节点时，需要处理以下3种情况：</p>
+<ol>
+<li>节点更新（类型和属性更新）</li>
+<li>节点新增和删除</li>
+<li>节点位置移动</li>
+</ol>
+<p>对于同级多个节点的 Diff，一定属于以上三种情况。同时，React 官方团队发现，在日常开发中，相对于增加、删除和位置移动，更新组件发生的频率更高，所以 React 的 Diff 算法会有闲判断并处理节点的更新。</p>
+<p>对于同级的多个节点，我们可以将其看作是一个链表（原因是：同级的 react element 的 fiber node 会通过 sibling 字段链接成一个单向链表）。Diff 算法将会对同级节点链表进行2次遍历：</p>
+<ol>
+<li>第一轮遍历：完成节点更新（即节点对应的 DOM 可以复用，只需要更新一些属性）</li>
+<li>第二轮遍历：对节点进行新增、删除和移动操作</li>
+</ol>
+<p><strong>第一轮遍历</strong></p>
+<ol>
+<li>遍历旧虚拟 DOM （react element tree）同级节点链表和新虚拟 DOM 同级链表，从第一个节点开始遍历，判断新、旧节点的类型（type）和 key 是否相同，如果 type 和 key 都相同，则说明对应的 DOM 节点可以复用</li>
+<li>如果这个节点对应的 DOM 可以复用，则移动到下一组新旧节点，并判断它们的 type 和 key 是否相同，如果相同则表示对应的 DOM 可以复用，继续重复此步骤2，否则进入步骤3或4.</li>
+<li>如果判断此组新旧节点对应的 DOM 不可以复用，则结束第一轮遍历</li>
+<li>如果新同级节点链表遍历完成，或者旧同级节点链表遍历完成，则也结束遍历</li>
+</ol>
+<p>第一轮遍历结束之后，有<strong>两种可能的情况：</strong></p>
+<ol>
+<li><strong>在步骤三结束：</strong>此时新旧同级节点链表都没有遍历完成</li>
+<li><strong>在步骤四结束：</strong>此时新旧节点链表中有一个没有遍历完成<ul>
+<li>2.1 如果是新节点链表没有遍历完成，则说明需要新增节点，因此即将要新增的节点会被打上一个<code>Placement</code>的标签（即<code>newFiber.flags = Placement</code>）</li>
+<li>2.2 如果是旧同级节点链表没有遍历完成，则说明需要删除节点，因此即将要删除的节点会被打上<code>Deletion</code>的标签（即<code>returnFiber.flags |= Deletion</code>）</li>
+<li>2.3 新旧同级节点链表都遍历完了</li>
+</ul>
+</li>
+</ol>
+<p><strong>第二轮遍历</strong></p>
+<p>如果是第一种结果：</p>
+<p>说明新旧同级节点链表都没有遍历完，这意味着有的节点在这次更新中可能出现位置变动、删除、或者出现新增的节点。首先判断是否是节点位置移动，在遍历新同级节点链表时，为了能够快速在旧同级节点链表中找到对应的旧节点，React 会将旧同级节点链表中还没被处理过的节点以 map 的形式存放起来，将其的 <code>key</code> 作为 map 的 key，<code>fiber node</code> 作为对应的 value，这个 map 就是 <code>existingChildren</code></p>
+<p><em><strong>步骤一：</strong></em></p>
+<p><code>existingChildren</code> 的作用是：在第二轮遍历中，<strong>帮助快速查找旧同级节点链表中是否存在具有相同 key 和 type 的旧同级节点，从而判断该节点对应的 DOM 是否可以复用</strong></p>
+<ol>
+<li><p>如果遍历到的新同级节点 A 的 key 在 <code>existingChildren</code> 中，则表明旧同级节点链表中存在一个相同 key 的旧同级节点 A1，接着继续判断它们的 type 是否相同：</p>
+<ul>
+<li>如果 type 也相同，则说明该节点对应的 DOM 节点可以复用，只是位置发生了改变</li>
+<li>如果 type 不同，则说明该节点对应的 DOM 不可复用，需要删除原来的节点并重新创建插入一个新的节点</li>
+</ul>
+</li>
+<li><p>如果遍历到的新同级节点 A 的 key 不在 <code>existingChildren</code> 中，则表明在旧同级节点链表中找不到和 A 的 key 相同的旧同级节点 A1，那么说明 A 是一个新增的节点</p>
+</li>
+</ol>
+<p><em><strong>步骤二：</strong></em></p>
+<p>在判断出是要移动旧节点还是要删除原节点并新增新节点之后，需要进行具体的操作，即如何实现移动和删除新增，删除和新增比较简单，下面具体解释一下如何处理节点的位置变化。</p>
+<p>处理节点位置变化主要有两点：</p>
+<ol>
+<li><strong>哪个节点需要右移？</strong></li>
+<li><strong>向右移动到哪个位置？</strong></li>
+</ol>
+<p>要想明确上面这两点，首先需要找到一个<strong>参考点</strong>（即在其左边需要右移，在其右边则不需要）。React 使用 <code>lastPlacedIndex</code> 这个变量来存放参考点，<code>lastPlacedIndex</code> 表示当前最后一个可复用的节点，对应在旧同级节点链表中的索引，初始值为0。</p>
+<p>在遍历剩下的新同级节点链表时，每一个新节点会通过 <code>existingChildren</code> 找到对应的旧节点（如有的话），然后就可以得到旧节点的索引 <code>oldIndex</code>。接下来会和 <code>lastPlacedIndex</code> 做比较并进行判断：</p>
+<ul>
+<li>如果 <code>oldIndex &gt;= lastPlacedIndex</code>，那么就表示该复用节点不需要移动位置，同时将 <code>lastPlacedIndex</code> 的值更新为 <code>oldIndex</code>。</li>
+<li>如果 <code>oldIndex &lt; lastPlacedIndex</code>，那么就表示该复用节点需要向右移动，同时将该节点移动到上一个遍历到的新节点的后面（注：此时不需要更新 <code>lastPlacedIndex</code>）</li>
+</ul>
+<p><em><strong>步骤三：</strong></em></p>
+<p>当第二轮遍历结束时，React 就知道要从旧同级节点链表变成新同级节点链表需要进行哪些节点的哪些操作。这些操作（work）即移动、删除、新增，会存放到各节点对应的 fiber node 中。在渲染阶段（Render phase），React 会读取并执行这些操作，从而完成 DOM 节点的更新。</p>
+<h3 id="4-2-将差异更新到真实-DOM，完成-UI-的更新"><a href="#4-2-将差异更新到真实-DOM，完成-UI-的更新" class="headerlink" title="4.2 将差异更新到真实 DOM，完成 UI 的更新"></a>4.2 将差异更新到真实 DOM，完成 UI 的更新</h3><p>经过上面的 Diff 之后，每个 react element 自身的更新任务（work）都存放在其对应的 fiber node 中。</p>
+<p>在渲染阶段，Reconciliation 会从 fiber node tree 最顶端的节点开始，重新对整棵 fiber node tree 进行<strong>深度优先遍历</strong>，处理树中的每一个 fiber node，处理 fiber node 中存储的 work。其中，<strong>遍历一次 fiber node tree 并执行其中的 work 的过程称为一次 work loop</strong>。</p>
+<p><strong>注：React 开发者做了一个优化，即 Effect List。</strong>React 会跳过那些已经处理过的 fiber node，只会去处理那些未完成 work 的 fiber node。例如，如果在组件树的深层中更新了某个 state，那么虽然 React 还是会从 fiber node tree 的顶部的节点开始遍历，但它会跳过前面的父节点，直接走到发生 state 变更的子节点。</p>
+<p>当 work loop 结束之后（即遍历完整棵 fiber node tree之后），就会进入 commit 阶段（Commit Phase）。在 commit 阶段，React 会去更新真实 DOM 树，从而完成 UI 的更新渲染。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>参考自掘金文章——<a target="_blank" rel="noopener" href="https://juejin.cn/post/6891242214324699143">轻烤 React 核心机制：React Fiber 与 Reconciliation</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN,en,default">
     <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2022/05/26/Git%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E7%AF%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1143,112 +1356,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN,en,default">
-    <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2021/11/04/DOM&BOM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Will">
-      <meta itemprop="description" content="这是一个关于二进制流浪的故事...">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="二进制的流浪">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/04/DOM&BOM/" class="post-title-link" itemprop="url">DOM & BOM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-04 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-04T00:00:00+08:00">2021-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-23 06:50:50" itemprop="dateModified" datetime="2022-02-23T06:50:50+08:00">2022-02-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/FrontEnd-%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">FrontEnd/前端</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      <!-- 自定义：用于添加摘要图片，文章中不显示 -->
-        
-          <div class="out-img-topic">
-            <img src=/cover/orange.jpg class="img-topic">
-          </div>
-        
-      <!-- 自定义结束 -->
-          <p><strong>本章主要介绍DOM概念、操作DOM的代价、浏览器渲染引擎的机制，性能优化以及节流和防抖等常见面试题。</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/04/DOM&BOM/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1316,7 +1427,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1385,13 +1496,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">78k</span>
+    <span title="站点总字数">84k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:11</span>
+    <span title="站点阅读时长">1:16</span>
 </div>
 
 <!--
