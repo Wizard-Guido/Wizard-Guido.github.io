@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN,en,default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"wizard-guido.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Monorepo 即代码的仓库维护方式，已经被诸多知名互联网公司如 Google、Meta、Microsoft 等公司使用了很多年，该模式的主要特点是将所有代码都集中到一个仓库中管理。与 Monorepo 相对的是 Multirepo（又叫 Polyrepo），该模式下每个模块都有自己独立的仓库。Monorepo 是目前前端开源项目的趋势之一，Vue3、Yarn2 等知名项目均已改用 Monore">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析前端流行仓库管理模式——Monorepo">
+<meta property="og:url" content="https://wizard-guido.github.io/2022/08/08/%E6%B5%85%E6%9E%90%E5%89%8D%E7%AB%AF%E6%B5%81%E8%A1%8C%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94Monorepo/index.html">
+<meta property="og:site_name" content="二进制的流浪">
+<meta property="og:description" content="Monorepo 即代码的仓库维护方式，已经被诸多知名互联网公司如 Google、Meta、Microsoft 等公司使用了很多年，该模式的主要特点是将所有代码都集中到一个仓库中管理。与 Monorepo 相对的是 Multirepo（又叫 Polyrepo），该模式下每个模块都有自己独立的仓库。Monorepo 是目前前端开源项目的趋势之一，Vue3、Yarn2 等知名项目均已改用 Monore">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wizard-guido.github.io/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2BackUp/pic/monorepo.png">
+<meta property="og:image" content="https://wizard-guido.github.io/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2BackUp/pic/multirepo.png">
+<meta property="og:image" content="https://wizard-guido.github.io/2022/08/08/pic/mono2.png">
+<meta property="og:image" content="https://wizard-guido.github.io/2022/08/08/pic/mono3.png">
+<meta property="og:image" content="https://wizard-guido.github.io/2022/08/08/pic/mono4.png">
+<meta property="og:image" content="https://wizard-guido.github.io/2022/08/08/pic/monotool.png">
+<meta property="og:image" content="https://wizard-guido.github.io/2022/08/08/pic/lerna.png">
+<meta property="article:published_time" content="2022-08-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-08-13T07:58:11.268Z">
+<meta property="article:author" content="Will">
+<meta property="article:tag" content="FrontEnd">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wizard-guido.github.io/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2BackUp/pic/monorepo.png">
+
+<link rel="canonical" href="https://wizard-guido.github.io/2022/08/08/%E6%B5%85%E6%9E%90%E5%89%8D%E7%AB%AF%E6%B5%81%E8%A1%8C%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94Monorepo/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+
+<script type="text/javascript">
+  // Wait for the page to load first
+  var _prevOnload = window.onload;
+  window.onload = function() {
+      var switchLang = document.getElementsByClassName("menu-item menu-item-switch_lang")[0];
+      switchLang.onclick = function() {
+          var href = window.location.href;
+          var indexOfEn = href.toLowerCase().indexOf('/en/');
+          if(indexOfEn !== -1) {
+              window.location.href = href.replace('/en/', '/');
+          }
+          else {
+              window.location.href = href.replace('.io', '.io/en');
+          }
+          if(typeof(_prevOnload) === 'function') {
+              _prevOnload();
+          }
+          return false;
+      }
+  }
+</script>
+  <title>浅析前端流行仓库管理模式——Monorepo | 二进制的流浪</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HEB2EZELMD"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HEB2EZELMD');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">二进制的流浪</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-switch_lang">
+
+    <a href="https://wizard-guido.github.io/en/" rel="section"><i class="fa fa-language fa-fw"></i>English</a>
+
+  </li>
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-健身">
+
+    <a href="/training/" rel="section"><i class="fa fa-dumbbell fa-fw"></i>健身</a>
+
+  </li>
+        <li class="menu-item menu-item-摄影">
+
+    <a href="/photography/" rel="section"><i class="fas fa-camera fa-fw"></i>摄影</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://wizard-guido.github.io/2022/08/08/%E6%B5%85%E6%9E%90%E5%89%8D%E7%AB%AF%E6%B5%81%E8%A1%8C%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94Monorepo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Will">
+      <meta itemprop="description" content="这是一个关于二进制流浪的故事...">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二进制的流浪">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          浅析前端流行仓库管理模式——Monorepo
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-08-08T00:00:00+08:00">2022-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-13 15:58:11" itemprop="dateModified" datetime="2022-08-13T15:58:11+08:00">2022-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FrontEnd-%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">FrontEnd/前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Monorepo 即代码的仓库维护方式，已经被诸多知名互联网公司如 Google、Meta、Microsoft 等公司使用了很多年，该模式的主要特点是<strong>将所有代码都集中到一个仓库中管理</strong>。与 Monorepo 相对的是 Multirepo（又叫 Polyrepo），该模式下每个模块都有自己独立的仓库。Monorepo 是目前前端开源项目的趋势之一，Vue3、Yarn2 等知名项目均已改用 Monorepo 模式。</p>
+<p>但对于业务型项目的 Monorepo，目前普及地还不是很广泛，虽然如此，业务型 Monorepo 也能给业务开发带来极大的便利。本文主要介绍业务型 Monorepo，使用它的好处，以及业务型 Monorepo 的工程化建设。</p>
+<a id="more"></a>
+
+<h1 id="前端流行仓库管理模式-Monorepo-浅析"><a href="#前端流行仓库管理模式-Monorepo-浅析" class="headerlink" title="前端流行仓库管理模式 Monorepo 浅析"></a>前端流行仓库管理模式 Monorepo 浅析</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><h3 id="1-1-什么是-Monorepo"><a href="#1-1-什么是-Monorepo" class="headerlink" title="1.1 什么是 Monorepo"></a>1.1 什么是 Monorepo</h3><p>Monorepo 是一种代码管理模式，将多个项目组织到一个 Repo 中。它有以下一些优点：</p>
+<ul>
+<li>子项目之间是独立的，可以独立开发、测试、以及部署</li>
+<li>子项目的类型可以是任意的，可以是 web 项目、server 项目、或者 library 项目等等</li>
+<li>子项目之间可能有依赖关系，例如一些顶层的项目会依赖于底层项目暴露的API</li>
+</ul>
+<p>对于前端项目而言，Monorepo 的子项目可以大致分为两类：</p>
+<ul>
+<li><strong>业务类子项目：</strong>子项目需要部署上线，例如基于 React 的业务项目，特点是不需要发布到 npm registry</li>
+<li><strong>lib 类子项目：</strong>前端的 package 或库，特点是需要 publish 到 npm registry</li>
+</ul>
+<p>本文主要介绍业务型 Monorepo，即将多个业务应用（例如 React、Node等）以及其依赖（组件库、公共工具库等）集中到一个仓库中进行管理的模式，示例图如下：</p>
+<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2BackUp/pic/monorepo.png" alt="monorepo"></p>
+<p>目前全球很多知名互联网公司都在使用 Monorepo 管理其源代码，据悉，谷歌甚至将整个公司的代码都放到一个仓库中，其仓库大小高达80TB。</p>
+<h3 id="1-2-Why-Monorepo"><a href="#1-2-Why-Monorepo" class="headerlink" title="1.2 Why Monorepo?"></a>1.2 Why Monorepo?</h3><p>随着业务的增长，一个团队往往会<strong>同时维护和迭代多个项目</strong>，并且这些项目之间往往需要<strong>共享代码（组件库、工具函数等等）</strong>、<strong>共享基础设施（构建工具、lint等）</strong>。然而，在 Multirepo 仓库管理模式中，跨项目的代码共享非常麻烦，常用的方式是将公共代码提取出来并放入一个单独的仓库，然后将公用仓库的产物发布到 npm registry（一般复用组件库就是采用这种形式），示例图如下：</p>
+<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2BackUp/pic/multirepo.png" alt="multirepo"></p>
+<p>在上图中，每一个顶层的 App 都在一个单独的仓库中，都有自己的一套基础设施、CI/CD 流程等，这些 App 的共用部分被拆分到独立的仓库中作为共用库，并发布到 npm，然后作为 npm 依赖引入到各个独立的 App 仓库中。看起来这是一个不错的解决方案，但是这种方法也会有一些问题：</p>
+<ol>
+<li><p><strong>重复的基础设施</strong>：每个项目都需要单独设置 CI 流程、配置开发环境、配置部署发布流程。这样不仅可能会带来一些构建设施或规范的不一致性，而且将会大大提高项目的基建维护成本。每个项目都需要专人维护，并且随着项目越来越大，维护成本会越来越高。</p>
+</li>
+<li><p><strong>割裂的工作流</strong>：多个项目组成的工程体系是不连续的，每个仓库都有自己的一套工作流程。当进行多项目协作开发时，整体的工作流是割裂的，例如需要修改公共库的一个函数，首先需要修改和调试公共库的仓库，然后跑工具库的 CI 流程，然后升级需要使用该函数的 App 仓库的相应依赖，然后调试 App，这一套流程显得非常的繁琐且不连续。</p>
+</li>
+<li><p><strong>复杂的版本管理</strong>：仓库之间的依赖关系随着时间推移会变得非常复杂。</p>
+<p><img src="../pic/mono2.png" alt="mono2"></p>
+</li>
+</ol>
+<p>采用 Monorepo 的模式管理代码可以很好地解决以上问题：</p>
+<p><img src="../pic/mono3.png" alt="mono3"></p>
+<ol>
+<li><strong>统一的 CI 流程和基建</strong>：一套工具、规范落地所有项目，无需重复切换开发环境，减轻协作开发的成本。只需要为 Monorepo 配置好基础设施，后续所有新建的项目都可以复用已有的基建，只需要1-2个同学维护所有项目的基建即可，降低了基建的维护成本。</li>
+<li><strong>一致的工作流</strong>：当工具库升级后，顶层的应用能同时感知到其依赖的升级，能够非常方便地调试工具库的修改，并能在开发完成后自动触发相关项目的测试发布流程。</li>
+<li><strong>简化的依赖管理</strong>：所有项目都使用 HEAD 上的代码，项目之间的依赖关系直接且清晰。</li>
+<li><strong>代码共享和团队协作能力</strong>：在 Monorepo 中，可以非常方便地实现代码复用，同时更加方便地检索到各项目的源代码，降低团队成员间的沟通成本。</li>
+</ol>
+<p>简而言之，Monorepo 可以将多个独立的项目变成一个统一的工程，多项目具有高度一致性并且有更高的复用和抽象能力。</p>
+<p><img src="../pic/mono4.png" alt="mono4"></p>
+<h2 id="2-Monorepo-工具调研"><a href="#2-Monorepo-工具调研" class="headerlink" title="2. Monorepo 工具调研"></a>2. Monorepo 工具调研</h2><p><img src="../pic/monotool.png" alt="monotool"></p>
+<p>简单来说，上层工具依赖下层工具提供的能力：</p>
+<ul>
+<li><strong>最底层—Package Manager</strong>：例如 npm, yarn, pnpm 等，提供 monorepo 下的依赖管理和依赖安装能力</li>
+<li><strong>中间层—Script Runner</strong>：例如 lerna, wsrun，提供在 Monorepo 中以某种顺序调用子项目的 script 或者在子项目下执行某种命令的能力</li>
+<li><strong>最上层—Application</strong>：例如 nx, rush stack，集成了 react, node server 等脚手架，为 monorepo 子项目的开发、构建、以及测试等工程能力提供支持</li>
+</ul>
+<h3 id="2-1-Package-Manager"><a href="#2-1-Package-Manager" class="headerlink" title="2.1 Package Manager"></a>2.1 Package Manager</h3><blockquote>
+<p>在各个 Package Manager 中，Monorepo 中的子项目称为一个 workspace，多个 workspace 构成 workspaces</p>
+</blockquote>
+<p>支持 workspaces 特性的 package manager，一般用于 Monorepo 中的依赖安装。目前前端最常用的 Package Manager 有 npm、yarn、pnpm，对 workspaces 特性都有一定的支持：</p>
+<ul>
+<li>npm：npm 从 v7 开始支持 workspaces，从 node 15 开始内置 npm 7</li>
+<li>yarn：已稳定支持 workspaces</li>
+<li>pnpm：已稳定支持 workspaces</li>
+</ul>
+<p>在 workspaces 模式下，package manager 会分析整个 Monorepo 下的所有 workspace，对所有 workspace 统一安装外部依赖，并且 link 依赖的 workspace 到node_modules 下。Package Manager 的 workspace 特性适合作为 Monorepo 的依赖管理方案，但是依赖管理是非常底层的能力。对于业务型的 Monorepo 来说，子项目的初始化、构建、以及部署都需要一整套工具链的支持。</p>
+<h3 id="2-2-Lerna"><a href="#2-2-Lerna" class="headerlink" title="2.2 Lerna"></a>2.2 Lerna</h3><p>Lerna 是目前使用最为广泛的 Monorepo 工具之一，提供了依赖安装、自动升级多个项目的版本好并发布、批量在多个项目中按序执行特定命令的能力，lerna 的常用命令如下图：</p>
+<p><img src="../pic/lerna.png" alt="lerna"></p>
+<p>Lerna 的能力是 Package Manager 和 Script Runner 的整合，在面向库的 Monorepo 中使用非常广泛，被开源项目和企业内部的工具库项目所广泛采用。但是对于面向业务的 Monorepo，Lerna 缺乏构建、测试等相应工具链的支撑。而且当 Monorepo 持续增大之后，Lerna 不支持增量构建、测试，缺乏 scale 能力。</p>
+<h3 id="2-3-集成的-Monorepo-工具"><a href="#2-3-集成的-Monorepo-工具" class="headerlink" title="2.3 集成的 Monorepo 工具"></a>2.3 集成的 Monorepo 工具</h3><p>集成的 Monorepo 工具基于上述的 Package Manager，在其基础上集成了 Script Runner、构建工具、测试工具等，常用的工具有 rushstack、nx 等。rushstack 是基于 rushjs 的一套 Monorepo 解决方案，相较于 Lerna 等工具，其提供了 webpack、jest 等常用工具的封装，并提供了增量构建的能力。nx 的建设相较于 rush 更加的顶层，提供了 React、React Native、Next 等技术展的工程化支持。</p>
+<p>rushstack 和 nx 这类集成的 Monorepo 工具，相较于底层的工具提供了较为全面的工程化能力，更加适合业务型 Monorepo 的开发。</p>
+<h2 id="3-小结"><a href="#3-小结" class="headerlink" title="3. 小结"></a>3. 小结</h2><p>对于较底层的工具，如 yarn、pnpm、lerna 等，这些工具仅仅用于依赖安装，或者按序调用 script，难以支撑起整个 Monorepo 的研发，缺乏整体工程化以及 scale 的能力。对于较顶层的工具，如 rushstack、nx 等，提供了较全的工程化能力，有一套完整的 Monorepo 工程设施，这类工具比较适合业务型 Monorepo 的研发，不过集成工具一般都有自己的生态体系和技术栈，因此有可能与现有的基础设施产生冲突。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《Eden Monorepo 系列：浅析 Eden Monorepo 工程化建设》</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FrontEnd/" rel="tag"># FrontEnd</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/02/ReactDiff%E7%AE%97%E6%B3%95/" rel="prev" title="React进阶之路——Diff算法详解">
+      <i class="fa fa-chevron-left"></i> React进阶之路——Diff算法详解
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%B5%81%E8%A1%8C%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F-Monorepo-%E6%B5%85%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">前端流行仓库管理模式 Monorepo 浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1. 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-Monorepo"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 什么是 Monorepo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Why-Monorepo"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Why Monorepo?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Monorepo-%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94"><span class="nav-number">1.2.</span> <span class="nav-text">2. Monorepo 工具调研</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Package-Manager"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Package Manager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Lerna"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Lerna</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%9B%86%E6%88%90%E7%9A%84-Monorepo-%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 集成的 Monorepo 工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B0%8F%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">3. 小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Will"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Will</p>
+  <div class="site-description" itemprop="description">这是一个关于二进制流浪的故事...</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Wizard-Guido" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Wizard-Guido" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+  <div class="languages">
+    <label class="lang-select-label">
+      <i class="fa fa-language"></i>
+      <span>简体中文</span>
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </label>
+    <select class="lang-select" data-canonical="">
+      
+        <option value="zh-CN" data-href="/2022/08/08/%E6%B5%85%E6%9E%90%E5%89%8D%E7%AB%AF%E6%B5%81%E8%A1%8C%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94Monorepo/" selected="">
+          简体中文
+        </option>
+      
+        <option value="en" data-href="/en/2022/08/08/%E6%B5%85%E6%9E%90%E5%89%8D%E7%AB%AF%E6%B5%81%E8%A1%8C%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E2%80%94%E2%80%94Monorepo/" selected="">
+          English
+        </option>
+      
+    </select>
+  </div>
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Will</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">87k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:19</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '665debbc9d743c5390af',
+      clientSecret: '23bba36009506d4723ecd374cbf8d9c3cea1bb10',
+      repo        : 'Wizard-Guido.github.io',
+      owner       : 'Wizard-Guido',
+      admin       : ['Wizard-Guido'],
+      id          : '1880344f9672f6f83349fa033316ba6f',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
