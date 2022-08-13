@@ -202,21 +202,6 @@
       </tags>
   </entry>
   <entry>
-    <title>前端知识-杂谈</title>
-    <url>/2021/09/21/FrontendTech/</url>
-    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
-<a id="more"></a>
-
-<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>CONCEPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>事件循环 &amp; 微任务、宏任务</title>
     <url>/2022/02/22/EventLoop/</url>
     <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
@@ -292,6 +277,21 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端知识-杂谈</title>
+    <url>/2021/09/21/FrontendTech/</url>
+    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
+<a id="more"></a>
+
+<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>CONCEPT</tag>
       </tags>
   </entry>
   <entry>
@@ -1610,10 +1610,10 @@
 <li><strong>lib 类子项目：</strong>前端的 package 或库，特点是需要 publish 到 npm registry</li>
 </ul>
 <p>本文主要介绍业务型 Monorepo，即将多个业务应用（例如 React、Node等）以及其依赖（组件库、公共工具库等）集中到一个仓库中进行管理的模式，示例图如下：</p>
-<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2BackUp/pic/monorepo.png" alt="monorepo"></p>
+<p><img src="/pic/monorepo.png" alt="monorepo"></p>
 <p>目前全球很多知名互联网公司都在使用 Monorepo 管理其源代码，据悉，谷歌甚至将整个公司的代码都放到一个仓库中，其仓库大小高达80TB。</p>
 <h3 id="1-2-Why-Monorepo"><a href="#1-2-Why-Monorepo" class="headerlink" title="1.2 Why Monorepo?"></a>1.2 Why Monorepo?</h3><p>随着业务的增长，一个团队往往会<strong>同时维护和迭代多个项目</strong>，并且这些项目之间往往需要<strong>共享代码（组件库、工具函数等等）</strong>、<strong>共享基础设施（构建工具、lint等）</strong>。然而，在 Multirepo 仓库管理模式中，跨项目的代码共享非常麻烦，常用的方式是将公共代码提取出来并放入一个单独的仓库，然后将公用仓库的产物发布到 npm registry（一般复用组件库就是采用这种形式），示例图如下：</p>
-<p><img src="/Users/arieskoo/Downloads/1-Self-Learning/Blog/%E5%8D%9A%E5%AE%A2BackUp/pic/multirepo.png" alt="multirepo"></p>
+<p><img src="/pic/multirepo.png" alt="multirepo"></p>
 <p>在上图中，每一个顶层的 App 都在一个单独的仓库中，都有自己的一套基础设施、CI/CD 流程等，这些 App 的共用部分被拆分到独立的仓库中作为共用库，并发布到 npm，然后作为 npm 依赖引入到各个独立的 App 仓库中。看起来这是一个不错的解决方案，但是这种方法也会有一些问题：</p>
 <ol>
 <li><p><strong>重复的基础设施</strong>：每个项目都需要单独设置 CI 流程、配置开发环境、配置部署发布流程。这样不仅可能会带来一些构建设施或规范的不一致性，而且将会大大提高项目的基建维护成本。每个项目都需要专人维护，并且随着项目越来越大，维护成本会越来越高。</p>
@@ -1621,11 +1621,11 @@
 <li><p><strong>割裂的工作流</strong>：多个项目组成的工程体系是不连续的，每个仓库都有自己的一套工作流程。当进行多项目协作开发时，整体的工作流是割裂的，例如需要修改公共库的一个函数，首先需要修改和调试公共库的仓库，然后跑工具库的 CI 流程，然后升级需要使用该函数的 App 仓库的相应依赖，然后调试 App，这一套流程显得非常的繁琐且不连续。</p>
 </li>
 <li><p><strong>复杂的版本管理</strong>：仓库之间的依赖关系随着时间推移会变得非常复杂。</p>
-<p><img src="../pic/mono2.png" alt="mono2"></p>
+<p><img src="/pic/mono2.png" alt="mono2"></p>
 </li>
 </ol>
 <p>采用 Monorepo 的模式管理代码可以很好地解决以上问题：</p>
-<p><img src="../pic/mono3.png" alt="mono3"></p>
+<p><img src="/pic/mono3.png" alt="mono3"></p>
 <ol>
 <li><strong>统一的 CI 流程和基建</strong>：一套工具、规范落地所有项目，无需重复切换开发环境，减轻协作开发的成本。只需要为 Monorepo 配置好基础设施，后续所有新建的项目都可以复用已有的基建，只需要1-2个同学维护所有项目的基建即可，降低了基建的维护成本。</li>
 <li><strong>一致的工作流</strong>：当工具库升级后，顶层的应用能同时感知到其依赖的升级，能够非常方便地调试工具库的修改，并能在开发完成后自动触发相关项目的测试发布流程。</li>
@@ -1633,8 +1633,8 @@
 <li><strong>代码共享和团队协作能力</strong>：在 Monorepo 中，可以非常方便地实现代码复用，同时更加方便地检索到各项目的源代码，降低团队成员间的沟通成本。</li>
 </ol>
 <p>简而言之，Monorepo 可以将多个独立的项目变成一个统一的工程，多项目具有高度一致性并且有更高的复用和抽象能力。</p>
-<p><img src="../pic/mono4.png" alt="mono4"></p>
-<h2 id="2-Monorepo-工具调研"><a href="#2-Monorepo-工具调研" class="headerlink" title="2. Monorepo 工具调研"></a>2. Monorepo 工具调研</h2><p><img src="../pic/monotool.png" alt="monotool"></p>
+<p><img src="/pic/mono4.png" alt="mono4"></p>
+<h2 id="2-Monorepo-工具调研"><a href="#2-Monorepo-工具调研" class="headerlink" title="2. Monorepo 工具调研"></a>2. Monorepo 工具调研</h2><p><img src="/pic/monotool.png" alt="monotool"></p>
 <p>简单来说，上层工具依赖下层工具提供的能力：</p>
 <ul>
 <li><strong>最底层—Package Manager</strong>：例如 npm, yarn, pnpm 等，提供 monorepo 下的依赖管理和依赖安装能力</li>
@@ -1652,7 +1652,7 @@
 </ul>
 <p>在 workspaces 模式下，package manager 会分析整个 Monorepo 下的所有 workspace，对所有 workspace 统一安装外部依赖，并且 link 依赖的 workspace 到node_modules 下。Package Manager 的 workspace 特性适合作为 Monorepo 的依赖管理方案，但是依赖管理是非常底层的能力。对于业务型的 Monorepo 来说，子项目的初始化、构建、以及部署都需要一整套工具链的支持。</p>
 <h3 id="2-2-Lerna"><a href="#2-2-Lerna" class="headerlink" title="2.2 Lerna"></a>2.2 Lerna</h3><p>Lerna 是目前使用最为广泛的 Monorepo 工具之一，提供了依赖安装、自动升级多个项目的版本好并发布、批量在多个项目中按序执行特定命令的能力，lerna 的常用命令如下图：</p>
-<p><img src="../pic/lerna.png" alt="lerna"></p>
+<p><img src="/pic/lerna.png" alt="lerna"></p>
 <p>Lerna 的能力是 Package Manager 和 Script Runner 的整合，在面向库的 Monorepo 中使用非常广泛，被开源项目和企业内部的工具库项目所广泛采用。但是对于面向业务的 Monorepo，Lerna 缺乏构建、测试等相应工具链的支撑。而且当 Monorepo 持续增大之后，Lerna 不支持增量构建、测试，缺乏 scale 能力。</p>
 <h3 id="2-3-集成的-Monorepo-工具"><a href="#2-3-集成的-Monorepo-工具" class="headerlink" title="2.3 集成的 Monorepo 工具"></a>2.3 集成的 Monorepo 工具</h3><p>集成的 Monorepo 工具基于上述的 Package Manager，在其基础上集成了 Script Runner、构建工具、测试工具等，常用的工具有 rushstack、nx 等。rushstack 是基于 rushjs 的一套 Monorepo 解决方案，相较于 Lerna 等工具，其提供了 webpack、jest 等常用工具的封装，并提供了增量构建的能力。nx 的建设相较于 rush 更加的顶层，提供了 React、React Native、Next 等技术展的工程化支持。</p>
 <p>rushstack 和 nx 这类集成的 Monorepo 工具，相较于底层的工具提供了较为全面的工程化能力，更加适合业务型 Monorepo 的开发。</p>
