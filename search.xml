@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>10 Design Patterns</title>
+    <url>/2022/03/11/10DesignPatterns/</url>
+    <content><![CDATA[<h1 id="10-Design-Patterns"><a href="#10-Design-Patterns" class="headerlink" title="10 Design Patterns"></a>10 Design Patterns</h1><h2 id="1-Category"><a href="#1-Category" class="headerlink" title="1. Category"></a>1. Category</h2><ol>
+<li><strong>Creational Design Pattern</strong> — How objectes are created<ul>
+<li>Singleton Design Pattern</li>
+<li>Prototype</li>
+<li>Builder</li>
+<li>Factory</li>
+</ul>
+</li>
+<li><strong>Structural Design Pattern</strong> — How objects are related to each other<ul>
+<li>Facade Design Pattern</li>
+<li>Proxy</li>
+</ul>
+</li>
+<li><strong>Behavioral Design Pattern</strong> — How objects communicate with each other<ul>
+<li>Iterator Design Pattern</li>
+<li>Observer</li>
+<li>Mediator</li>
+<li>State</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-Creational-Pattern"><a href="#2-Creational-Pattern" class="headerlink" title="2. Creational Pattern"></a>2. Creational Pattern</h2><h3 id="2-1-Singleton"><a href="#2-1-Singleton" class="headerlink" title="2.1. Singleton"></a>2.1. Singleton</h3><p><strong>It’s a type of object that cam only be instantiated once.</strong></p>
+<p>A singleton eample in TS:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Settings</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> instance: Settings;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">readonly</span> mode = <span class="string">&#x27;dark&#x27;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// prevent new with private constructor</span></span><br><span class="line">  <span class="keyword">private</span> <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> getInstance(): Settings &#123;</span><br><span class="line">    <span class="keyword">if</span> (!Settings.instance) &#123;</span><br><span class="line">      Settings.instance = <span class="keyword">new</span> Settings();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> Settings.instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> settings = Settings.getInstance();</span><br></pre></td></tr></table></figure>
+<p>This works too.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> settings = &#123;</span><br><span class="line">  dark: <span class="string">&#x27;true&#x27;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-2-Prototype"><a href="#2-2-Prototype" class="headerlink" title="2.2. Prototype"></a>2.2. Prototype</h3><p><strong>It’s a fancy word for clone.</strong></p>
+<p>One problem with inheritance is that it can lead to a complex hierarchy of code.</p>
+<p><strong>The Prototype pattern is an alterantive way to implement inheritance but instead of inheriting functionality from a class, it comes from an object that’s already been created.</strong> This creates a flat prototype chain that makes it much easier to share functionalities between objects especially in a dynamic language like JavaScript, which supports prototypal inheritance out of box.</p>
+<p>A prototype example in JS:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zombie = &#123;</span><br><span class="line">  <span class="function"><span class="title">eatBrains</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;yum brain&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chad = <span class="built_in">Object</span>.create(zombie, &#123; <span class="attr">name</span>: &#123; <span class="attr">value</span>: <span class="string">&#x27;chad&#x27;</span> &#125; &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(chad); <span class="comment">// &#123; name: &#x27;chad&#x27; &#125;</span></span><br><span class="line">chad.eatBrains();  <span class="comment">// works</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf(chad); <span class="comment">// &#123;eatBrains: f&#125;</span></span><br></pre></td></tr></table></figure>
+<p>When it comes to classes in javascript, prototype refers to its constructor.</p>
+<h3 id="2-3-Builder"><a href="#2-3-Builder" class="headerlink" title="2.3. Builder"></a>2.3. Builder</h3><p>Imagine you are running a hot dog stand and when a custimer places an order they need to tell you everything they want in the sandwich in the constructor. That works, <strong>but it’s kind of hard to keep track of all these options and we might want to defer each step to a later point.</strong></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HotDog</span> </span>&#123;</span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">  	<span class="keyword">public</span> bun: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> ketchup: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> mustard: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">     <span class="keyword">public</span> kraut: <span class="built_in">boolean</span></span></span><br><span class="line"><span class="params">  </span>) &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> HotDog(<span class="string">&#x27;wheat&#x27;</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p>With the builder pattern, we create the object step by step using methods rather than the constructor and we can even delegate the building logic to an entirely different class.</p>
+<p>In JavaScript, we’ll have each method return this which is a reference to the object instance that allows us to implement method chaining where we instantiate an object then chain methods to it but always get the object as the return value. You’ll come across this pattern frequently with libraries like jQuery but it’s gone a bit out of style in recent years.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HotDog</span> </span>&#123;</span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">  	<span class="keyword">public</span> bread: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> ketchup?: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> mustard?: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> kraut?: <span class="built_in">boolean</span></span></span><br><span class="line"><span class="params">  </span>) &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">addKetchup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.ketchup = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">addMustard</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.mustard = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">addKraut</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.kraut = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myLunch = <span class="keyword">new</span> HotDog(<span class="string">&#x27;gluten free&#x27;</span>);</span><br><span class="line"></span><br><span class="line">myLunch</span><br><span class="line">	.addKetchup()</span><br><span class="line">	.addMustard()</span><br><span class="line">	.addKraut()      <span class="comment">// Method Chaining</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-4-Factory"><a href="#2-4-Factory" class="headerlink" title="2.4. Factory"></a>2.4. Factory</h3><p><strong>Instead of using the new keyword to instantiate an object, you use a function or method to do it for you.</strong></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IOSButton</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AndroidButton</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Without Factory, that&#x27;s not very maintainable</span></span><br><span class="line"><span class="keyword">const</span> button1 = os === <span class="string">&#x27;ios&#x27;</span> ? <span class="keyword">new</span> IOSButton() : <span class="keyword">new</span> AndroidButton();</span><br><span class="line"><span class="keyword">const</span> button2 = os === <span class="string">&#x27;ios&#x27;</span> ? <span class="keyword">new</span> IOSButton() : <span class="keyword">new</span> AndroidButton();</span><br></pre></td></tr></table></figure>
+<p>Instead, we can create a subclass or function that will determine which object to instantiate.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ButtonFactory</span> </span>&#123;</span><br><span class="line">  createButton(os: <span class="built_in">string</span>): IOSButton | AndroidButton &#123;</span><br><span class="line">    <span class="keyword">if</span> (os === <span class="string">&#x27;ios&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> IOSButton();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> AndroidButton();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// With Factory</span></span><br><span class="line"><span class="keyword">const</span> factory = <span class="keyword">new</span> ButtonFactory();</span><br><span class="line"><span class="keyword">const</span> btn1 = factory.createButton(os);</span><br><span class="line"><span class="keyword">const</span> btn2 = factory.createButton(os);</span><br></pre></td></tr></table></figure>
+<h3 id="3-Structural-Pattern"><a href="#3-Structural-Pattern" class="headerlink" title="3. Structural Pattern"></a>3. Structural Pattern</h3><h3 id="3-1-Facade"><a href="#3-1-Facade" class="headerlink" title="3.1 Facade"></a>3.1 Facade</h3><p><strong>A facade is the face of a building, inside that building, there’s a lot of complexity that the end user doesn’t need to know about.</strong></p>
+<p><strong>A facade is basically just a simplified api to hide other low-level details in your code base.</strong></p>
+<p>A facade example in TS:</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PlumbingSystem</span> </span>&#123;</span><br><span class="line">  <span class="comment">// low level access to plumbing system</span></span><br><span class="line">  <span class="function"><span class="title">setPressure</span>(<span class="params">v: <span class="built_in">number</span></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOn</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOff</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ElectricalSystem</span> </span>&#123;</span><br><span class="line">  <span class="comment">// low level access to electrical system</span></span><br><span class="line">  <span class="function"><span class="title">setVoltage</span>(<span class="params">v: <span class="built_in">number</span></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOn</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOff</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">House</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> plumbing = <span class="keyword">new</span> PlumbingSystem();</span><br><span class="line">  <span class="keyword">private</span> electrical = <span class="keyword">new</span> ElectricalSystem();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="title">turnOnSystems</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.electrical.setVoltage(<span class="number">120</span>);</span><br><span class="line">    <span class="built_in">this</span>.electrical.turnOn();</span><br><span class="line">    <span class="built_in">this</span>.plumbing.setPressure(<span class="number">500</span>);</span><br><span class="line">    <span class="built_in">this</span>.plumbing.turnOn();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="title">shutDown</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.plumbing.turnOff();</span><br><span class="line">    <span class="built_in">this</span>.electrical.turnOff();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> client = <span class="keyword">new</span> House();</span><br><span class="line">client.turnOnSystems();</span><br><span class="line">client.shutDown();               <span class="comment">// Ugly details hidden</span></span><br></pre></td></tr></table></figure>
+<p><strong>Almost every package that you install with javascript could be considered a facade in some way.</strong></p>
+<h3 id="3-2-Proxy"><a href="#3-2-Proxy" class="headerlink" title="3.2 Proxy"></a>3.2 Proxy</h3><p><strong>A fancy word for substitute.</strong> You can replace a target object with a proxy.</p>
+<p>A great case study is the reactivity system in Vue.js. In Vue, you create data but the framework itself needs a way to intercept that data and update the ui whenever that data changes.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> original = &#123; <span class="attr">name</span>: <span class="string">&#x27;jeff&#x27;</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reactive = <span class="keyword">new</span> <span class="built_in">Proxy</span>(original, &#123;</span><br><span class="line">  <span class="function"><span class="title">get</span>(<span class="params">target, key</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Tracking: &#x27;</span>, key);</span><br><span class="line">    <span class="keyword">return</span> target[key];</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">set</span>(<span class="params">target, key, value</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Updating UI...&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.set(target, key, value);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">reactive.name; <span class="comment">// logs &#x27;tracking name&#x27;</span></span><br><span class="line">reactive.name = <span class="string">&#x27;bob&#x27;</span>; <span class="comment">//logs &#x27;updating UI...&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>The way Vue handles that is by replacing the original object with a proxy. A proxy takes the original object as the first argument then a handler as the second argument, inside of which, we can override methods like get and set which allows us to run code whenever a property is accessed on the object or changed.</p>
+<p>The end user can now work with a proxy just like the original object but it can trigger the side effects behind the scenes.</p>
+<p><strong>Proxies are also commonly used when you have a very large object that would be expensive to duplicate in memory.</strong></p>
+<h2 id="4-Behavioral-Pattern"><a href="#4-Behavioral-Pattern" class="headerlink" title="4. Behavioral Pattern"></a>4. Behavioral Pattern</h2><h3 id="4-1-Iterator-—-Pull-Based-System"><a href="#4-1-Iterator-—-Pull-Based-System" class="headerlink" title="4.1 Iterator — Pull-Based System"></a>4.1 Iterator — Pull-Based System</h3><p><strong>The iterator pattern allows you to traverse through a collection of objects.</strong> Modern languages already provide abstractions for the iterator pattern like the for loop. When you loop over an array of items, you’re using the iterator pattern.</p>
+<p>Implement our own iterator pattern to achieve “range function”</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">range</span>(<span class="params">start: <span class="built_in">number</span>, end: <span class="built_in">number</span>, step=<span class="number">1</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">next</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (start &lt; end) &#123;</span><br><span class="line">        start = start + step;</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="attr">value</span>: start, <span class="attr">done</span>: <span class="literal">false</span> &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">done</span>: <span class="literal">true</span>, <span class="attr">value</span>: end &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> n <span class="keyword">of</span> range(<span class="number">0</span>, <span class="number">20</span>, <span class="number">5</span>))) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-Observer-—-Push-Based-System"><a href="#4-2-Observer-—-Push-Based-System" class="headerlink" title="4.2 Observer — Push-Based System"></a>4.2 Observer — Push-Based System</h3><p><strong>The observer pattern allows many objects to subscribe to events that are broadcast by another object. It’s a one-to-mant relationship.</strong></p>
+<p>This pattern is used all over the place in app development. Like in firebase, when your data changes on the server, all your client apps are subscribed to it and automatically updated with the latest data.</p>
+<p>rijx library example for observer</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import &#123; Subject &#125; from &#39;rxjs&#39;;</span><br><span class="line"></span><br><span class="line">const news &#x3D; new Subject();</span><br><span class="line"></span><br><span class="line">const tv1 &#x3D; news.subscribe(v &#x3D;&gt; console.log(v + &#39;via Den TV&#39;));</span><br><span class="line">const tv2 &#x3D; news.subscribe(v &#x3D;&gt; console.log(v + &#39;via Batcave TV&#39;));</span><br><span class="line">const tv3 &#x3D; news.subscribe(v &#x3D;&gt; console.log(v + &#39;via Airport TV&#39;));</span><br><span class="line"></span><br><span class="line">news.next(&#39;Breaking new: &#39;);</span><br><span class="line">news.next(&#39;The war is over &#39;);</span><br></pre></td></tr></table></figure>
+<p>Personally, I like to think of this as a loop that unfolds over the dimension of time. (Haven’t got the idea yet)</p>
+<h3 id="4-3-Mediator"><a href="#4-3-Mediator" class="headerlink" title="4.3 Mediator"></a>4.3 Mediator</h3><p><strong>A mediator is like a middleman or broker.</strong></p>
+<p>A practical example, in the express.js web framework, there’s a middleware system, you have incoming requests and outgoing responses. <strong>Middleware sits in the middle by intercepting every request and transform it into the proper format for the response. It provides a separation of concerns and eliminates code duplication.</strong></p>
+<h3 id="4-4-State"><a href="#4-4-State" class="headerlink" title="4.4 State"></a>4.4 State</h3><p><strong>State Pattern is where an object behaves differently based on a finite number of states.</strong></p>
+<p>Without state pattern, you’ve likely used conditional logic or switch statements to handle a bunch of different possibilities based on the state or data in your application. Code like this generally doesn’t scale very well.</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Without State Pattern</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">think</span>(<span class="params">mood</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (mood) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;happy&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;I am happy&quot;</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;sad&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;I am sad&quot;</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;I am neutral&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The state pattern allows you to start with one base class then provide it with different functionality based on its internal state. The idea is related to finite state machines and libraries like xstate where the goal is to make the object’s behavior predictable based on its underlying state.</p>
+<p>Another way to go about it would be to create a separate class for each possible state, inside each class, we will have an identical method that behaves differently. <strong>Now in the Human Class, we set the state as a property and whenever that method is called, we delegate it to its current state. That means whenever the state changes, the object will behave in a completely different way, but at the same time, we don’t have to change the api or use a bunch of conditional logic.</strong></p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> State &#123;</span><br><span class="line">  think(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123;</span><br><span class="line">  state: State;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.state = <span class="keyword">new</span> HappyState();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">think</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.state.think();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">changeState</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.state = state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>“10 Design Patterns Explained in 10 Minutes” — <a href="https://www.youtube.com/watch?v=tv-_1er1mWI">https://www.youtube.com/watch?v=tv-_1er1mWI</a></p>
+]]></content>
+      <categories>
+        <category>Design Pattern</category>
+      </categories>
+      <tags>
+        <tag>Design Pattern</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DNS原理基础</title>
     <url>/2021/11/25/BasicPrincipleofDNS/</url>
     <content><![CDATA[<p><strong>DNS，又称为域名系统（Domain Names System），是一项互联网服务，用于进行域名和与之相对应的IP地址进行转化的服务器。</strong></p>
@@ -248,96 +338,6 @@
       </categories>
       <tags>
         <tag>Security</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>10 Design Patterns</title>
-    <url>/2022/03/11/10DesignPatterns/</url>
-    <content><![CDATA[<h1 id="10-Design-Patterns"><a href="#10-Design-Patterns" class="headerlink" title="10 Design Patterns"></a>10 Design Patterns</h1><h2 id="1-Category"><a href="#1-Category" class="headerlink" title="1. Category"></a>1. Category</h2><ol>
-<li><strong>Creational Design Pattern</strong> — How objectes are created<ul>
-<li>Singleton Design Pattern</li>
-<li>Prototype</li>
-<li>Builder</li>
-<li>Factory</li>
-</ul>
-</li>
-<li><strong>Structural Design Pattern</strong> — How objects are related to each other<ul>
-<li>Facade Design Pattern</li>
-<li>Proxy</li>
-</ul>
-</li>
-<li><strong>Behavioral Design Pattern</strong> — How objects communicate with each other<ul>
-<li>Iterator Design Pattern</li>
-<li>Observer</li>
-<li>Mediator</li>
-<li>State</li>
-</ul>
-</li>
-</ol>
-<h2 id="2-Creational-Pattern"><a href="#2-Creational-Pattern" class="headerlink" title="2. Creational Pattern"></a>2. Creational Pattern</h2><h3 id="2-1-Singleton"><a href="#2-1-Singleton" class="headerlink" title="2.1. Singleton"></a>2.1. Singleton</h3><p><strong>It’s a type of object that cam only be instantiated once.</strong></p>
-<p>A singleton eample in TS:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Settings</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> instance: Settings;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">readonly</span> mode = <span class="string">&#x27;dark&#x27;</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// prevent new with private constructor</span></span><br><span class="line">  <span class="keyword">private</span> <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">static</span> getInstance(): Settings &#123;</span><br><span class="line">    <span class="keyword">if</span> (!Settings.instance) &#123;</span><br><span class="line">      Settings.instance = <span class="keyword">new</span> Settings();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> Settings.instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> settings = Settings.getInstance();</span><br></pre></td></tr></table></figure>
-<p>This works too.</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> settings = &#123;</span><br><span class="line">  dark: <span class="string">&#x27;true&#x27;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="2-2-Prototype"><a href="#2-2-Prototype" class="headerlink" title="2.2. Prototype"></a>2.2. Prototype</h3><p><strong>It’s a fancy word for clone.</strong></p>
-<p>One problem with inheritance is that it can lead to a complex hierarchy of code.</p>
-<p><strong>The Prototype pattern is an alterantive way to implement inheritance but instead of inheriting functionality from a class, it comes from an object that’s already been created.</strong> This creates a flat prototype chain that makes it much easier to share functionalities between objects especially in a dynamic language like JavaScript, which supports prototypal inheritance out of box.</p>
-<p>A prototype example in JS:</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zombie = &#123;</span><br><span class="line">  <span class="function"><span class="title">eatBrains</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;yum brain&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chad = <span class="built_in">Object</span>.create(zombie, &#123; <span class="attr">name</span>: &#123; <span class="attr">value</span>: <span class="string">&#x27;chad&#x27;</span> &#125; &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(chad); <span class="comment">// &#123; name: &#x27;chad&#x27; &#125;</span></span><br><span class="line">chad.eatBrains();  <span class="comment">// works</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf(chad); <span class="comment">// &#123;eatBrains: f&#125;</span></span><br></pre></td></tr></table></figure>
-<p>When it comes to classes in javascript, prototype refers to its constructor.</p>
-<h3 id="2-3-Builder"><a href="#2-3-Builder" class="headerlink" title="2.3. Builder"></a>2.3. Builder</h3><p>Imagine you are running a hot dog stand and when a custimer places an order they need to tell you everything they want in the sandwich in the constructor. That works, <strong>but it’s kind of hard to keep track of all these options and we might want to defer each step to a later point.</strong></p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HotDog</span> </span>&#123;</span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">  	<span class="keyword">public</span> bun: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> ketchup: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> mustard: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">     <span class="keyword">public</span> kraut: <span class="built_in">boolean</span></span></span><br><span class="line"><span class="params">  </span>) &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> HotDog(<span class="string">&#x27;wheat&#x27;</span>, <span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
-
-
-<p>With the builder pattern, we create the object step by step using methods rather than the constructor and we can even delegate the building logic to an entirely different class.</p>
-<p>In JavaScript, we’ll have each method return this which is a reference to the object instance that allows us to implement method chaining where we instantiate an object then chain methods to it but always get the object as the return value. You’ll come across this pattern frequently with libraries like jQuery but it’s gone a bit out of style in recent years.</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HotDog</span> </span>&#123;</span><br><span class="line">  <span class="title">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">  	<span class="keyword">public</span> bread: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> ketchup?: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> mustard?: <span class="built_in">boolean</span>,</span></span><br><span class="line"><span class="params">    <span class="keyword">public</span> kraut?: <span class="built_in">boolean</span></span></span><br><span class="line"><span class="params">  </span>) &#123;&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">addKetchup</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.ketchup = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">addMustard</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.mustard = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">addKraut</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.kraut = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myLunch = <span class="keyword">new</span> HotDog(<span class="string">&#x27;gluten free&#x27;</span>);</span><br><span class="line"></span><br><span class="line">myLunch</span><br><span class="line">	.addKetchup()</span><br><span class="line">	.addMustard()</span><br><span class="line">	.addKraut()      <span class="comment">// Method Chaining</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="2-4-Factory"><a href="#2-4-Factory" class="headerlink" title="2.4. Factory"></a>2.4. Factory</h3><p><strong>Instead of using the new keyword to instantiate an object, you use a function or method to do it for you.</strong></p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IOSButton</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AndroidButton</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Without Factory, that&#x27;s not very maintainable</span></span><br><span class="line"><span class="keyword">const</span> button1 = os === <span class="string">&#x27;ios&#x27;</span> ? <span class="keyword">new</span> IOSButton() : <span class="keyword">new</span> AndroidButton();</span><br><span class="line"><span class="keyword">const</span> button2 = os === <span class="string">&#x27;ios&#x27;</span> ? <span class="keyword">new</span> IOSButton() : <span class="keyword">new</span> AndroidButton();</span><br></pre></td></tr></table></figure>
-<p>Instead, we can create a subclass or function that will determine which object to instantiate.</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ButtonFactory</span> </span>&#123;</span><br><span class="line">  createButton(os: <span class="built_in">string</span>): IOSButton | AndroidButton &#123;</span><br><span class="line">    <span class="keyword">if</span> (os === <span class="string">&#x27;ios&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> IOSButton();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> AndroidButton();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// With Factory</span></span><br><span class="line"><span class="keyword">const</span> factory = <span class="keyword">new</span> ButtonFactory();</span><br><span class="line"><span class="keyword">const</span> btn1 = factory.createButton(os);</span><br><span class="line"><span class="keyword">const</span> btn2 = factory.createButton(os);</span><br></pre></td></tr></table></figure>
-<h3 id="3-Structural-Pattern"><a href="#3-Structural-Pattern" class="headerlink" title="3. Structural Pattern"></a>3. Structural Pattern</h3><h3 id="3-1-Facade"><a href="#3-1-Facade" class="headerlink" title="3.1 Facade"></a>3.1 Facade</h3><p><strong>A facade is the face of a building, inside that building, there’s a lot of complexity that the end user doesn’t need to know about.</strong></p>
-<p><strong>A facade is basically just a simplified api to hide other low-level details in your code base.</strong></p>
-<p>A facade example in TS:</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PlumbingSystem</span> </span>&#123;</span><br><span class="line">  <span class="comment">// low level access to plumbing system</span></span><br><span class="line">  <span class="function"><span class="title">setPressure</span>(<span class="params">v: <span class="built_in">number</span></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOn</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOff</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ElectricalSystem</span> </span>&#123;</span><br><span class="line">  <span class="comment">// low level access to electrical system</span></span><br><span class="line">  <span class="function"><span class="title">setVoltage</span>(<span class="params">v: <span class="built_in">number</span></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOn</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">  <span class="function"><span class="title">turnOff</span>(<span class="params"></span>)</span> &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">House</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> plumbing = <span class="keyword">new</span> PlumbingSystem();</span><br><span class="line">  <span class="keyword">private</span> electrical = <span class="keyword">new</span> ElectricalSystem();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="title">turnOnSystems</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.electrical.setVoltage(<span class="number">120</span>);</span><br><span class="line">    <span class="built_in">this</span>.electrical.turnOn();</span><br><span class="line">    <span class="built_in">this</span>.plumbing.setPressure(<span class="number">500</span>);</span><br><span class="line">    <span class="built_in">this</span>.plumbing.turnOn();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="title">shutDown</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.plumbing.turnOff();</span><br><span class="line">    <span class="built_in">this</span>.electrical.turnOff();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> client = <span class="keyword">new</span> House();</span><br><span class="line">client.turnOnSystems();</span><br><span class="line">client.shutDown();               <span class="comment">// Ugly details hidden</span></span><br></pre></td></tr></table></figure>
-<p><strong>Almost every package that you install with javascript could be considered a facade in some way.</strong></p>
-<h3 id="3-2-Proxy"><a href="#3-2-Proxy" class="headerlink" title="3.2 Proxy"></a>3.2 Proxy</h3><p><strong>A fancy word for substitute.</strong> You can replace a target object with a proxy.</p>
-<p>A great case study is the reactivity system in Vue.js. In Vue, you create data but the framework itself needs a way to intercept that data and update the ui whenever that data changes.</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> original = &#123; <span class="attr">name</span>: <span class="string">&#x27;jeff&#x27;</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reactive = <span class="keyword">new</span> <span class="built_in">Proxy</span>(original, &#123;</span><br><span class="line">  <span class="function"><span class="title">get</span>(<span class="params">target, key</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Tracking: &#x27;</span>, key);</span><br><span class="line">    <span class="keyword">return</span> target[key];</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">set</span>(<span class="params">target, key, value</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Updating UI...&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.set(target, key, value);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">reactive.name; <span class="comment">// logs &#x27;tracking name&#x27;</span></span><br><span class="line">reactive.name = <span class="string">&#x27;bob&#x27;</span>; <span class="comment">//logs &#x27;updating UI...&#x27;</span></span><br></pre></td></tr></table></figure>
-
-
-<p>The way Vue handles that is by replacing the original object with a proxy. A proxy takes the original object as the first argument then a handler as the second argument, inside of which, we can override methods like get and set which allows us to run code whenever a property is accessed on the object or changed.</p>
-<p>The end user can now work with a proxy just like the original object but it can trigger the side effects behind the scenes.</p>
-<p><strong>Proxies are also commonly used when you have a very large object that would be expensive to duplicate in memory.</strong></p>
-<h2 id="4-Behavioral-Pattern"><a href="#4-Behavioral-Pattern" class="headerlink" title="4. Behavioral Pattern"></a>4. Behavioral Pattern</h2><h3 id="4-1-Iterator-—-Pull-Based-System"><a href="#4-1-Iterator-—-Pull-Based-System" class="headerlink" title="4.1 Iterator — Pull-Based System"></a>4.1 Iterator — Pull-Based System</h3><p><strong>The iterator pattern allows you to traverse through a collection of objects.</strong> Modern languages already provide abstractions for the iterator pattern like the for loop. When you loop over an array of items, you’re using the iterator pattern.</p>
-<p>Implement our own iterator pattern to achieve “range function”</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">range</span>(<span class="params">start: <span class="built_in">number</span>, end: <span class="built_in">number</span>, step=<span class="number">1</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">next</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (start &lt; end) &#123;</span><br><span class="line">        start = start + step;</span><br><span class="line">        <span class="keyword">return</span> &#123; <span class="attr">value</span>: start, <span class="attr">done</span>: <span class="literal">false</span> &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> &#123; <span class="attr">done</span>: <span class="literal">true</span>, <span class="attr">value</span>: end &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> n <span class="keyword">of</span> range(<span class="number">0</span>, <span class="number">20</span>, <span class="number">5</span>))) &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-Observer-—-Push-Based-System"><a href="#4-2-Observer-—-Push-Based-System" class="headerlink" title="4.2 Observer — Push-Based System"></a>4.2 Observer — Push-Based System</h3><p><strong>The observer pattern allows many objects to subscribe to events that are broadcast by another object. It’s a one-to-mant relationship.</strong></p>
-<p>This pattern is used all over the place in app development. Like in firebase, when your data changes on the server, all your client apps are subscribed to it and automatically updated with the latest data.</p>
-<p>rijx library example for observer</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import &#123; Subject &#125; from &#39;rxjs&#39;;</span><br><span class="line"></span><br><span class="line">const news &#x3D; new Subject();</span><br><span class="line"></span><br><span class="line">const tv1 &#x3D; news.subscribe(v &#x3D;&gt; console.log(v + &#39;via Den TV&#39;));</span><br><span class="line">const tv2 &#x3D; news.subscribe(v &#x3D;&gt; console.log(v + &#39;via Batcave TV&#39;));</span><br><span class="line">const tv3 &#x3D; news.subscribe(v &#x3D;&gt; console.log(v + &#39;via Airport TV&#39;));</span><br><span class="line"></span><br><span class="line">news.next(&#39;Breaking new: &#39;);</span><br><span class="line">news.next(&#39;The war is over &#39;);</span><br></pre></td></tr></table></figure>
-<p>Personally, I like to think of this as a loop that unfolds over the dimension of time. (Haven’t got the idea yet)</p>
-<h3 id="4-3-Mediator"><a href="#4-3-Mediator" class="headerlink" title="4.3 Mediator"></a>4.3 Mediator</h3><p><strong>A mediator is like a middleman or broker.</strong></p>
-<p>A practical example, in the express.js web framework, there’s a middleware system, you have incoming requests and outgoing responses. <strong>Middleware sits in the middle by intercepting every request and transform it into the proper format for the response. It provides a separation of concerns and eliminates code duplication.</strong></p>
-<h3 id="4-4-State"><a href="#4-4-State" class="headerlink" title="4.4 State"></a>4.4 State</h3><p><strong>State Pattern is where an object behaves differently based on a finite number of states.</strong></p>
-<p>Without state pattern, you’ve likely used conditional logic or switch statements to handle a bunch of different possibilities based on the state or data in your application. Code like this generally doesn’t scale very well.</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Without State Pattern</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">think</span>(<span class="params">mood</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (mood) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;happy&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;I am happy&quot;</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&quot;sad&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;I am sad&quot;</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;I am neutral&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The state pattern allows you to start with one base class then provide it with different functionality based on its internal state. The idea is related to finite state machines and libraries like xstate where the goal is to make the object’s behavior predictable based on its underlying state.</p>
-<p>Another way to go about it would be to create a separate class for each possible state, inside each class, we will have an identical method that behaves differently. <strong>Now in the Human Class, we set the state as a property and whenever that method is called, we delegate it to its current state. That means whenever the state changes, the object will behave in a completely different way, but at the same time, we don’t have to change the api or use a bunch of conditional logic.</strong></p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">interface</span> State &#123;</span><br><span class="line">  think(): <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123;</span><br><span class="line">  state: State;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.state = <span class="keyword">new</span> HappyState();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">think</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>.state.think();</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="title">changeState</span>(<span class="params">state</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.state = state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>“10 Design Patterns Explained in 10 Minutes” — <a href="https://www.youtube.com/watch?v=tv-_1er1mWI">https://www.youtube.com/watch?v=tv-_1er1mWI</a></p>
-]]></content>
-      <categories>
-        <category>Design Pattern</category>
-      </categories>
-      <tags>
-        <tag>Design Pattern</tag>
       </tags>
   </entry>
   <entry>
@@ -874,92 +874,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Handy CheatSheet</title>
-    <url>/2021/10/27/Handy-CheatSheet/</url>
-    <content><![CDATA[<h1 id="Algorithm-Time-Complexity"><a href="#Algorithm-Time-Complexity" class="headerlink" title="Algorithm Time Complexity"></a>Algorithm Time Complexity</h1><table>
-<thead>
-<tr>
-<th align="center">Algorithm</th>
-<th align="center">Best Time Complexity</th>
-<th align="center">Ave TC</th>
-<th align="center">Worst TC</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Selection Sort</td>
-<td align="center">Ω($n^2$)</td>
-<td align="center">Θ($n^2$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
-</tr>
-<tr>
-<td align="center">Bubble Sort</td>
-<td align="center">Ω($n$)</td>
-<td align="center">Θ($n^2$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
-</tr>
-<tr>
-<td align="center">Insertion Sort</td>
-<td align="center">Ω($n$)</td>
-<td align="center">Θ($n^2$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>Heap Sort</strong></td>
-<td align="center">Ω($nlogn$)</td>
-<td align="center">Θ($nlogn$)</td>
-<td align="center"><strong>O($nlogn$)</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>Quick Sort</strong></td>
-<td align="center">Ω($nlogn$)</td>
-<td align="center">Θ($nlogn$)</td>
-<td align="center"><strong>O($n^2$)</strong></td>
-</tr>
-<tr>
-<td align="center"><strong>Merge Sort</strong></td>
-<td align="center">Ω($nlogn$)</td>
-<td align="center">Θ($nlogn$)</td>
-<td align="center"><strong>O($nlogn$)</strong></td>
-</tr>
-<tr>
-<td align="center">Bucket Sort</td>
-<td align="center">Ω($n+k$)</td>
-<td align="center">Θ($n+k$)</td>
-<td align="center">O($n^2$)</td>
-</tr>
-<tr>
-<td align="center">Radix Sort</td>
-<td align="center">Ω($nk$)</td>
-<td align="center">Θ($nk$)</td>
-<td align="center">O($nk$)</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-
-<h1 id="Time-Complexity-Rank"><a href="#Time-Complexity-Rank" class="headerlink" title="Time Complexity Rank"></a>Time Complexity Rank</h1><ol>
-<li>O($logn$)    ——————–    e.g. Binary Tree</li>
-<li>O($n$)          ——————–    e.g. Simple Search</li>
-<li>O($nlogn$)  ——————–    e.g. Quick Sort</li>
-</ol>
-<hr>
-<ol start="4">
-<li>O($n^2$)        ——————–     e.g. Selection Sort (Not Recommended Time Complexity)</li>
-</ol>
-<h1 id="Java-IDEA-IDE-ShortCut"><a href="#Java-IDEA-IDE-ShortCut" class="headerlink" title="Java IDEA IDE ShortCut"></a>Java IDEA IDE ShortCut</h1><ol>
-<li>sout + enter</li>
-<li>psvm + enter</li>
-<li>fori + enter</li>
-<li>iter + enter</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Algorithm/算法</category>
-      </categories>
-      <tags>
-        <tag>Algorithm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript琐碎基础---学习手记</title>
     <url>/2021/09/24/JavaScriptBasics/</url>
     <content><![CDATA[<p><strong>JavaScript语语法基础部分一览，包括面试常见的“深浅拷贝”、数据结构操作（如数组插入等）需熟记于心。</strong></p>
@@ -1315,6 +1229,92 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Handy CheatSheet</title>
+    <url>/2021/10/27/Handy-CheatSheet/</url>
+    <content><![CDATA[<h1 id="Algorithm-Time-Complexity"><a href="#Algorithm-Time-Complexity" class="headerlink" title="Algorithm Time Complexity"></a>Algorithm Time Complexity</h1><table>
+<thead>
+<tr>
+<th align="center">Algorithm</th>
+<th align="center">Best Time Complexity</th>
+<th align="center">Ave TC</th>
+<th align="center">Worst TC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Selection Sort</td>
+<td align="center">Ω($n^2$)</td>
+<td align="center">Θ($n^2$)</td>
+<td align="center"><strong>O($n^2$)</strong></td>
+</tr>
+<tr>
+<td align="center">Bubble Sort</td>
+<td align="center">Ω($n$)</td>
+<td align="center">Θ($n^2$)</td>
+<td align="center"><strong>O($n^2$)</strong></td>
+</tr>
+<tr>
+<td align="center">Insertion Sort</td>
+<td align="center">Ω($n$)</td>
+<td align="center">Θ($n^2$)</td>
+<td align="center"><strong>O($n^2$)</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>Heap Sort</strong></td>
+<td align="center">Ω($nlogn$)</td>
+<td align="center">Θ($nlogn$)</td>
+<td align="center"><strong>O($nlogn$)</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>Quick Sort</strong></td>
+<td align="center">Ω($nlogn$)</td>
+<td align="center">Θ($nlogn$)</td>
+<td align="center"><strong>O($n^2$)</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>Merge Sort</strong></td>
+<td align="center">Ω($nlogn$)</td>
+<td align="center">Θ($nlogn$)</td>
+<td align="center"><strong>O($nlogn$)</strong></td>
+</tr>
+<tr>
+<td align="center">Bucket Sort</td>
+<td align="center">Ω($n+k$)</td>
+<td align="center">Θ($n+k$)</td>
+<td align="center">O($n^2$)</td>
+</tr>
+<tr>
+<td align="center">Radix Sort</td>
+<td align="center">Ω($nk$)</td>
+<td align="center">Θ($nk$)</td>
+<td align="center">O($nk$)</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h1 id="Time-Complexity-Rank"><a href="#Time-Complexity-Rank" class="headerlink" title="Time Complexity Rank"></a>Time Complexity Rank</h1><ol>
+<li>O($logn$)    ——————–    e.g. Binary Tree</li>
+<li>O($n$)          ——————–    e.g. Simple Search</li>
+<li>O($nlogn$)  ——————–    e.g. Quick Sort</li>
+</ol>
+<hr>
+<ol start="4">
+<li>O($n^2$)        ——————–     e.g. Selection Sort (Not Recommended Time Complexity)</li>
+</ol>
+<h1 id="Java-IDEA-IDE-ShortCut"><a href="#Java-IDEA-IDE-ShortCut" class="headerlink" title="Java IDEA IDE ShortCut"></a>Java IDEA IDE ShortCut</h1><ol>
+<li>sout + enter</li>
+<li>psvm + enter</li>
+<li>fori + enter</li>
+<li>iter + enter</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Algorithm/算法</category>
+      </categories>
+      <tags>
+        <tag>Algorithm</tag>
       </tags>
   </entry>
   <entry>
@@ -1762,6 +1762,77 @@
       </tags>
   </entry>
   <entry>
+    <title>再探 React Hooks</title>
+    <url>/2022/02/21/ReactHookIntro2/</url>
+    <content><![CDATA[<p><strong>在之前的一章我们已经了解了 React Hook 的一些基本特性/优点和一些使用方法。在这一章中，我们将深入介绍另外几个常用的钩子。</strong></p>
+<a id="more"></a>
+
+<h1 id="React-Hooks-Intro"><a href="#React-Hooks-Intro" class="headerlink" title="React Hooks Intro"></a>React Hooks Intro</h1><h2 id="一、类与函数的区别"><a href="#一、类与函数的区别" class="headerlink" title="一、类与函数的区别"></a>一、类与函数的区别</h2><p>React的核心是<strong>组件</strong>。在v16.8版本之前，组件的标准写法是类组件。</p>
+<h3 id="1-1-类组件的缺点"><a href="#1-1-类组件的缺点" class="headerlink" title="1.1 类组件的缺点"></a>1.1 类组件的缺点</h3><ul>
+<li>组件类代码很“重”</li>
+<li>真实的 React App 由多个类按层级，一层层构成，复杂度很高</li>
+<li>如果再使用 Redux，整个项目看起来会变得非常复杂</li>
+</ul>
+<p>根据 Redux 的作者 Dan 的总结，组件类有以下几个缺点：</p>
+<ul>
+<li><strong>Huge components</strong> that are hard to refactor and test.</li>
+<li><strong>Duplicated logic</strong> between different components and lifecycle methods.</li>
+<li><strong>Complex patterns</strong> like render props and higher-order components.</li>
+</ul>
+<p>翻译一下就是：</p>
+<ul>
+<li><strong>大型组件</strong>很难拆分、重构和测试</li>
+<li>业务逻辑存在于不同组件以及生命周期方法中，因此会导致<strong>重复逻辑</strong></li>
+<li><strong>复杂的编程模式</strong>，如render props 和高阶组件</li>
+</ul>
+<h3 id="1-2-函数组件的优势"><a href="#1-2-函数组件的优势" class="headerlink" title="1.2 函数组件的优势"></a>1.2 函数组件的优势</h3><p>React 官方希望组件是一个简单的<strong>数据流管道</strong>，让开发者可以根据需求来组合管道，而不要变成一个复杂的容器。因此组件的最佳写法是函数式。</p>
+<p>早期的函数组件无法取代类组件，是因为函数组件必须是<strong>纯函数</strong>，因此<strong>不能包含状态</strong>和<strong>生命周期方法</strong>。</p>
+<p>而 React Hook 的出现彻底解决了这个问题，它可以让我们用函数式组件的写法，完成一个功能齐全的组件。</p>
+<h2 id="二、What-is-Hook"><a href="#二、What-is-Hook" class="headerlink" title="二、What is Hook?"></a>二、What is Hook?</h2><p><strong>React Hooks</strong> 是为函数组件提供所需要的<strong>外部功能</strong>和<strong>副作用</strong>的“钩子”。</p>
+<p>因此我们需要什么功能，就使用什么钩子。</p>
+<p>要注意的是，如果我们自己封装自定义的钩子，需要遵循命名规则，即钩子一律使用 use 前缀来命名，以便于识别。</p>
+<p>接下来，我们来介绍几个 React 提供的常用的钩子。</p>
+<blockquote>
+<ul>
+<li>useState()</li>
+<li>useContext()</li>
+<li>useReducer()</li>
+<li>useEffect()</li>
+</ul>
+</blockquote>
+<h2 id="三、useState-状态钩子"><a href="#三、useState-状态钩子" class="headerlink" title="三、useState(): 状态钩子"></a>三、useState(): 状态钩子</h2><p>由于纯函数不能有状态，所以需要把状态放在钩子里面。</p>
+<p>useState() 函数接受状态的初始值作为参数，并返回一个数组，数组的第一个值为表示当前状态值的变量，第二个值为用来更新状态的函数（命名约定为：以<code>set</code>前缀+状态的变量名）。示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Button</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [buttonText, setButtonText] = useState(<span class="string">&#x27;Hello!&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setButtonText(<span class="string">&#x27;World!&#x27;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;button onClick=&#123;handleClick&#125;&gt;&#123;buttonText&#125;&lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="四、useContext-共享状态钩子"><a href="#四、useContext-共享状态钩子" class="headerlink" title="四、useContext(): 共享状态钩子"></a>四、useContext(): 共享状态钩子</h2><p>如果需要在组件间共享状态，可以使用<code>useContext()</code>。</p>
+<p>例如组件A和组件B需要共享状态，示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.jsx</span></span><br><span class="line"><span class="keyword">const</span> AppContext = React.createContext(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">&lt;AppContext.Provider value = &#123;&#123;<span class="attr">username</span>: <span class="string">&#x27;Will&#x27;</span>&#125;&#125;&gt;</span><br><span class="line">  &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">    &lt;A /&gt;</span><br><span class="line">    &lt;B /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/AppContext.Provider&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;A&#x27;</span>&gt;</span><br><span class="line">      &lt;p&gt;Home&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;&#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// B.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;B&#x27;</span>&gt;</span><br><span class="line">      &lt;h1&gt;B Component&lt;/h1&gt;</span><br><span class="line">      &lt;p&gt;the current user is: &#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="五、useReducer-action-钩子"><a href="#五、useReducer-action-钩子" class="headerlink" title="五、useReducer(): action 钩子"></a>五、useReducer(): action 钩子</h2><p>React 本身并不提供状态管理工具，如果需要，通常是引入外部库，当前最流行的库非 Redux 莫属。</p>
+<p><strong>Redux 的核心理念</strong>是：组件<strong>发出 action 与状态管理器通信</strong>，在状态管理器收到 action 后，<strong>使用 Reducer 函数计算出最新的状态</strong>并返回其值（Reducer函数形式大致为：<code>(state, action) =&gt; newState</code>）。（具体关于 Redux 的介绍，请参考我之前的关于 Redux 的文章）</p>
+<p>随着 Redux 的流行，React 官方也加入了 <code>useReducers()</code> 这个钩子用来引入 Reducer 功能，从而可以更方便的使用 Redux。</p>
+<p>**useReducer()**的基本用法：接受 Reducer 函数和状态初始值作为参数，并返回一个数组。数组的第一个值是当前状态值，第二个值是用来发送 action 的 dispatch 函数。</p>
+<p>以计数器为例，示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建 reducer 函数</span></span><br><span class="line"><span class="keyword">const</span> myReducer = <span class="function">(<span class="params">state, action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">      <span class="keyword">case</span>(<span class="string">&#x27;countUp&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    	<span class="keyword">case</span> (<span class="string">&#x27;countDown&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count - <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 计算器组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [state, dispatch] = useReducer(myReducer, &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countUp&#x27;</span>&#125;)&#125;&gt;+<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countDown&#x27;</span>&#125;)&#125;&gt;-<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;p&gt;Count: &#123;state.count&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>尽管使用 Hook <strong>可以提供共享状态</strong>以及<strong>Reducer 函数</strong>，但是由于 React 本身并<strong>没有提供中间件（middleware）</strong>以及<strong>时间旅行（time travel）</strong>，因此，如果需要使用这两个功能，还是要用 Redux。</p>
+<h2 id="六、useEffect-通用副作用钩子"><a href="#六、useEffect-通用副作用钩子" class="headerlink" title="六、useEffect(): 通用副作用钩子"></a>六、useEffect(): 通用副作用钩子</h2><p>这个在上一章中已经详细讲解，这里不多赘述。只给出一个简单示例，如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">false</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="七、创建自定义的-Hook"><a href="#七、创建自定义的-Hook" class="headerlink" title="七、创建自定义的 Hook"></a>七、创建自定义的 Hook</h2><p>如上面代码示例所示，我们也可以将其封装起来以变成一个自定义的 Hook。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 封装为 Hook</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">usePerson</span>(<span class="params">personId</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">true</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> [loading, person];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, person] = usePerson(personId);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>Notes：</strong>以上内容借鉴了阮一峰老师的文章。</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>React进阶之路——Diff算法详解</title>
     <url>/2022/08/02/ReactDiff%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p><strong>React Fiber</strong> 是 React 16 之后推出的新架构，而 <strong>Reconciliation</strong> 是 React 的 Diff 算法，<strong>Fiber 和 Reconciliation 都是 React 的核心机制</strong>。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。</p>
@@ -1885,77 +1956,6 @@
 <p><strong>注：React 开发者做了一个优化，即 Effect List。</strong>React 会跳过那些已经处理过的 fiber node，只会去处理那些未完成 work 的 fiber node。例如，如果在组件树的深层中更新了某个 state，那么虽然 React 还是会从 fiber node tree 的顶部的节点开始遍历，但它会跳过前面的父节点，直接走到发生 state 变更的子节点。</p>
 <p>当 work loop 结束之后（即遍历完整棵 fiber node tree之后），就会进入 commit 阶段（Commit Phase）。在 commit 阶段，React 会去更新真实 DOM 树，从而完成 UI 的更新渲染。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>参考自掘金文章——<a href="https://juejin.cn/post/6891242214324699143">轻烤 React 核心机制：React Fiber 与 Reconciliation</a></p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>再探 React Hooks</title>
-    <url>/2022/02/21/ReactHookIntro2/</url>
-    <content><![CDATA[<p><strong>在之前的一章我们已经了解了 React Hook 的一些基本特性/优点和一些使用方法。在这一章中，我们将深入介绍另外几个常用的钩子。</strong></p>
-<a id="more"></a>
-
-<h1 id="React-Hooks-Intro"><a href="#React-Hooks-Intro" class="headerlink" title="React Hooks Intro"></a>React Hooks Intro</h1><h2 id="一、类与函数的区别"><a href="#一、类与函数的区别" class="headerlink" title="一、类与函数的区别"></a>一、类与函数的区别</h2><p>React的核心是<strong>组件</strong>。在v16.8版本之前，组件的标准写法是类组件。</p>
-<h3 id="1-1-类组件的缺点"><a href="#1-1-类组件的缺点" class="headerlink" title="1.1 类组件的缺点"></a>1.1 类组件的缺点</h3><ul>
-<li>组件类代码很“重”</li>
-<li>真实的 React App 由多个类按层级，一层层构成，复杂度很高</li>
-<li>如果再使用 Redux，整个项目看起来会变得非常复杂</li>
-</ul>
-<p>根据 Redux 的作者 Dan 的总结，组件类有以下几个缺点：</p>
-<ul>
-<li><strong>Huge components</strong> that are hard to refactor and test.</li>
-<li><strong>Duplicated logic</strong> between different components and lifecycle methods.</li>
-<li><strong>Complex patterns</strong> like render props and higher-order components.</li>
-</ul>
-<p>翻译一下就是：</p>
-<ul>
-<li><strong>大型组件</strong>很难拆分、重构和测试</li>
-<li>业务逻辑存在于不同组件以及生命周期方法中，因此会导致<strong>重复逻辑</strong></li>
-<li><strong>复杂的编程模式</strong>，如render props 和高阶组件</li>
-</ul>
-<h3 id="1-2-函数组件的优势"><a href="#1-2-函数组件的优势" class="headerlink" title="1.2 函数组件的优势"></a>1.2 函数组件的优势</h3><p>React 官方希望组件是一个简单的<strong>数据流管道</strong>，让开发者可以根据需求来组合管道，而不要变成一个复杂的容器。因此组件的最佳写法是函数式。</p>
-<p>早期的函数组件无法取代类组件，是因为函数组件必须是<strong>纯函数</strong>，因此<strong>不能包含状态</strong>和<strong>生命周期方法</strong>。</p>
-<p>而 React Hook 的出现彻底解决了这个问题，它可以让我们用函数式组件的写法，完成一个功能齐全的组件。</p>
-<h2 id="二、What-is-Hook"><a href="#二、What-is-Hook" class="headerlink" title="二、What is Hook?"></a>二、What is Hook?</h2><p><strong>React Hooks</strong> 是为函数组件提供所需要的<strong>外部功能</strong>和<strong>副作用</strong>的“钩子”。</p>
-<p>因此我们需要什么功能，就使用什么钩子。</p>
-<p>要注意的是，如果我们自己封装自定义的钩子，需要遵循命名规则，即钩子一律使用 use 前缀来命名，以便于识别。</p>
-<p>接下来，我们来介绍几个 React 提供的常用的钩子。</p>
-<blockquote>
-<ul>
-<li>useState()</li>
-<li>useContext()</li>
-<li>useReducer()</li>
-<li>useEffect()</li>
-</ul>
-</blockquote>
-<h2 id="三、useState-状态钩子"><a href="#三、useState-状态钩子" class="headerlink" title="三、useState(): 状态钩子"></a>三、useState(): 状态钩子</h2><p>由于纯函数不能有状态，所以需要把状态放在钩子里面。</p>
-<p>useState() 函数接受状态的初始值作为参数，并返回一个数组，数组的第一个值为表示当前状态值的变量，第二个值为用来更新状态的函数（命名约定为：以<code>set</code>前缀+状态的变量名）。示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Button</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [buttonText, setButtonText] = useState(<span class="string">&#x27;Hello!&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setButtonText(<span class="string">&#x27;World!&#x27;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;button onClick=&#123;handleClick&#125;&gt;&#123;buttonText&#125;&lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="四、useContext-共享状态钩子"><a href="#四、useContext-共享状态钩子" class="headerlink" title="四、useContext(): 共享状态钩子"></a>四、useContext(): 共享状态钩子</h2><p>如果需要在组件间共享状态，可以使用<code>useContext()</code>。</p>
-<p>例如组件A和组件B需要共享状态，示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.jsx</span></span><br><span class="line"><span class="keyword">const</span> AppContext = React.createContext(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">&lt;AppContext.Provider value = &#123;&#123;<span class="attr">username</span>: <span class="string">&#x27;Will&#x27;</span>&#125;&#125;&gt;</span><br><span class="line">  &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">    &lt;A /&gt;</span><br><span class="line">    &lt;B /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/AppContext.Provider&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;A&#x27;</span>&gt;</span><br><span class="line">      &lt;p&gt;Home&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;&#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// B.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;B&#x27;</span>&gt;</span><br><span class="line">      &lt;h1&gt;B Component&lt;/h1&gt;</span><br><span class="line">      &lt;p&gt;the current user is: &#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="五、useReducer-action-钩子"><a href="#五、useReducer-action-钩子" class="headerlink" title="五、useReducer(): action 钩子"></a>五、useReducer(): action 钩子</h2><p>React 本身并不提供状态管理工具，如果需要，通常是引入外部库，当前最流行的库非 Redux 莫属。</p>
-<p><strong>Redux 的核心理念</strong>是：组件<strong>发出 action 与状态管理器通信</strong>，在状态管理器收到 action 后，<strong>使用 Reducer 函数计算出最新的状态</strong>并返回其值（Reducer函数形式大致为：<code>(state, action) =&gt; newState</code>）。（具体关于 Redux 的介绍，请参考我之前的关于 Redux 的文章）</p>
-<p>随着 Redux 的流行，React 官方也加入了 <code>useReducers()</code> 这个钩子用来引入 Reducer 功能，从而可以更方便的使用 Redux。</p>
-<p>**useReducer()**的基本用法：接受 Reducer 函数和状态初始值作为参数，并返回一个数组。数组的第一个值是当前状态值，第二个值是用来发送 action 的 dispatch 函数。</p>
-<p>以计数器为例，示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建 reducer 函数</span></span><br><span class="line"><span class="keyword">const</span> myReducer = <span class="function">(<span class="params">state, action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">      <span class="keyword">case</span>(<span class="string">&#x27;countUp&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    	<span class="keyword">case</span> (<span class="string">&#x27;countDown&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count - <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 计算器组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [state, dispatch] = useReducer(myReducer, &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countUp&#x27;</span>&#125;)&#125;&gt;+<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countDown&#x27;</span>&#125;)&#125;&gt;-<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;p&gt;Count: &#123;state.count&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>尽管使用 Hook <strong>可以提供共享状态</strong>以及<strong>Reducer 函数</strong>，但是由于 React 本身并<strong>没有提供中间件（middleware）</strong>以及<strong>时间旅行（time travel）</strong>，因此，如果需要使用这两个功能，还是要用 Redux。</p>
-<h2 id="六、useEffect-通用副作用钩子"><a href="#六、useEffect-通用副作用钩子" class="headerlink" title="六、useEffect(): 通用副作用钩子"></a>六、useEffect(): 通用副作用钩子</h2><p>这个在上一章中已经详细讲解，这里不多赘述。只给出一个简单示例，如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">false</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="七、创建自定义的-Hook"><a href="#七、创建自定义的-Hook" class="headerlink" title="七、创建自定义的 Hook"></a>七、创建自定义的 Hook</h2><p>如上面代码示例所示，我们也可以将其封装起来以变成一个自定义的 Hook。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 封装为 Hook</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">usePerson</span>(<span class="params">personId</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">true</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> [loading, person];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, person] = usePerson(personId);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>Notes：</strong>以上内容借鉴了阮一峰老师的文章。</p>
 ]]></content>
       <categories>
         <category>FrontEnd/前端</category>
@@ -2372,20 +2372,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2021/02/14/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>会话技术</title>
     <url>/2021/12/06/SessionTech/</url>
     <content><![CDATA[<p><strong>在互联网发展之初，Web主要用于文档浏览，服务器无需维护客户端的用户状态，因此HTTP请求是无状态的。然而随着互联网的快速发展，无状态的请求已经无法满足需求，因此就引入了会话技术。</strong></p>
@@ -2514,6 +2500,20 @@
       <tags>
         <tag>FrontEnd</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/02/14/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>浅析前端流行仓库管理模式——Monorepo</title>
