@@ -198,8 +198,8 @@
       </tags>
   </entry>
   <entry>
-    <title>10 Design Patterns</title>
-    <url>/2023/03/11/Docker%20Intro/</url>
+    <title>Understanding Docker Technologoy</title>
+    <url>/2025/03/16/Docker%20Intro/</url>
     <content><![CDATA[<p><strong>This article will talk about docker, one of the most popular containerisation technologies that every developer should know and master.</strong></p>
 <a id="more"></a>
 
@@ -316,10 +316,10 @@
 </ol>
 ]]></content>
       <categories>
-        <category>Design Pattern</category>
+        <category>Containerisation</category>
       </categories>
       <tags>
-        <tag>Design Pattern</tag>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
