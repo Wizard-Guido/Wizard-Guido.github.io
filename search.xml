@@ -198,6 +198,55 @@
       </tags>
   </entry>
   <entry>
+    <title>Eavesdropping and Packet Sniffing over Wi-Fi</title>
+    <url>/2022/11/18/EavesdroppingAndPacketSniffingOverWi-Fi/</url>
+    <content><![CDATA[<p><strong>This report illustrates the eavesdropping and packet sniffing over Wi-Fi networks, one of the most common attacks. It will focus on the threats and some popular solutions of Wi-Fi eavesdropping.</strong></p>
+<a id="more"></a>
+
+<h1 id="Eavesdropping-and-packet-sniffing-over-Wi-Fi"><a href="#Eavesdropping-and-packet-sniffing-over-Wi-Fi" class="headerlink" title="Eavesdropping and packet sniffing over Wi-Fi"></a>Eavesdropping and packet sniffing over Wi-Fi</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>This report illustrates the eavesdropping and packet sniffing over Wi-Fi networks, one of the most common attacks. It will focus on the threats and some popular solutions of Wi-Fi eavesdropping. It will begin from the definition of Wi-Fi eavesdropping, passing by posting some threats of the confidentiality attack and what will be at risk from this attack, through mentioning the principles that the Wi-Fi eavesdropping is based on and some common preventative measures in order to secure the network and show what we can do to protect our Wi-Fi. At the end, a brief conclusion will be given.</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Eavesdropping is an action of spying on personal information and the victims can’t realize that. It’s the confidentiality attack that usually takes place on the internet. Wi-Fi eavesdropping focuses on capturing, recombining and reading the data packets which are transmitted between devices on the internet. Wi-Fi eavesdropping usually takes the form of packet sniffing to achieve their purpose. Packet sniffing is the process of collecting and gathering all the data packets regardless of the destination address of these packets. This type of technology can be legal or illegal which depends on who uses it. For example, the government will use this technology to detect if any criminal events exist on the internet and it’s legal. But black-hat hackers can also utilize it to intercept some sensitive information which is illegal. This report will focus on the illegal events and their influences.</p>
+<p>Before discussing threats resulting from eavesdropping, we need to figure out the principle of Wi-Fi eavesdropping firstly. Wi-Fi eavesdropping can also be called packet sniffing in a way. According to Ethernet protocol, every data packet has a header which should include the destination physical address and each node on the network can find it but only the node who has the same address as the packet will receive it. However, using some tools can set the network interface setting to the monitor mode, which will allow this node to receive any packet regardless of the destination physical address. Therefore, Wi-Fi eavesdropping just utilizes this principle to sniff every packet potentially, which means it’s very difficult for general users to find whether they are being eavesdropped.</p>
+<h2 id="Security-threats-from-Wi-Fi-eavesdropping"><a href="#Security-threats-from-Wi-Fi-eavesdropping" class="headerlink" title="Security threats from Wi-Fi eavesdropping"></a>Security threats from Wi-Fi eavesdropping</h2><p>The personal privacy will be exposed to the attackers if the bad guy successfully sniffs the packets. For example, public Wi-Fi is very common in the modern society, especially in the coffee bar like Starbucks. If you and the attacker are under the same public Wi-Fi, your data packets are vulnerable to this interception. Particularly, if your data packets are not encrypted in certain way, like you just unencrypted HTTP to visit some websites and submit some tables, then your personal information will be more likely to leak, such as the websites you are accessing, user name and password, what you download and even all your emails. </p>
+<p>The business information might be stolen by black-hat hackers, especially some sensitive business information which will result in money loss or even company bankruptcy. For instance, in a big company an employee is an attacker who put a packet sniffer on the internal network to eavesdrop some sensitive data like financial data which will cause a big crisis of the company. After that, it might lead to job loss and even trigger some social problems in some small areas.</p>
+<p>Besides, if a technical corporation makes a mistake on its products, it will not only affect itself like company future and share price, but also hundreds of thousands of users who own its products, which even cause a huge panic in the society. For example, according to cnet website news, in 2019 a smart video ring created by Amazon company was found to have vulnerability leaking Wi-Fi login information. (Alfred, 2019) The leaking happens when you first set your ring device. It will send the sensitive information such as Wi-Fi username and password in the plain form, which shows that everyone can see the information and even successfully enter your network and eavesdrop all your information on the network. That sounds horrible but it’s true.  </p>
+<p>In some cases, eavesdropping attack could lead to a big social event. According to an essay in UKESSAYS, over 55,000 wireless routers’ passwords are compromised due to the user bad habit that they don’t change the default password, which gives the eavesdroppers a chance to catch their data easily. [2] This case shows that many users are lack of network security awareness and it will let Wi-Fi eavesdropping become easier.</p>
+<h2 id="Why-is-Wi-Fi-so-vulnerable-to-compromise"><a href="#Why-is-Wi-Fi-so-vulnerable-to-compromise" class="headerlink" title="Why is Wi-Fi so vulnerable to compromise?"></a>Why is Wi-Fi so vulnerable to compromise?</h2><p>The most important reason is that most of users around the world don’t develop the awareness about how important network security is and how to protect their data on the internet. If users don’t know the basic knowledge of network, it will be difficult for them to know how to protect their sensitive information.</p>
+<p>Another reason is that Wi-Fi is different from wired network. Particularly, the public Wi-Fi offer everyone to access, which also allow attackers to access. It will be easier for eavesdroppers to find your devices and intercept your data since you and attackers are under the same network.</p>
+<p>Although cyber security has developed for many years, the only way to prevent us from eavesdropping is encryption. However, unfortunately, even if we use the encryption technology to secure our data, attackers still can capture data packet but in its encrypted form which also makes it possible to decipher data by using some other technologies.</p>
+<p>Last but not least, if we see the history of Wi-Fi, it’s not difficult to find Wi-Fi security problems. At the beginning, WEP was developed as the first version of Wi-Fi, but people find WEP has many security flaws after using it for a while. And then WAP was created to enhance the security as a temporary measure. But WPA was just a upgrade version of WEP and people found it was vulnerable to attack. Finally, WPA2 with advanced encryption standard was established to replace the previous protocols since WPA2 is secure enough to protect home network, but attackers still can use Wi-Fi Protected Setup to intrude into the network although it might take them about 10 hours.[3] In short, it is shown clearly that Wi-Fi itself has some inherent flaws actually and we can’t guarantee it will protect our privacy easily.</p>
+<h2 id="Common-solutions-to-eavesdropping"><a href="#Common-solutions-to-eavesdropping" class="headerlink" title="Common solutions to eavesdropping"></a>Common solutions to eavesdropping</h2><p>There are lots of ways to prevent data packets from sniffing, but the core of most measures is encryption and the difference between them is the way of encryption. In addition, there are also some indirect ways to reduce the possibility and effect of suffering from Wi-Fi eavesdropping.</p>
+<h3 id="Encryption"><a href="#Encryption" class="headerlink" title="Encryption"></a>Encryption</h3><p>In terms of encryption, the most effective way is using virtual private network(VPN) and HTTPS to surf. First, Using plain HTTP will not provide you any encryption service which means your transmitting data packets are completely exposed to anyone on the network. Compared with that, HTTPS has an additional ‘S’ which means SSL. HTTPS uses SSL to encrypt HTTP requests and responses and makes data safer than HTTP. According to the experiment of Jon Watson, he separately use HTTP, HTTPS and VPN to visit a website and use a packet sniffer called Wireshark to capture his own data. The result shows that when using HTTP, he can sniff all the packets and see all information including his username, password and his destination website, but when using HTTPS, he can also sniff all data packets but in the encrypted form and he just can see the website that he wants to visit, and when using VPN, he can only know a bunch of encrypted data sent to the Open VPN server. Hence, this experiment illustrates that HTTP is not secure and HTTPS is better but not as good as VPN. And it also indicates that using VPN means that you need to trust your VPN server since they can decipher your sending to see your data. So besides using VPN, we still need to use HTTPS that can protect our data from VPN server because even if they decipher our data packets, they will find data is still encrypted by HTTPS. ( Jon, 2018) From this point of view, the combination of HTTPS and VPN seems to be a best choice for most users.</p>
+<p>In addition, for some special users such as the government and big company, the methods mentioned above are obviously not safe enough. Therefore, another enhanced encryption called military-grade encryption will meet their requirement. Due to using a 256-bit encryption, even if data packets are sniffed by others successfully, it will take over 5,000 years to decipher them. Generally, this military-grade encryption is a great way to defend packet sniffing. But it is often used in some special area and not very widespread.</p>
+<p>Last but not least, the special encryption I really want to mention is end-to-end encryption technology. If we want to explain this technology clearly, we need to talk a little about hop-by-hop encryption. According to Dan York, hop-by-hop uses SSL encryption to ensure the security of the transmission between the user and the server. But unfortunately, when data stream arrives in the server, the protection will disappear because the server need to decode them to get some necessary information, which also provides hackers some chances. (Dan, 2010) If the server is hacked by other tools, the information of every user through this server will be dumped out on the internet. Hence, in order to make data packets safer, we introduce this technology called end-to-end encryption. It only allows both of sender and receiver to decipher the data, which means only the two side have the decryption key except others and even the server. Therefore, there is no way to see this information in its decrypted form. But suppose there is a back door here and the hacker find it, they will have the ability to eavesdrop all the information. In short, end- to-end encryption provides a higher level of security to protect our data, however, packets still could be stolen through the combination of packet sniffing and other technologies.</p>
+<h3 id="Other-indirect-measures"><a href="#Other-indirect-measures" class="headerlink" title="Other indirect measures"></a>Other indirect measures</h3><p>In terms of indirect way, there are some common solutions including turning off SSID broadcasting, disabling DHCP, and network segmentation.</p>
+<p>Firstly, SSID is service set identifier which is the name of your wireless network. Many routers set SSID broadcast as a default setting. If you turn off your SSID broadcast, other users’ terminal devices can’t find your network. However, hiding your network name doesn’t represent it disappearance in fact. It does exist actually, which means hackers still can find it. Some programs such as NetStumbler can help them easily locate your network. Consequently, it will only work for those inexperienced users and be useless for most hackers. (Paul, 2019)</p>
+<p>Secondly, DHCP is dynamic host configuration protocol. If you disable DHCP, your router will not give any devices IP automatically. Instead, you need to configure your device IP and then the router will recognize it. This measure can prevent hackers from entering your router as they don’t know your router internal IP and can’t configure their device IP. But the premise is that you have changed your router default IP which can make it hardly possible for hackers to guess your IP. (Miguel, 2014) Therefore, it will work but also lead to some inconvenient access for your own devices.</p>
+<p>Finally, network segmentation is a structural approach which can divide a network into many independent subnets and every subnet is an individual network. For example, in business network, if employees are in one subnet, they will not be authorized to access other sensitive subnets, which also reduce the possibility of eavesdropping attack. Since a hacker use phishing or other ways to control one employee’s computer, he still can’t use the packet sniffer to capture some valuable information in different subnet. From pure security point of view, this measure will reduce the attack risk obviously. Nevertheless, once the hackers decide to capture the information, they will try to comprise many users in the business company, which means it’s still possible to eavesdrop sensitive information.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>This report presents the definition and principle of Wi-Fi eavesdropping in a simple way and illustrates eavesdropping’s threats and how to protect us from them in detail. </p>
+<p>As I show in the report, the majority of threats is information leak including private information, sensitive business strategies and confidential government policies. The worst effect of threats is leading to a social event and people’s panic and the smallest consequence is individual privacy disclosure. Either of these results is serious, hence, we need to take some measures to avoid suffering from packet sniffing.</p>
+<p>In my opinion, all the measures can be divided into two types. One is direct solution called encryption. The other is indirect solution including network segmentation etc. Compared with indirect solution, encryption is the most effective measure to prevent eavesdropping attacks, especially military grade encryption and end-to-end encryption because it is very difficult for hackers to decode them through either spending long time or finding a backdoor. And improving the network security awareness of users is also very significant since many attacks just use very simple method and are easy to avoid. Besides, other measures can also be taken into consideration as they are able to help users reduce the possibility of eavesdropping obviously.</p>
+<p>At the end, with the development of Wi-Fi, people can’t live and work without it although it still brings us some security problems. We are expecting some key technological breakthroughs to avoid illegal Wi-Fi eavesdropping well.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] Alfred, Ring doorbells had vulnerability leaking Wi-Fi login info, 2019 </p>
+<p><a href="https://www.cnet.com/news/ring-doorbells-had-vulnerability-leaking-wi-fi-login-info-researchers-found/">https://www.cnet.com/news/ring-doorbells-had-vulnerability-leaking-wi-fi-login-info-researchers-found/</a></p>
+<p>[2]<a href="https://www.ukessays.com/essays/computer-science/wifi-eavesdropping-attack-overview-and-challenegs.php">https://www.ukessays.com/essays/computer-science/wifi-eavesdropping-attack-overview-and-challenegs.php</a></p>
+<p>[3] <a href="https://www.netspotapp.com/wifi-encryption-and-security.html">https://www.netspotapp.com/wifi-encryption-and-security.html</a></p>
+<p>[4] Jon,What is packet sniffing and how can you avoid it?, 2018 </p>
+<p><a href="https://www.comparitech.com/blog/information-security/what-is-packet-sniffing/">https://www.comparitech.com/blog/information-security/what-is-packet-sniffing/</a></p>
+<p>[5] Dan, Seven Deadliest Unified Communications Attacks, Chapter 3, Page 61, 2010</p>
+<p><a href="https://cdn.ttgtmedia.com/searchUnifiedCommunications/downloads/Seven_Deadliest_UC_Attacks_Ch3.pdf">https://cdn.ttgtmedia.com/searchUnifiedCommunications/downloads/Seven_Deadliest_UC_Attacks_Ch3.pdf</a></p>
+<p>[6] Paul, How to disable SSID broadcast to hide your Wi-Fi, 2019 </p>
+<p><a href="https://nordvpn.com/blog/how-to-disable-ssid-broadcast/">https://nordvpn.com/blog/how-to-disable-ssid-broadcast/</a></p>
+<p>[7] Miguel, Does Disabling DHCP on Your Router Really Help Your Security?, 2014 </p>
+<p><a href="https://www.maketecheasier.com/does-disabling-dhcp-improve-security/">https://www.maketecheasier.com/does-disabling-dhcp-improve-security/</a></p>
+]]></content>
+      <categories>
+        <category>CyberSecurity</category>
+      </categories>
+      <tags>
+        <tag>Security</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Understanding Docker Technologoy</title>
     <url>/2025/03/16/Docker%20Intro/</url>
     <content><![CDATA[<p><strong>This article will talk about docker, one of the most popular containerisation technologies that every developer should know and master.</strong></p>
@@ -323,21 +372,6 @@
       </tags>
   </entry>
   <entry>
-    <title>前端知识-杂谈</title>
-    <url>/2021/09/21/FrontendTech/</url>
-    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
-<a id="more"></a>
-
-<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>CONCEPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>事件循环 &amp; 微任务、宏任务</title>
     <url>/2022/02/22/EventLoop/</url>
     <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
@@ -413,6 +447,21 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端知识-杂谈</title>
+    <url>/2021/09/21/FrontendTech/</url>
+    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
+<a id="more"></a>
+
+<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>CONCEPT</tag>
       </tags>
   </entry>
   <entry>
@@ -630,6 +679,48 @@
       </tags>
   </entry>
   <entry>
+    <title>HTML基础---学习手记</title>
+    <url>/2021/09/22/HTMLNotes/</url>
+    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
+<a id="more"></a>
+
+<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="../pic/Layout.jpg" alt="Layout"></p>
+</blockquote>
+<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>controls</em> 显示浏览器提供的控件界面</p>
+<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
+<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>poster</em>—视频的封面</p>
+<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
+<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
+<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
+<p><em><strong>sandbox:</strong></em> 提高安全性</p>
+<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
+<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
+<p><strong>运行机制：</strong></p>
+<pre><code>                1. 检查设备宽度
+                2. 检查sizes列表中哪个媒体条件第一个为真
+                3. 查看对应的槽宽度
+                4. 加载srcset列表中最接近该槽大小的图像
+</code></pre>
+]]></content>
+      <categories>
+        <category>Frontend/前端</category>
+      </categories>
+      <tags>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP&amp;网络安全篇</title>
     <url>/2021/12/06/HTTP&amp;Network/</url>
     <content><![CDATA[<p><strong>本篇文章主要针对常见的一些计算机网络概念进行梳理和总结，便于今后对于web开发的深入理解。</strong></p>
@@ -811,97 +902,6 @@
       </categories>
       <tags>
         <tag>HTTP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTML基础---学习手记</title>
-    <url>/2021/09/22/HTMLNotes/</url>
-    <content><![CDATA[<p><strong>关于HTML一些生疏和不常见的知识，简单汇总一下。</strong></p>
-<a id="more"></a>
-
-<h2 id="HTML布局元素"><a href="#HTML布局元素" class="headerlink" title="HTML布局元素"></a>HTML布局元素</h2><blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&gt;<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">article</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span><br><span class="line">   </span><br><span class="line">   <span class="tag">&lt;<span class="name">aside</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">aside</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"> <span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">&gt;<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="../pic/Layout.jpg" alt="Layout"></p>
-</blockquote>
-<h2 id="多媒体嵌入"><a href="#多媒体嵌入" class="headerlink" title="多媒体嵌入"></a>多媒体嵌入</h2><h3 id="图片—img"><a href="#图片—img" class="headerlink" title="图片—img"></a>图片—img</h3><p> 为图片提供一个语义容器，在标题和图片之间建立清晰的关联，使用HTML5 的<figure>和<figcaption>元素。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">figure</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;当图片无法显示时&quot;</span> <span class="attr">title</span>=<span class="string">&quot;当鼠标悬浮在图片时说明图片&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">figcaption</span>&gt;</span>说明图片的描述文字<span class="tag">&lt;/<span class="name">figcaption</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">figure</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="视频和音频—video-amp-audio"><a href="#视频和音频—video-amp-audio" class="headerlink" title="视频和音频—video&amp;audio"></a>视频和音频—video&amp;audio</h2><h3 id="Video"><a href="#Video" class="headerlink" title="Video"></a>Video</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">src</span>=<span class="string">&quot;视频资源地址&quot;</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    不支持视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>controls</em> 显示浏览器提供的控件界面</p>
-<h4 id="使用多个播放源以提高兼容性"><a href="#使用多个播放源以提高兼容性" class="headerlink" title="使用多个播放源以提高兼容性"></a>使用多个播放源以提高兼容性</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    浏览器不支持该视频时显示</span><br><span class="line">  <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p> WebM 和 MP4 两种格式在目前已经足够支持大多数平台和浏览器。</p>
-<h4 id="其他video特性—H5"><a href="#其他video特性—H5" class="headerlink" title="其他video特性—H5"></a>其他video特性—H5</h4><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">muted</span></span></span><br><span class="line"><span class="tag">       <span class="attr">poster</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/mp4&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span> <span class="attr">type</span>=<span class="string">&quot;video/webm&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 视频。可点击<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;rabbit320.mp4&quot;</span>&gt;</span>此链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span>观看<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em>poster</em>—视频的封面</p>
-<h3 id="audio标签"><a href="#audio标签" class="headerlink" title="audio标签"></a>audio标签</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">audio</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/mp3&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> <span class="attr">type</span>=<span class="string">&quot;audio/ogg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>你的浏览器不支持 HTML5 音频时显示<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">audio</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>audio没有视觉部件，所以除了不支持width、height和poster之外，它支持video所以video标签拥有的特性。</p>
-<h3 id="Iframe元素—嵌入技术"><a href="#Iframe元素—嵌入技术" class="headerlink" title="Iframe元素—嵌入技术"></a>Iframe元素—嵌入技术</h3><p>embed和object元素主要用来嵌入PDF和SVG、Flash，但现今它们都在逐渐被淘汰，只有iframe现在经常还被使用。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">src</span>=<span class="string">&quot;address&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span> <span class="attr">frameborder</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">allowfullscreen</span> <span class="attr">sandbox</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span> <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;address&quot;</span>&gt;</span></span><br><span class="line">    Fallback link for browsers that don&#x27;t support iframes</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>**<em>allowfullscreen:</em> **允许进行全屏展示</p>
-<p><em><strong>frameborder:</strong></em> 绘制边框（推荐在CSS中用border）</p>
-<p><em><strong>sandbox:</strong></em> 提高安全性</p>
-<h3 id="响应式图片"><a href="#响应式图片" class="headerlink" title="响应式图片"></a>响应式图片</h3><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">&quot;elva-fairy-320w.jpg 320w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-480w.jpg 480w,</span></span></span><br><span class="line"><span class="tag"><span class="string">             elva-fairy-800w.jpg 800w&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">sizes</span>=<span class="string">&quot;(max-width: 320px) 280px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            (max-width: 480px) 440px,</span></span></span><br><span class="line"><span class="tag"><span class="string">            800px&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">src</span>=<span class="string">&quot;elva-fairy-800w.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Elva dressed as a fairy&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><em><strong>srcset:</strong></em> 图像地址 固有宽度（以w为单位）</p>
-<p><em><strong>sizes:</strong></em> (媒体条件) 槽的宽度（条件为真时）</p>
-<p><strong>运行机制：</strong></p>
-<pre><code>                1. 检查设备宽度
-                2. 检查sizes列表中哪个媒体条件第一个为真
-                3. 查看对应的槽宽度
-                4. 加载srcset列表中最接近该槽大小的图像
-</code></pre>
-]]></content>
-      <categories>
-        <category>Frontend/前端</category>
-      </categories>
-      <tags>
-        <tag>HTML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Eavesdropping and Packet Sniffing over Wi-Fi</title>
-    <url>/2022/11/18/EavesdroppingAndPacketSniffingOverWi-Fi/</url>
-    <content><![CDATA[<p><strong>This report illustrates the eavesdropping and packet sniffing over Wi-Fi networks, one of the most common attacks. It will focus on the threats and some popular solutions of Wi-Fi eavesdropping.</strong></p>
-<a id="more"></a>
-
-<h1 id="Eavesdropping-and-packet-sniffing-over-Wi-Fi"><a href="#Eavesdropping-and-packet-sniffing-over-Wi-Fi" class="headerlink" title="Eavesdropping and packet sniffing over Wi-Fi"></a>Eavesdropping and packet sniffing over Wi-Fi</h1><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>This report illustrates the eavesdropping and packet sniffing over Wi-Fi networks, one of the most common attacks. It will focus on the threats and some popular solutions of Wi-Fi eavesdropping. It will begin from the definition of Wi-Fi eavesdropping, passing by posting some threats of the confidentiality attack and what will be at risk from this attack, through mentioning the principles that the Wi-Fi eavesdropping is based on and some common preventative measures in order to secure the network and show what we can do to protect our Wi-Fi. At the end, a brief conclusion will be given.</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Eavesdropping is an action of spying on personal information and the victims can’t realize that. It’s the confidentiality attack that usually takes place on the internet. Wi-Fi eavesdropping focuses on capturing, recombining and reading the data packets which are transmitted between devices on the internet. Wi-Fi eavesdropping usually takes the form of packet sniffing to achieve their purpose. Packet sniffing is the process of collecting and gathering all the data packets regardless of the destination address of these packets. This type of technology can be legal or illegal which depends on who uses it. For example, the government will use this technology to detect if any criminal events exist on the internet and it’s legal. But black-hat hackers can also utilize it to intercept some sensitive information which is illegal. This report will focus on the illegal events and their influences.</p>
-<p>Before discussing threats resulting from eavesdropping, we need to figure out the principle of Wi-Fi eavesdropping firstly. Wi-Fi eavesdropping can also be called packet sniffing in a way. According to Ethernet protocol, every data packet has a header which should include the destination physical address and each node on the network can find it but only the node who has the same address as the packet will receive it. However, using some tools can set the network interface setting to the monitor mode, which will allow this node to receive any packet regardless of the destination physical address. Therefore, Wi-Fi eavesdropping just utilizes this principle to sniff every packet potentially, which means it’s very difficult for general users to find whether they are being eavesdropped.</p>
-<h2 id="Security-threats-from-Wi-Fi-eavesdropping"><a href="#Security-threats-from-Wi-Fi-eavesdropping" class="headerlink" title="Security threats from Wi-Fi eavesdropping"></a>Security threats from Wi-Fi eavesdropping</h2><p>The personal privacy will be exposed to the attackers if the bad guy successfully sniffs the packets. For example, public Wi-Fi is very common in the modern society, especially in the coffee bar like Starbucks. If you and the attacker are under the same public Wi-Fi, your data packets are vulnerable to this interception. Particularly, if your data packets are not encrypted in certain way, like you just unencrypted HTTP to visit some websites and submit some tables, then your personal information will be more likely to leak, such as the websites you are accessing, user name and password, what you download and even all your emails. </p>
-<p>The business information might be stolen by black-hat hackers, especially some sensitive business information which will result in money loss or even company bankruptcy. For instance, in a big company an employee is an attacker who put a packet sniffer on the internal network to eavesdrop some sensitive data like financial data which will cause a big crisis of the company. After that, it might lead to job loss and even trigger some social problems in some small areas.</p>
-<p>Besides, if a technical corporation makes a mistake on its products, it will not only affect itself like company future and share price, but also hundreds of thousands of users who own its products, which even cause a huge panic in the society. For example, according to cnet website news, in 2019 a smart video ring created by Amazon company was found to have vulnerability leaking Wi-Fi login information. (Alfred, 2019) The leaking happens when you first set your ring device. It will send the sensitive information such as Wi-Fi username and password in the plain form, which shows that everyone can see the information and even successfully enter your network and eavesdrop all your information on the network. That sounds horrible but it’s true.  </p>
-<p>In some cases, eavesdropping attack could lead to a big social event. According to an essay in UKESSAYS, over 55,000 wireless routers’ passwords are compromised due to the user bad habit that they don’t change the default password, which gives the eavesdroppers a chance to catch their data easily. [2] This case shows that many users are lack of network security awareness and it will let Wi-Fi eavesdropping become easier.</p>
-<h2 id="Why-is-Wi-Fi-so-vulnerable-to-compromise"><a href="#Why-is-Wi-Fi-so-vulnerable-to-compromise" class="headerlink" title="Why is Wi-Fi so vulnerable to compromise?"></a>Why is Wi-Fi so vulnerable to compromise?</h2><p>The most important reason is that most of users around the world don’t develop the awareness about how important network security is and how to protect their data on the internet. If users don’t know the basic knowledge of network, it will be difficult for them to know how to protect their sensitive information.</p>
-<p>Another reason is that Wi-Fi is different from wired network. Particularly, the public Wi-Fi offer everyone to access, which also allow attackers to access. It will be easier for eavesdroppers to find your devices and intercept your data since you and attackers are under the same network.</p>
-<p>Although cyber security has developed for many years, the only way to prevent us from eavesdropping is encryption. However, unfortunately, even if we use the encryption technology to secure our data, attackers still can capture data packet but in its encrypted form which also makes it possible to decipher data by using some other technologies.</p>
-<p>Last but not least, if we see the history of Wi-Fi, it’s not difficult to find Wi-Fi security problems. At the beginning, WEP was developed as the first version of Wi-Fi, but people find WEP has many security flaws after using it for a while. And then WAP was created to enhance the security as a temporary measure. But WPA was just a upgrade version of WEP and people found it was vulnerable to attack. Finally, WPA2 with advanced encryption standard was established to replace the previous protocols since WPA2 is secure enough to protect home network, but attackers still can use Wi-Fi Protected Setup to intrude into the network although it might take them about 10 hours.[3] In short, it is shown clearly that Wi-Fi itself has some inherent flaws actually and we can’t guarantee it will protect our privacy easily.</p>
-<h2 id="Common-solutions-to-eavesdropping"><a href="#Common-solutions-to-eavesdropping" class="headerlink" title="Common solutions to eavesdropping"></a>Common solutions to eavesdropping</h2><p>There are lots of ways to prevent data packets from sniffing, but the core of most measures is encryption and the difference between them is the way of encryption. In addition, there are also some indirect ways to reduce the possibility and effect of suffering from Wi-Fi eavesdropping.</p>
-<h3 id="Encryption"><a href="#Encryption" class="headerlink" title="Encryption"></a>Encryption</h3><p>In terms of encryption, the most effective way is using virtual private network(VPN) and HTTPS to surf. First, Using plain HTTP will not provide you any encryption service which means your transmitting data packets are completely exposed to anyone on the network. Compared with that, HTTPS has an additional ‘S’ which means SSL. HTTPS uses SSL to encrypt HTTP requests and responses and makes data safer than HTTP. According to the experiment of Jon Watson, he separately use HTTP, HTTPS and VPN to visit a website and use a packet sniffer called Wireshark to capture his own data. The result shows that when using HTTP, he can sniff all the packets and see all information including his username, password and his destination website, but when using HTTPS, he can also sniff all data packets but in the encrypted form and he just can see the website that he wants to visit, and when using VPN, he can only know a bunch of encrypted data sent to the Open VPN server. Hence, this experiment illustrates that HTTP is not secure and HTTPS is better but not as good as VPN. And it also indicates that using VPN means that you need to trust your VPN server since they can decipher your sending to see your data. So besides using VPN, we still need to use HTTPS that can protect our data from VPN server because even if they decipher our data packets, they will find data is still encrypted by HTTPS. ( Jon, 2018) From this point of view, the combination of HTTPS and VPN seems to be a best choice for most users.</p>
-<p>In addition, for some special users such as the government and big company, the methods mentioned above are obviously not safe enough. Therefore, another enhanced encryption called military-grade encryption will meet their requirement. Due to using a 256-bit encryption, even if data packets are sniffed by others successfully, it will take over 5,000 years to decipher them. Generally, this military-grade encryption is a great way to defend packet sniffing. But it is often used in some special area and not very widespread.</p>
-<p>Last but not least, the special encryption I really want to mention is end-to-end encryption technology. If we want to explain this technology clearly, we need to talk a little about hop-by-hop encryption. According to Dan York, hop-by-hop uses SSL encryption to ensure the security of the transmission between the user and the server. But unfortunately, when data stream arrives in the server, the protection will disappear because the server need to decode them to get some necessary information, which also provides hackers some chances. (Dan, 2010) If the server is hacked by other tools, the information of every user through this server will be dumped out on the internet. Hence, in order to make data packets safer, we introduce this technology called end-to-end encryption. It only allows both of sender and receiver to decipher the data, which means only the two side have the decryption key except others and even the server. Therefore, there is no way to see this information in its decrypted form. But suppose there is a back door here and the hacker find it, they will have the ability to eavesdrop all the information. In short, end- to-end encryption provides a higher level of security to protect our data, however, packets still could be stolen through the combination of packet sniffing and other technologies.</p>
-<h3 id="Other-indirect-measures"><a href="#Other-indirect-measures" class="headerlink" title="Other indirect measures"></a>Other indirect measures</h3><p>In terms of indirect way, there are some common solutions including turning off SSID broadcasting, disabling DHCP, and network segmentation.</p>
-<p>Firstly, SSID is service set identifier which is the name of your wireless network. Many routers set SSID broadcast as a default setting. If you turn off your SSID broadcast, other users’ terminal devices can’t find your network. However, hiding your network name doesn’t represent it disappearance in fact. It does exist actually, which means hackers still can find it. Some programs such as NetStumbler can help them easily locate your network. Consequently, it will only work for those inexperienced users and be useless for most hackers. (Paul, 2019)</p>
-<p>Secondly, DHCP is dynamic host configuration protocol. If you disable DHCP, your router will not give any devices IP automatically. Instead, you need to configure your device IP and then the router will recognize it. This measure can prevent hackers from entering your router as they don’t know your router internal IP and can’t configure their device IP. But the premise is that you have changed your router default IP which can make it hardly possible for hackers to guess your IP. (Miguel, 2014) Therefore, it will work but also lead to some inconvenient access for your own devices.</p>
-<p>Finally, network segmentation is a structural approach which can divide a network into many independent subnets and every subnet is an individual network. For example, in business network, if employees are in one subnet, they will not be authorized to access other sensitive subnets, which also reduce the possibility of eavesdropping attack. Since a hacker use phishing or other ways to control one employee’s computer, he still can’t use the packet sniffer to capture some valuable information in different subnet. From pure security point of view, this measure will reduce the attack risk obviously. Nevertheless, once the hackers decide to capture the information, they will try to comprise many users in the business company, which means it’s still possible to eavesdrop sensitive information.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>This report presents the definition and principle of Wi-Fi eavesdropping in a simple way and illustrates eavesdropping’s threats and how to protect us from them in detail. </p>
-<p>As I show in the report, the majority of threats is information leak including private information, sensitive business strategies and confidential government policies. The worst effect of threats is leading to a social event and people’s panic and the smallest consequence is individual privacy disclosure. Either of these results is serious, hence, we need to take some measures to avoid suffering from packet sniffing.</p>
-<p>In my opinion, all the measures can be divided into two types. One is direct solution called encryption. The other is indirect solution including network segmentation etc. Compared with indirect solution, encryption is the most effective measure to prevent eavesdropping attacks, especially military grade encryption and end-to-end encryption because it is very difficult for hackers to decode them through either spending long time or finding a backdoor. And improving the network security awareness of users is also very significant since many attacks just use very simple method and are easy to avoid. Besides, other measures can also be taken into consideration as they are able to help users reduce the possibility of eavesdropping obviously.</p>
-<p>At the end, with the development of Wi-Fi, people can’t live and work without it although it still brings us some security problems. We are expecting some key technological breakthroughs to avoid illegal Wi-Fi eavesdropping well.</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] Alfred, Ring doorbells had vulnerability leaking Wi-Fi login info, 2019 </p>
-<p><a href="https://www.cnet.com/news/ring-doorbells-had-vulnerability-leaking-wi-fi-login-info-researchers-found/">https://www.cnet.com/news/ring-doorbells-had-vulnerability-leaking-wi-fi-login-info-researchers-found/</a></p>
-<p>[2]<a href="https://www.ukessays.com/essays/computer-science/wifi-eavesdropping-attack-overview-and-challenegs.php">https://www.ukessays.com/essays/computer-science/wifi-eavesdropping-attack-overview-and-challenegs.php</a></p>
-<p>[3] <a href="https://www.netspotapp.com/wifi-encryption-and-security.html">https://www.netspotapp.com/wifi-encryption-and-security.html</a></p>
-<p>[4] Jon,What is packet sniffing and how can you avoid it?, 2018 </p>
-<p><a href="https://www.comparitech.com/blog/information-security/what-is-packet-sniffing/">https://www.comparitech.com/blog/information-security/what-is-packet-sniffing/</a></p>
-<p>[5] Dan, Seven Deadliest Unified Communications Attacks, Chapter 3, Page 61, 2010</p>
-<p><a href="https://cdn.ttgtmedia.com/searchUnifiedCommunications/downloads/Seven_Deadliest_UC_Attacks_Ch3.pdf">https://cdn.ttgtmedia.com/searchUnifiedCommunications/downloads/Seven_Deadliest_UC_Attacks_Ch3.pdf</a></p>
-<p>[6] Paul, How to disable SSID broadcast to hide your Wi-Fi, 2019 </p>
-<p><a href="https://nordvpn.com/blog/how-to-disable-ssid-broadcast/">https://nordvpn.com/blog/how-to-disable-ssid-broadcast/</a></p>
-<p>[7] Miguel, Does Disabling DHCP on Your Router Really Help Your Security?, 2014 </p>
-<p><a href="https://www.maketecheasier.com/does-disabling-dhcp-improve-security/">https://www.maketecheasier.com/does-disabling-dhcp-improve-security/</a></p>
-]]></content>
-      <categories>
-        <category>CyberSecurity</category>
-      </categories>
-      <tags>
-        <tag>Security</tag>
       </tags>
   </entry>
   <entry>
@@ -1349,6 +1349,53 @@
       </tags>
   </entry>
   <entry>
+    <title>基于MAC的NGINX配置使用---反向代理解决跨域</title>
+    <url>/2021/10/19/NignxConfig/</url>
+    <content><![CDATA[<p><strong>关于Engine X（即Nignx）代理服务器配置说明</strong></p>
+<a id="more"></a>
+
+<h1 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h1><ol>
+<li><p>Terminal执行以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew search nginx</span><br><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
+<li><p>安装完成后，Terminal输出信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Docroot is: &#x2F;usr&#x2F;local&#x2F;var&#x2F;www</span><br><span class="line"></span><br><span class="line">The default port has been set in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;nginx.conf to 8080 so that</span><br><span class="line">nginx can run without sudo.</span><br><span class="line"></span><br><span class="line">nginx will load all files in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;servers&#x2F;.</span><br><span class="line"></span><br><span class="line">To start nginx:</span><br><span class="line">  brew services start nginx</span><br><span class="line">Or, if you don&#39;t want&#x2F;need a background service you can just run:</span><br><span class="line">  &#x2F;usr&#x2F;local&#x2F;opt&#x2F;nginx&#x2F;bin&#x2F;nginx -g &#39;daemon off;&#39;</span><br></pre></td></tr></table></figure>
+<h1 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h1></li>
+<li><p>第一次安装后启动nginx，Terminal执行以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew services start nginx</span><br></pre></td></tr></table></figure>
+<p>以后再次启动nginx只需执行以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure>
+<p><strong>注：</strong>如果出现不成功的情况，可采取以下方法：先结束主进程再重启</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -ax | grep nginx # 查看进程号</span><br><span class="line">sudo kill -s QUIT 主进程ID号</span><br><span class="line">sudo nginx</span><br></pre></td></tr></table></figure></li>
+<li><p>访问Nginx默认端口8080</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">localhost:8080</span><br></pre></td></tr></table></figure></li>
+<li><p>其他常用命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nginx -s stop # 停止nginx</span><br><span class="line">nginx -s reload # 重启nginx</span><br><span class="line">nginx # 启动nginx</span><br></pre></td></tr></table></figure></li>
+<li><p>配置<code>nginx.conf</code>文件</p>
+<ul>
+<li><p>进入Finder，按住<code>shift</code>+<code>command</code>+G，然后搜索<code>local/etc</code>，找到nginx文件夹</p>
+</li>
+<li><p>找到nginx.conf文件，进入修改</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen: 80; &#x2F;&#x2F; 默认80端口，选择一个未被使用的接口即可</span><br><span class="line">	server_name: localhost;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourfronend.com; &#x2F;&#x2F; 此处为你浏览器所在的地址</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;api&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourbackend.com; &#x2F;&#x2F; 此处为你浏览器所请求的地址</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>保存文件，重启Nginx</p>
+</li>
+<li><p>访问Nignx的监听端口，本例为<code>http://localhost:80</code></p>
+</li>
+<li><p>你会看到前端地址所在的内容</p>
+</li>
+<li><p>进行跨域测试</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Frontend/前端</category>
+      </categories>
+      <tags>
+        <tag>ClientServer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript函数进阶---学习笔记</title>
     <url>/2021/10/04/JavascriptFunction/</url>
     <content><![CDATA[<p><strong>本章将深入J高级，诸如Spread语法、闭包、垃圾回收机制、函数对象、SetTimeout和SetInterval、装饰器模式和转发call/apply以及箭头函数。</strong></p>
@@ -1592,53 +1639,6 @@
       </tags>
   </entry>
   <entry>
-    <title>基于MAC的NGINX配置使用---反向代理解决跨域</title>
-    <url>/2021/10/19/NignxConfig/</url>
-    <content><![CDATA[<p><strong>关于Engine X（即Nignx）代理服务器配置说明</strong></p>
-<a id="more"></a>
-
-<h1 id="安装Nginx"><a href="#安装Nginx" class="headerlink" title="安装Nginx"></a>安装Nginx</h1><ol>
-<li><p>Terminal执行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew search nginx</span><br><span class="line">brew install nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>安装完成后，Terminal输出信息如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Docroot is: &#x2F;usr&#x2F;local&#x2F;var&#x2F;www</span><br><span class="line"></span><br><span class="line">The default port has been set in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;nginx.conf to 8080 so that</span><br><span class="line">nginx can run without sudo.</span><br><span class="line"></span><br><span class="line">nginx will load all files in &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx&#x2F;servers&#x2F;.</span><br><span class="line"></span><br><span class="line">To start nginx:</span><br><span class="line">  brew services start nginx</span><br><span class="line">Or, if you don&#39;t want&#x2F;need a background service you can just run:</span><br><span class="line">  &#x2F;usr&#x2F;local&#x2F;opt&#x2F;nginx&#x2F;bin&#x2F;nginx -g &#39;daemon off;&#39;</span><br></pre></td></tr></table></figure>
-<h1 id="启动Nginx"><a href="#启动Nginx" class="headerlink" title="启动Nginx"></a>启动Nginx</h1></li>
-<li><p>第一次安装后启动nginx，Terminal执行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew services start nginx</span><br></pre></td></tr></table></figure>
-<p>以后再次启动nginx只需执行以下代码：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo nginx</span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>如果出现不成功的情况，可采取以下方法：先结束主进程再重启</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ps -ax | grep nginx # 查看进程号</span><br><span class="line">sudo kill -s QUIT 主进程ID号</span><br><span class="line">sudo nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>访问Nginx默认端口8080</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">localhost:8080</span><br></pre></td></tr></table></figure></li>
-<li><p>其他常用命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nginx -s stop # 停止nginx</span><br><span class="line">nginx -s reload # 重启nginx</span><br><span class="line">nginx # 启动nginx</span><br></pre></td></tr></table></figure></li>
-<li><p>配置<code>nginx.conf</code>文件</p>
-<ul>
-<li><p>进入Finder，按住<code>shift</code>+<code>command</code>+G，然后搜索<code>local/etc</code>，找到nginx文件夹</p>
-</li>
-<li><p>找到nginx.conf文件，进入修改</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">	listen: 80; &#x2F;&#x2F; 默认80端口，选择一个未被使用的接口即可</span><br><span class="line">	server_name: localhost;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourfronend.com; &#x2F;&#x2F; 此处为你浏览器所在的地址</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	location &#x2F;api&#123;</span><br><span class="line">		proxy_pass http:&#x2F;&#x2F;yourbackend.com; &#x2F;&#x2F; 此处为你浏览器所请求的地址</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>保存文件，重启Nginx</p>
-</li>
-<li><p>访问Nignx的监听端口，本例为<code>http://localhost:80</code></p>
-</li>
-<li><p>你会看到前端地址所在的内容</p>
-</li>
-<li><p>进行跨域测试</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Frontend/前端</category>
-      </categories>
-      <tags>
-        <tag>ClientServer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Python设置本地测试服务器</title>
     <url>/2021/09/16/Python-localServer/</url>
     <content><![CDATA[<p><strong>关于使用Python搭建简易本地服务器指南，可用于异步测试等。</strong></p>
@@ -1793,77 +1793,6 @@
       </tags>
   </entry>
   <entry>
-    <title>再探 React Hooks</title>
-    <url>/2022/02/21/ReactHookIntro2/</url>
-    <content><![CDATA[<p><strong>在之前的一章我们已经了解了 React Hook 的一些基本特性/优点和一些使用方法。在这一章中，我们将深入介绍另外几个常用的钩子。</strong></p>
-<a id="more"></a>
-
-<h1 id="React-Hooks-Intro"><a href="#React-Hooks-Intro" class="headerlink" title="React Hooks Intro"></a>React Hooks Intro</h1><h2 id="一、类与函数的区别"><a href="#一、类与函数的区别" class="headerlink" title="一、类与函数的区别"></a>一、类与函数的区别</h2><p>React的核心是<strong>组件</strong>。在v16.8版本之前，组件的标准写法是类组件。</p>
-<h3 id="1-1-类组件的缺点"><a href="#1-1-类组件的缺点" class="headerlink" title="1.1 类组件的缺点"></a>1.1 类组件的缺点</h3><ul>
-<li>组件类代码很“重”</li>
-<li>真实的 React App 由多个类按层级，一层层构成，复杂度很高</li>
-<li>如果再使用 Redux，整个项目看起来会变得非常复杂</li>
-</ul>
-<p>根据 Redux 的作者 Dan 的总结，组件类有以下几个缺点：</p>
-<ul>
-<li><strong>Huge components</strong> that are hard to refactor and test.</li>
-<li><strong>Duplicated logic</strong> between different components and lifecycle methods.</li>
-<li><strong>Complex patterns</strong> like render props and higher-order components.</li>
-</ul>
-<p>翻译一下就是：</p>
-<ul>
-<li><strong>大型组件</strong>很难拆分、重构和测试</li>
-<li>业务逻辑存在于不同组件以及生命周期方法中，因此会导致<strong>重复逻辑</strong></li>
-<li><strong>复杂的编程模式</strong>，如render props 和高阶组件</li>
-</ul>
-<h3 id="1-2-函数组件的优势"><a href="#1-2-函数组件的优势" class="headerlink" title="1.2 函数组件的优势"></a>1.2 函数组件的优势</h3><p>React 官方希望组件是一个简单的<strong>数据流管道</strong>，让开发者可以根据需求来组合管道，而不要变成一个复杂的容器。因此组件的最佳写法是函数式。</p>
-<p>早期的函数组件无法取代类组件，是因为函数组件必须是<strong>纯函数</strong>，因此<strong>不能包含状态</strong>和<strong>生命周期方法</strong>。</p>
-<p>而 React Hook 的出现彻底解决了这个问题，它可以让我们用函数式组件的写法，完成一个功能齐全的组件。</p>
-<h2 id="二、What-is-Hook"><a href="#二、What-is-Hook" class="headerlink" title="二、What is Hook?"></a>二、What is Hook?</h2><p><strong>React Hooks</strong> 是为函数组件提供所需要的<strong>外部功能</strong>和<strong>副作用</strong>的“钩子”。</p>
-<p>因此我们需要什么功能，就使用什么钩子。</p>
-<p>要注意的是，如果我们自己封装自定义的钩子，需要遵循命名规则，即钩子一律使用 use 前缀来命名，以便于识别。</p>
-<p>接下来，我们来介绍几个 React 提供的常用的钩子。</p>
-<blockquote>
-<ul>
-<li>useState()</li>
-<li>useContext()</li>
-<li>useReducer()</li>
-<li>useEffect()</li>
-</ul>
-</blockquote>
-<h2 id="三、useState-状态钩子"><a href="#三、useState-状态钩子" class="headerlink" title="三、useState(): 状态钩子"></a>三、useState(): 状态钩子</h2><p>由于纯函数不能有状态，所以需要把状态放在钩子里面。</p>
-<p>useState() 函数接受状态的初始值作为参数，并返回一个数组，数组的第一个值为表示当前状态值的变量，第二个值为用来更新状态的函数（命名约定为：以<code>set</code>前缀+状态的变量名）。示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Button</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [buttonText, setButtonText] = useState(<span class="string">&#x27;Hello!&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setButtonText(<span class="string">&#x27;World!&#x27;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;button onClick=&#123;handleClick&#125;&gt;&#123;buttonText&#125;&lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="四、useContext-共享状态钩子"><a href="#四、useContext-共享状态钩子" class="headerlink" title="四、useContext(): 共享状态钩子"></a>四、useContext(): 共享状态钩子</h2><p>如果需要在组件间共享状态，可以使用<code>useContext()</code>。</p>
-<p>例如组件A和组件B需要共享状态，示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.jsx</span></span><br><span class="line"><span class="keyword">const</span> AppContext = React.createContext(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">&lt;AppContext.Provider value = &#123;&#123;<span class="attr">username</span>: <span class="string">&#x27;Will&#x27;</span>&#125;&#125;&gt;</span><br><span class="line">  &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">    &lt;A /&gt;</span><br><span class="line">    &lt;B /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/AppContext.Provider&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;A&#x27;</span>&gt;</span><br><span class="line">      &lt;p&gt;Home&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;&#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// B.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;B&#x27;</span>&gt;</span><br><span class="line">      &lt;h1&gt;B Component&lt;/h1&gt;</span><br><span class="line">      &lt;p&gt;the current user is: &#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="五、useReducer-action-钩子"><a href="#五、useReducer-action-钩子" class="headerlink" title="五、useReducer(): action 钩子"></a>五、useReducer(): action 钩子</h2><p>React 本身并不提供状态管理工具，如果需要，通常是引入外部库，当前最流行的库非 Redux 莫属。</p>
-<p><strong>Redux 的核心理念</strong>是：组件<strong>发出 action 与状态管理器通信</strong>，在状态管理器收到 action 后，<strong>使用 Reducer 函数计算出最新的状态</strong>并返回其值（Reducer函数形式大致为：<code>(state, action) =&gt; newState</code>）。（具体关于 Redux 的介绍，请参考我之前的关于 Redux 的文章）</p>
-<p>随着 Redux 的流行，React 官方也加入了 <code>useReducers()</code> 这个钩子用来引入 Reducer 功能，从而可以更方便的使用 Redux。</p>
-<p>**useReducer()**的基本用法：接受 Reducer 函数和状态初始值作为参数，并返回一个数组。数组的第一个值是当前状态值，第二个值是用来发送 action 的 dispatch 函数。</p>
-<p>以计数器为例，示例如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建 reducer 函数</span></span><br><span class="line"><span class="keyword">const</span> myReducer = <span class="function">(<span class="params">state, action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">      <span class="keyword">case</span>(<span class="string">&#x27;countUp&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    	<span class="keyword">case</span> (<span class="string">&#x27;countDown&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count - <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 计算器组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [state, dispatch] = useReducer(myReducer, &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countUp&#x27;</span>&#125;)&#125;&gt;+<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countDown&#x27;</span>&#125;)&#125;&gt;-<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;p&gt;Count: &#123;state.count&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>尽管使用 Hook <strong>可以提供共享状态</strong>以及<strong>Reducer 函数</strong>，但是由于 React 本身并<strong>没有提供中间件（middleware）</strong>以及<strong>时间旅行（time travel）</strong>，因此，如果需要使用这两个功能，还是要用 Redux。</p>
-<h2 id="六、useEffect-通用副作用钩子"><a href="#六、useEffect-通用副作用钩子" class="headerlink" title="六、useEffect(): 通用副作用钩子"></a>六、useEffect(): 通用副作用钩子</h2><p>这个在上一章中已经详细讲解，这里不多赘述。只给出一个简单示例，如下：</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">false</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="七、创建自定义的-Hook"><a href="#七、创建自定义的-Hook" class="headerlink" title="七、创建自定义的 Hook"></a>七、创建自定义的 Hook</h2><p>如上面代码示例所示，我们也可以将其封装起来以变成一个自定义的 Hook。</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 封装为 Hook</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">usePerson</span>(<span class="params">personId</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">true</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> [loading, person];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, person] = usePerson(personId);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>Notes：</strong>以上内容借鉴了阮一峰老师的文章。</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>React</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>React进阶之路——Diff算法详解</title>
     <url>/2022/08/02/ReactDiff%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p><strong>React Fiber</strong> 是 React 16 之后推出的新架构，而 <strong>Reconciliation</strong> 是 React 的 Diff 算法，<strong>Fiber 和 Reconciliation 都是 React 的核心机制</strong>。因此了解和认识其核心机制的运作以及原理，对我们今后高效使用 React 大有裨益。</p>
@@ -1987,6 +1916,77 @@
 <p><strong>注：React 开发者做了一个优化，即 Effect List。</strong>React 会跳过那些已经处理过的 fiber node，只会去处理那些未完成 work 的 fiber node。例如，如果在组件树的深层中更新了某个 state，那么虽然 React 还是会从 fiber node tree 的顶部的节点开始遍历，但它会跳过前面的父节点，直接走到发生 state 变更的子节点。</p>
 <p>当 work loop 结束之后（即遍历完整棵 fiber node tree之后），就会进入 commit 阶段（Commit Phase）。在 commit 阶段，React 会去更新真实 DOM 树，从而完成 UI 的更新渲染。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>参考自掘金文章——<a href="https://juejin.cn/post/6891242214324699143">轻烤 React 核心机制：React Fiber 与 Reconciliation</a></p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>再探 React Hooks</title>
+    <url>/2022/02/21/ReactHookIntro2/</url>
+    <content><![CDATA[<p><strong>在之前的一章我们已经了解了 React Hook 的一些基本特性/优点和一些使用方法。在这一章中，我们将深入介绍另外几个常用的钩子。</strong></p>
+<a id="more"></a>
+
+<h1 id="React-Hooks-Intro"><a href="#React-Hooks-Intro" class="headerlink" title="React Hooks Intro"></a>React Hooks Intro</h1><h2 id="一、类与函数的区别"><a href="#一、类与函数的区别" class="headerlink" title="一、类与函数的区别"></a>一、类与函数的区别</h2><p>React的核心是<strong>组件</strong>。在v16.8版本之前，组件的标准写法是类组件。</p>
+<h3 id="1-1-类组件的缺点"><a href="#1-1-类组件的缺点" class="headerlink" title="1.1 类组件的缺点"></a>1.1 类组件的缺点</h3><ul>
+<li>组件类代码很“重”</li>
+<li>真实的 React App 由多个类按层级，一层层构成，复杂度很高</li>
+<li>如果再使用 Redux，整个项目看起来会变得非常复杂</li>
+</ul>
+<p>根据 Redux 的作者 Dan 的总结，组件类有以下几个缺点：</p>
+<ul>
+<li><strong>Huge components</strong> that are hard to refactor and test.</li>
+<li><strong>Duplicated logic</strong> between different components and lifecycle methods.</li>
+<li><strong>Complex patterns</strong> like render props and higher-order components.</li>
+</ul>
+<p>翻译一下就是：</p>
+<ul>
+<li><strong>大型组件</strong>很难拆分、重构和测试</li>
+<li>业务逻辑存在于不同组件以及生命周期方法中，因此会导致<strong>重复逻辑</strong></li>
+<li><strong>复杂的编程模式</strong>，如render props 和高阶组件</li>
+</ul>
+<h3 id="1-2-函数组件的优势"><a href="#1-2-函数组件的优势" class="headerlink" title="1.2 函数组件的优势"></a>1.2 函数组件的优势</h3><p>React 官方希望组件是一个简单的<strong>数据流管道</strong>，让开发者可以根据需求来组合管道，而不要变成一个复杂的容器。因此组件的最佳写法是函数式。</p>
+<p>早期的函数组件无法取代类组件，是因为函数组件必须是<strong>纯函数</strong>，因此<strong>不能包含状态</strong>和<strong>生命周期方法</strong>。</p>
+<p>而 React Hook 的出现彻底解决了这个问题，它可以让我们用函数式组件的写法，完成一个功能齐全的组件。</p>
+<h2 id="二、What-is-Hook"><a href="#二、What-is-Hook" class="headerlink" title="二、What is Hook?"></a>二、What is Hook?</h2><p><strong>React Hooks</strong> 是为函数组件提供所需要的<strong>外部功能</strong>和<strong>副作用</strong>的“钩子”。</p>
+<p>因此我们需要什么功能，就使用什么钩子。</p>
+<p>要注意的是，如果我们自己封装自定义的钩子，需要遵循命名规则，即钩子一律使用 use 前缀来命名，以便于识别。</p>
+<p>接下来，我们来介绍几个 React 提供的常用的钩子。</p>
+<blockquote>
+<ul>
+<li>useState()</li>
+<li>useContext()</li>
+<li>useReducer()</li>
+<li>useEffect()</li>
+</ul>
+</blockquote>
+<h2 id="三、useState-状态钩子"><a href="#三、useState-状态钩子" class="headerlink" title="三、useState(): 状态钩子"></a>三、useState(): 状态钩子</h2><p>由于纯函数不能有状态，所以需要把状态放在钩子里面。</p>
+<p>useState() 函数接受状态的初始值作为参数，并返回一个数组，数组的第一个值为表示当前状态值的变量，第二个值为用来更新状态的函数（命名约定为：以<code>set</code>前缀+状态的变量名）。示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Button</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [buttonText, setButtonText] = useState(<span class="string">&#x27;Hello!&#x27;</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setButtonText(<span class="string">&#x27;World!&#x27;</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;button onClick=&#123;handleClick&#125;&gt;&#123;buttonText&#125;&lt;/button&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="四、useContext-共享状态钩子"><a href="#四、useContext-共享状态钩子" class="headerlink" title="四、useContext(): 共享状态钩子"></a>四、useContext(): 共享状态钩子</h2><p>如果需要在组件间共享状态，可以使用<code>useContext()</code>。</p>
+<p>例如组件A和组件B需要共享状态，示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// App.jsx</span></span><br><span class="line"><span class="keyword">const</span> AppContext = React.createContext(&#123;&#125;);</span><br><span class="line"></span><br><span class="line">&lt;AppContext.Provider value = &#123;&#123;<span class="attr">username</span>: <span class="string">&#x27;Will&#x27;</span>&#125;&#125;&gt;</span><br><span class="line">  &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">    &lt;A /&gt;</span><br><span class="line">    &lt;B /&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/AppContext.Provider&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;A&#x27;</span>&gt;</span><br><span class="line">      &lt;p&gt;Home&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;&#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// B.jsx</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username &#125; = useContext(AppContext);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;B&#x27;</span>&gt;</span><br><span class="line">      &lt;h1&gt;B Component&lt;/h1&gt;</span><br><span class="line">      &lt;p&gt;the current user is: &#123;username&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="五、useReducer-action-钩子"><a href="#五、useReducer-action-钩子" class="headerlink" title="五、useReducer(): action 钩子"></a>五、useReducer(): action 钩子</h2><p>React 本身并不提供状态管理工具，如果需要，通常是引入外部库，当前最流行的库非 Redux 莫属。</p>
+<p><strong>Redux 的核心理念</strong>是：组件<strong>发出 action 与状态管理器通信</strong>，在状态管理器收到 action 后，<strong>使用 Reducer 函数计算出最新的状态</strong>并返回其值（Reducer函数形式大致为：<code>(state, action) =&gt; newState</code>）。（具体关于 Redux 的介绍，请参考我之前的关于 Redux 的文章）</p>
+<p>随着 Redux 的流行，React 官方也加入了 <code>useReducers()</code> 这个钩子用来引入 Reducer 功能，从而可以更方便的使用 Redux。</p>
+<p>**useReducer()**的基本用法：接受 Reducer 函数和状态初始值作为参数，并返回一个数组。数组的第一个值是当前状态值，第二个值是用来发送 action 的 dispatch 函数。</p>
+<p>以计数器为例，示例如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建 reducer 函数</span></span><br><span class="line"><span class="keyword">const</span> myReducer = <span class="function">(<span class="params">state, action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">      <span class="keyword">case</span>(<span class="string">&#x27;countUp&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    	<span class="keyword">case</span> (<span class="string">&#x27;countDown&#x27;</span>):</span><br><span class="line">      	<span class="keyword">return</span> &#123;</span><br><span class="line">          ...state,</span><br><span class="line">          count: state.count - <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 计算器组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [state, dispatch] = useReducer(myReducer, &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=<span class="string">&#x27;App&#x27;</span>&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countUp&#x27;</span>&#125;)&#125;&gt;+<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;<span class="function">() =&gt;</span> dispatch(&#123;<span class="attr">type</span>: <span class="string">&#x27;countDown&#x27;</span>&#125;)&#125;&gt;-<span class="number">1</span>&lt;/button&gt;</span><br><span class="line">      &lt;p&gt;Count: &#123;state.count&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>尽管使用 Hook <strong>可以提供共享状态</strong>以及<strong>Reducer 函数</strong>，但是由于 React 本身并<strong>没有提供中间件（middleware）</strong>以及<strong>时间旅行（time travel）</strong>，因此，如果需要使用这两个功能，还是要用 Redux。</p>
+<h2 id="六、useEffect-通用副作用钩子"><a href="#六、useEffect-通用副作用钩子" class="headerlink" title="六、useEffect(): 通用副作用钩子"></a>六、useEffect(): 通用副作用钩子</h2><p>这个在上一章中已经详细讲解，这里不多赘述。只给出一个简单示例，如下：</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">false</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="七、创建自定义的-Hook"><a href="#七、创建自定义的-Hook" class="headerlink" title="七、创建自定义的 Hook"></a>七、创建自定义的 Hook</h2><p>如上面代码示例所示，我们也可以将其封装起来以变成一个自定义的 Hook。</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 封装为 Hook</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">usePerson</span>(<span class="params">personId</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">true</span>);</span><br><span class="line">  <span class="keyword">const</span> [person, setPerson] = useState(&#123;&#125;);</span><br><span class="line">  </span><br><span class="line">  useEffect(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    setLoading(<span class="literal">true</span>);</span><br><span class="line">    fetch(<span class="string">`https://getApi/<span class="subst">$&#123;personId&#125;</span>`</span>)</span><br><span class="line">    	.then(<span class="function"><span class="params">response</span> =&gt;</span> response.json())</span><br><span class="line">    	.then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">      	setPerson(data);</span><br><span class="line">      	setLoading(<span class="literal">true</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, [personId])</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> [loading, person];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Person 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">&#123; personId &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, person] = usePerson(personId);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (loading === <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;p&gt;Name: &#123;person.name&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Age: &#123;person.age&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>Notes：</strong>以上内容借鉴了阮一峰老师的文章。</p>
 ]]></content>
       <categories>
         <category>FrontEnd/前端</category>
