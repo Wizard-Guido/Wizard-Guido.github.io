@@ -372,6 +372,21 @@
       </tags>
   </entry>
   <entry>
+    <title>前端知识-杂谈</title>
+    <url>/2021/09/21/FrontendTech/</url>
+    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
+<a id="more"></a>
+
+<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
+]]></content>
+      <categories>
+        <category>FrontEnd/前端</category>
+      </categories>
+      <tags>
+        <tag>CONCEPT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>事件循环 &amp; 微任务、宏任务</title>
     <url>/2022/02/22/EventLoop/</url>
     <content><![CDATA[<p><strong>浏览器中的 JS 的执行流程</strong>和 <strong>NodeJS 中的流程</strong>都是遵循<strong>事件循环</strong>的。理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
@@ -661,21 +676,6 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端知识-杂谈</title>
-    <url>/2021/09/21/FrontendTech/</url>
-    <content><![CDATA[<h2 id="前端趋势"><a href="#前端趋势" class="headerlink" title="前端趋势"></a>前端趋势</h2><p>目前有走向微前端的趋势，所谓微前端的提出，可以说是在MPA（多页）和SPA（单页）之间的折中，现今大多数网站都采用SPA，然而随着时间的推移，SPA内的东西越来越多，并且由于各部分之间的耦合性，使得维护成本越来越高。</p>
-<a id="more"></a>
-
-<p>因此微前端的概念被提出，即降低内部的耦合性，实现类似高内聚低耦合的效果。目前流行的有Web-Component，将网页各部分模块化，各模块之间互不干扰，独立工作（例如各模块甚至可以使用不同的编程语言来编写）。（PS: 这一概念可以与后端的微服务对比参考）</p>
-]]></content>
-      <categories>
-        <category>FrontEnd/前端</category>
-      </categories>
-      <tags>
-        <tag>CONCEPT</tag>
       </tags>
   </entry>
   <entry>
@@ -2615,6 +2615,20 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2021/02/14/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Infrastructure as Code --- Terraform</title>
     <url>/2025/05/08/Terraform/</url>
     <content><![CDATA[<p><strong>This article focuses on an infrastructure as code tool, terraform, and helps developers quickly and confidently scale your cloud deployments, and also easily maintain and manage the infrastructure of their projects.</strong></p>
@@ -2721,20 +2735,6 @@
       <tags>
         <tag>IAC</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2021/02/14/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>浅析前端流行仓库管理模式——Monorepo</title>
